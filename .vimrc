@@ -88,7 +88,7 @@ set shiftwidth=4
 "                                 UI                                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showcmd             " show command in bottom bar
-set number              " show line numbers
+"set number              " show line numbers
 
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to

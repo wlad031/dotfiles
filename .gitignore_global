@@ -3,4 +3,7 @@
 report.zip
 .idea/
 *IGNORED*
-
+.gradle/
+gradlew
+gradlew.bat
+gradle/wrapper/*

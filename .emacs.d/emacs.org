@@ -1,0 +1,737 @@
+#+TITLE: My Emacs Configuration
+#+AUTHOR: Vlad Gerasimov
+#+EMAIL: gerasimovvs@yahoo.com
+#+OPTIONS: num:nil
+
+* TODO Using org+babel for loading org file as init file
+* TODO Move this file to my org directory
+* Lexical binding
+
+A lexically-bound variable has lexical scope, meaning that any reference to the variable must be located textually within the binding construct. Each binding construct defines a lexical environment, specifying the variables that are bound within the construct and their local values. When the Lisp evaluator wants the current value of a variable, it looks first in the lexical environment; if the variable is not specified in there, it looks in the symbol's value cell, where the dynamic value is stored.
+
+#+BEGIN_SRC emacs-lisp
+;;; -*- lexical-binding: t -*-
+#+END_SRC
+
+* Menu bar
+
+Creating a new menu pane in the menu bar to the right of /Buffers/ menu:
+
+#+BEGIN_SRC emacs-lisp
+(define-key-after global-map [menu-bar windows] (cons "Windows" (make-sparse-keymap "Windows")) 'buffers)
+#+END_SRC
+
+Creating menu items, under the menu by the id ~[menu-bar windows]~:
+
+#+BEGIN_SRC emacs-lisp
+(define-key global-map [menu-bar windows split-vertically]
+  '(menu-item "Split vertically" split-window-right :help "Splits window vertically"))
+(define-key global-map [menu-bar windows split-horizontally]
+  '(menu-item "Split horizontally" split-window-below :help "Splits window horizontally"))
+#+END_SRC
+
+* Frame properties
+
+** Frame title format
+
+The frame title is changed by changing the value of the variable ~frame-title-format~. Likewise, the icon title can be changed with ~icon-title-format~. They recognize most of the same special characters as variable ~mode-line-format~; see that variable for further details:
+
+A string is printed verbatim in the mode line except for %-constructs:
+
+#+BEGIN_SRC tangle: no
+    (%-constructs are allowed when the string is the entire mode-line-format
+     or when it is found in a cons-cell or a list)
+    %b -- print buffer name.      %f -- print visited file name.
+    %F -- print frame name.
+    %* -- print %, * or hyphen.   %+ -- print *, % or hyphen.
+          %& is like %*, but ignore read-only-ness.
+          % means buffer is read-only and * means it is modified.
+          For a modified read-only buffer, %* gives % and %+ gives *.
+    %s -- print process status.
+    %p -- print percent of buffer above top of window, or Top, Bot or All.
+    %P -- print percent of buffer above bottom of window, perhaps plus Top,
+          or print Bottom or All.
+    %m -- print the mode name.
+    %n -- print Narrow if appropriate.
+    %z -- print mnemonics of buffer, terminal, and keyboard coding systems.
+    %Z -- like %z, but including the end-of-line format.
+    %[ -- print one [ for each recursive editing level.  %] similar.
+    %% -- print %.   %- -- print infinitely many dashes.
+#+END_SRC
+
+Decimal digits after the % specify field width to which to pad.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default frame-title-format "%b (%f)")
+#+END_SRC
+
+** default-frame-alist
+
+You can control the default appearance and behavior of all frames by specifying a default list of frame parameters in the variable ~default-frame-alist~. Its value should be a list of entries, each specifying a parameter name and a value for that parameter. These entries take effect whenever Emacs creates a new frame, including the initial frame.
+
+*** Apperance
+
+Enable transparent title bar on macOS
+
+#+BEGIN_SRC emacs-lisp
+(when (memq window-system '(mac ns))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+#+END_SRC
+
+*** Initial frame position
+
+Move the frame to the top left position
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(left . 0))
+(add-to-list 'default-frame-alist '(top . 0))
+#+END_SRC
+
+*** Initial frame size
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(height . 48))
+(add-to-list 'default-frame-alist '(width . 160))
+#+END_SRC
+
+* TODO Package system and sources.
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                 (not (gnutls-available-p))))
+    (proto (if no-ssl "http" "https")))
+    (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+    (when (< emacs-major-version 24)
+#+END_SRC
+
+For important compatibility libraries like cl-lib
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
+#+END_SRC
+
+Initialize Emacs' internal record of which packages are installed, and loads them.
+
+#+BEGIN_SRC emacs-lisp
+(package-initialize)
+(package-refresh-contents)
+#+END_SRC
+
+We will use 'use-package' to install and configure packages.
+
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile (require 'use-package))
+#+END_SRC
+
+No need to out 'ensure' everywhere, since we don't use anything else to install packages.
+
+#+BEGIN_SRC emacs-lisp
+(setq use-package-always-ensure t)
+#+END_SRC
+
+* Emacs initialization benchmarking
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+#+END_SRC
+
+* System shell environment
+
+Pass system shell environment to Emacs. This is important primarily for shell inside Emacs, but also things like Org mode export to Tex PDF don't work, since it relies on running external command pdflatex, which is loaded from PATH.
+
+#+BEGIN_SRC emacs-lisp
+(use-package exec-path-from-shell
+	     :ensure t)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+#+END_SRC
+
+* Additional configuration files
+
+** Custom file
+
+Store custom-file separately, don't freak out when it's not found
+
+#+BEGIN_SRC emacs-lisp
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
+#+END_SRC
+
+** Private config
+
+Set path for private config.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
+#+END_SRC
+
+* Evil mode
+
+Evil is an extensible vi layer for Emacs. It emulates the main features of Vim, and provides facilities for writing custom extensions.
+
+[[https://github.com/emacs-evil/evil][Evil mode - Github page]]
+
+Download and install Evil.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil)
+#+END_SRC
+
+Enable Evil.
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil)
+(evil-mode 1)
+#+END_SRC
+
+Many X desktop environments support a feature called the clipboard manager. If you exit Emacs while it is the current "owner" of the clipboard data, and there is a clipboard manager running, Emacs transfers the clipboard data to the clipboard manager so that it is not lost. In some circumstances, this may cause a delay when exiting Emacs; if you wish to prevent Emacs from transferring data to the clipboard manager, change the variable ~x-select-enable-clipboard-manager~ to ~nil~.
+
+I use it to be able to copy to the system clipboard from Evil.
+
+#+BEGIN_SRC emacs-lisp
+(setq x-select-enable-clipboard nil)
+#+END_SRC
+
+* TODO header
+
+#+BEGIN_SRC emacs-lisp
+;; Both command keys are 'Super'
+(setq mac-right-command-modifier 'super)
+(setq mac-command-modifier 'super)
+(setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
+
+;; Option or Alt is naturally 'Meta'
+(setq mac-option-modifier 'meta)
+
+
+;; Right Alt (option) can be used to enter symbols like em dashes '—' and euros '€' and stuff.
+(setq mac-right-option-modifier 'nil)
+
+;; Control is control, and you also need to change Caps Lock to Control in the Keyboard
+;; preferences in macOS.
+
+
+;; =============
+;; SANE DEFAULTS
+
+
+;; Smoother and nicer scrolling
+(setq scroll-margin 10
+      scroll-step 1
+      next-line-add-newlines nil
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
+(setq mouse-wheel-follow-mouse 't)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+
+
+;; Use ESC as universal get me out of here command
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+
+;; Don't bother with auto save and backups.
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+
+
+;; Warn only when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
+
+;; Move file to trash instead of removing.
+(setq-default delete-by-moving-to-trash t)
+
+
+;; Revert (update) buffers automatically when underlying files are changed externally.
+(global-auto-revert-mode t)
+
+(setq
+ inhibit-startup-message t         ; Don't show the startup message...
+ inhibit-startup-screen t          ; ... or screen
+ cursor-in-non-selected-windows t  ; Hide the cursor in inactive windows
+
+ echo-keystrokes 0.1               ; Show keystrokes right away, don't show the message in the scratch buffer
+ initial-scratch-message nil       ; Empty scratch buffer
+ initial-major-mode 'org-mode      ; Org mode by default
+ sentence-end-double-space nil     ; Sentences should end in one space, come on!
+ confirm-kill-emacs 'y-or-n-p      ; y and n instead of yes and no when quitting
+ help-window-select t              ; Select help window so it's easy to quit it with 'q'
+ )
+
+
+(fset 'yes-or-no-p 'y-or-n-p)      ; y and n instead of yes and no everywhere else
+(delete-selection-mode 1)          ; Delete selected text when typing
+(global-unset-key (kbd "s-p"))     ; Don't print
+
+
+;; We need Emacs kill ring and system clipboard to be independent. Simpleclip is the solution to that.
+(use-package simpleclip
+	     :config
+	     (simpleclip-mode 1))
+
+
+;; Things you'd expect from macOS app.
+(global-set-key (kbd "s-s") 'save-buffer)             ;; save
+(global-set-key (kbd "s-S") 'write-file)              ;; save as
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
+(global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
+;; (global-set-key (kbd "s-z") 'undo)
+
+;; Delete trailing spaces and add new line in the end of a file on save.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq require-final-newline t)
+
+
+;; Linear undo and redo.
+(use-package undo-fu)
+(global-set-key (kbd "s-z")   'undo-fu-only-undo)
+(global-set-key (kbd "s-Z") 'undo-fu-only-redo)
+
+
+;; =======
+;; VISUALS
+
+
+
+;; Font
+;(when (member "Ayuthaya" (font-family-list))
+;  (set-face-attribute 'default nil :font "Ayuthaya 12"))
+(setq-default line-spacing 1)
+
+
+;;
+(use-package hemisu-theme)
+(load-theme 'hemisu-dark t)
+
+
+;; Hide toolbar and scroll bar
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+
+;; Always wrap lines
+(global-visual-line-mode 1)
+
+
+;; Highlight current line
+(global-hl-line-mode 1)
+
+
+;; Show parens and other pairs.
+(use-package smartparens
+	     :diminish
+	     :config
+	     (require 'smartparens-config)
+	     (smartparens-global-mode t)
+	     (show-smartparens-global-mode t))
+
+
+;; Set colors to distinguish between active and inactive windows
+(set-face-attribute 'mode-line nil :background "SlateGray1")
+(set-face-attribute 'mode-line-inactive nil :background "grey93")
+
+;; Show vi-like tilde in the fringe on empty lines.
+(use-package vi-tilde-fringe
+	     :config
+	     (global-vi-tilde-fringe-mode 1))
+
+
+;; Never use tabs, use spaces instead.
+(setq tab-width 2)
+(setq js-indent-level 2)
+(setq css-indent-offset 2)
+(setq c-basic-offset 2)
+(setq-default indent-tabs-mode nil)
+(setq-default c-basic-offset 2)
+(setq-default tab-width 2)
+(setq-default c-basic-indent 2)
+
+
+;; Show keybindings cheatsheet
+(use-package which-key
+	     :config
+	     (which-key-mode)
+	     (setq which-key-idle-delay 0.5))
+
+
+;; Disable blinking cursor.
+(blink-cursor-mode 0)
+
+
+;; ================
+;; BASIC NAVIGATION
+
+
+;; Kill line with CMD-Backspace. Note that thanks to Simpleclip, killing doesn't rewrite the system clipboard.
+;; Kill one word with Alt+Backspace.
+;; Kill forward word with Alt-Shift-Backspace.
+(global-set-key (kbd "s-<backspace>") 'kill-whole-line)
+(global-set-key (kbd "M-S-<backspace>") 'kill-word)
+
+
+;; Use Cmd for movement and selection.
+(global-set-key (kbd "s-<right>") (kbd "C-e"))        ;; End of line
+(global-set-key (kbd "S-s-<right>") (kbd "C-S-e"))    ;; Select to end of line
+(global-set-key (kbd "s-<left>") (kbd "M-m"))         ;; Beginning of line (first non-whitespace character)
+(global-set-key (kbd "S-s-<left>") (kbd "M-S-m"))     ;; Select to beginning of line
+
+(global-set-key (kbd "s-<up>") 'beginning-of-buffer)  ;; First line
+(global-set-key (kbd "s-<down>") 'end-of-buffer)      ;; Last line
+
+
+;; Thanks to Bozhidar Batsov
+;; http://emacsredux.com/blog/2013/]05/22/smarter-navigation-to-the-beginning-of-a-line/
+(defun smarter-move-beginning-of-line (arg)
+    "Move point back to indentation of beginning of line.
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+    (interactive "^p")
+    (setq arg (or arg 1))
+
+    ;; Move lines first
+    (when (/= arg 1)
+      (let ((line-move-visual nil))
+	(forward-line (1- arg))))
+
+    (let ((orig-point (point)))
+      (back-to-indentation)
+      (when (= orig-point (point))
+	(move-beginning-of-line 1))))
+
+;; Many commands in Emacs write the current position into mark ring.
+;; These custom functions allow for quick movement backward and forward.
+;; For example, if you were editing line 6, then did a search with Cmd+f, did something and want to come back,
+;; press Cmd+, to go back to line 6. Cmd+. to go forward.
+;; These keys are chosen because they are the same buttons as < and >, think of them as arrows.
+(defun my-pop-local-mark-ring ()
+  (interactive)
+  (set-mark-command t))
+
+(defun unpop-to-mark-command ()
+  "Unpop off mark ring. Does nothing if mark ring is empty."
+  (interactive)
+  (when mark-ring
+    (setq mark-ring (cons (copy-marker (mark-marker)) mark-ring))
+    (set-marker (mark-marker) (car (last mark-ring)) (current-buffer))
+    (when (null (mark t)) (ding))
+    (setq mark-ring (nbutlast mark-ring))
+    (goto-char (marker-position (car (last mark-ring))))))
+
+(global-set-key (kbd "s-,") 'my-pop-local-mark-ring)
+(global-set-key (kbd "s-.") 'unpop-to-mark-command)
+
+
+;; Same keys with Shift will move you back and forward between open buffers.
+(global-set-key (kbd "s-<") 'previous-buffer)
+(global-set-key (kbd "s->") 'next-buffer)
+
+(global-set-key (kbd "M-<left>") 'smarter-move-beginning-of-line)
+(global-set-key (kbd "M-<right>") 'move-end-of-line)
+
+;; ============
+;; TEXT EDITING
+
+
+;; Expand-region allows to gradually expand selection inside words, sentences, expressions, etc.
+(use-package expand-region
+	     :config
+	     (global-set-key (kbd "s-'") 'er/expand-region)         ;; Cmd+' (apostrophe) to expand
+	     (global-set-key (kbd "s-\"") 'er/contract-region))     ;; Cmd+" (same, but with shift) to contract
+
+
+;; Move-text lines around with meta-up/down.
+(use-package move-text
+	     :config
+	     (move-text-default-bindings))
+
+
+;; Quickly insert new lines above or below the current line, with correct indentation.
+(defun smart-open-line ()
+  "Insert an empty line after the current line. Position the cursor at its beginning, according to the current mode."
+  (interactive)
+  (move-end-of-line nil)
+  (newline-and-indent))
+
+(defun smart-open-line-above ()
+  "Insert an empty line above the current line. Position the cursor at it's beginning, according to the current mode."
+  (interactive)
+  (move-beginning-of-line nil)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "s-<return>") 'smart-open-line)            ;; Cmd+Return new line below
+(global-set-key (kbd "s-S-<return>") 'smart-open-line-above)    ;; Cmd+Shift+Return new line above
+
+
+;; Upcase and lowercase word or region, if selected.
+;; To capitalize or un-capitalize word use Alt+c and Alt+l
+(global-set-key (kbd "M-u") 'upcase-dwim)   ;; Alt+u upcase
+(global-set-key (kbd "M-l") 'downcase-dwim) ;; Alt-l lowercase
+
+
+;; Comment line or region.
+(global-set-key (kbd "s-/") 'comment-line)
+
+
+;; Visually find and replace text
+(use-package visual-regexp
+	     :config
+	     (define-key global-map (kbd "M-s-f") 'vr/replace)
+	     (define-key global-map (kbd "s-r") 'vr/replace))  ;; Cmd+r find and replace
+
+
+;; Multiple cursors. Similar to Sublime or VS Code.
+(use-package multiple-cursors
+	     :config
+	     (setq mc/always-run-for-all 1)
+	     (global-set-key (kbd "s-d") 'mc/mark-next-like-this)        ;; Cmd+d select next occurrence of region
+	     (global-set-key (kbd "s-D") 'mc/mark-all-dwim)              ;; Cmd+Shift+d select all occurrences
+	     (global-set-key (kbd "M-s-d") 'mc/edit-beginnings-of-lines) ;; Alt+Cmd+d add cursor to each line in region
+	     (define-key mc/keymap (kbd "<return>") nil))
+
+
+;; =================
+;; WINDOW MANAGEMENT
+
+
+;; This is rather radical, but saves from a lot of pain in the ass.
+;; When split is automatic, always split windows vertically
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
+
+
+;; Go to other windows easily with one keystroke Cmd-something.
+(global-set-key (kbd "s-1") (kbd "C-x 1"))  ;; Cmd-1 kill other windows (keep 1)
+(global-set-key (kbd "s-2") (kbd "C-x 2"))  ;; Cmd-2 split horizontally
+(global-set-key (kbd "s-3") (kbd "C-x 3"))  ;; Cmd-3 split vertically
+(global-set-key (kbd "s-0") (kbd "C-x 0"))  ;; Cmd-0...
+(global-set-key (kbd "s-w") (kbd "C-x 0"))  ;; ...and Cmd-w to close current window
+
+
+;; Move between windows with Control-Command-Arrow and with =Cmd= just like in iTerm.
+(use-package windmove
+	     :config
+	     (global-set-key (kbd "<C-s-left>")  'windmove-left)  ;; Ctrl+Cmd+left go to left window
+	     (global-set-key (kbd "s-[")  'windmove-left)         ;; Cmd+[ go to left window
+
+	     (global-set-key (kbd "<C-s-right>") 'windmove-right) ;; Ctrl+Cmd+right go to right window
+	     (global-set-key (kbd "s-]")  'windmove-right)        ;; Cmd+] go to right window
+
+	     (global-set-key (kbd "<C-s-up>")    'windmove-up)    ;; Ctrl+Cmd+up go to upper window
+	     (global-set-key (kbd "s-{")  'windmove-up)           ;; Cmd+Shift+[ go to upper window
+
+	     (global-set-key (kbd "<C-s-down>")  'windmove-down)  ;; Ctrl+Cmd+down go to down window
+	     (global-set-key (kbd "s-}")  'windmove-down))        ;; Cmd+Shift+] got to down window
+
+
+;; Enable winner mode to quickly restore window configurations
+(winner-mode 1)
+(global-set-key (kbd "M-s-[") 'winner-undo)
+(global-set-key (kbd "M-s-]") 'winner-redo)
+
+;; ==========================================
+;; MENUS AND COMPLETION (not code completion)
+
+
+;; Use minimalist Ivy for most things.
+(use-package ivy
+	     :diminish                             ;; don't show Ivy in minor mode list
+	     :config
+	     (ivy-mode 1)                          ;; enable Ivy everywhere
+	     (setq ivy-use-virtual-buffers t)      ;; show bookmarks and recent files in buffer list
+	     (setq ivy-count-format "(%d/%d) ")
+	     (setq enable-recursive-minibuffers t)
+
+	     (setq ivy-re-builders-alist
+		   '((swiper . ivy--regex-plus)
+		     (t      . ivy--regex-fuzzy)))   ;; enable fuzzy searching everywhere except for Swiper
+
+	     (global-set-key (kbd "s-b") 'ivy-switch-buffer)  ;; Cmd+b show buffers and recent files
+	     (global-set-key (kbd "M-s-b") 'ivy-resume))      ;; Alt+Cmd+b resume whatever Ivy was doing
+
+
+;; Swiper is a better local finder.
+(use-package swiper
+	     :config
+	     (global-set-key "\C-s" 'swiper)       ;; Default Emacs Isearch forward...
+	     (global-set-key "\C-r" 'swiper)       ;; ... and Isearch backward replaced with Swiper
+	     (global-set-key (kbd "s-f") 'swiper)) ;; Cmd+f find text
+
+
+;; Better menus with Counsel (a layer on top of Ivy)
+(use-package counsel
+	     :config
+	     (global-set-key (kbd "M-x") 'counsel-M-x)            ;; Alt+x run command
+	     (global-set-key (kbd "s-P") 'counsel-M-x)            ;; Cmd+Shift+p run command
+	     (global-set-key (kbd "C-x C-f") 'counsel-find-file)  ;; Replace built-in Emacs 'find file' (open file) with Counsel
+	     (global-set-key (kbd "s-o") 'counsel-find-file))     ;; Cmd+o open file
+
+(use-package smex)  ;; show recent commands when invoking Alt-x (or Cmd+Shift+p)
+(use-package flx)   ;; enable fuzzy matching
+(use-package avy)   ;; enable avy for quick navigation
+
+
+;; Make Ivy a bit more friendly by adding information to ivy buffers, e.g. description of commands in Alt-x, meta info when switching buffers, etc.
+(use-package ivy-rich
+	     :config
+	     (ivy-rich-mode 1)
+	     (setq ivy-rich-path-style 'abbrev)) ;; Abbreviate paths using abbreviate-file-name (e.g. replace “/home/username” with “~”)
+
+;; ========
+;; TERMINAL
+
+
+(use-package shell-pop
+	     :config
+	     (custom-set-variables
+	      '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+	      '(shell-pop-universal-key "s-=")))
+
+
+;; ===============
+;; CODE COMPLETION
+
+
+(use-package company
+	     :config
+	     (setq company-idle-delay 0.1)
+	     (setq company-global-modes '(not org-mode))
+	     (setq company-minimum-prefix-length 1)
+	     (add-hook 'after-init-hook 'global-company-mode))
+
+
+;; ===========
+;; PROGRAMMING
+
+(use-package yaml-mode)
+(use-package markdown-mode)
+
+#+END_SRC
+
+* Org mode
+
+Install and configure Org mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+	     :config
+#+END_SRC
+
+Visually indent sections. This looks better for smaller files.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-startup-indented t)
+#+END_SRC
+
+Tab in source blocks should act like in major mode.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-src-tab-acts-natively t)
+	     (setq org-src-preserve-indentation t)
+#+END_SRC
+
+State changes for todos and also notes should go into a Logbook drawer.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-log-into-drawer t)
+#+END_SRC
+
+Code highlighting in code blocks.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-src-fontify-natively t)
+#+END_SRC
+
+Add closed date when todo goes to DONE state.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-log-done 'time)
+#+END_SRC
+
+Allow shift selection with arrows.
+
+#+BEGIN_SRC emacs-lisp
+	     (setq org-support-shift-select t)
+#+END_SRC
+
+~org-image-actual-width~ is a variable defined in =org.el=. Its value is ~t~
+When set to ~t~, always use the image width.
+When set to a number, use imagemagick (when available) to set the image’s width to this value.
+When set to a number in a list, try to get the width from any ~#+ATTR.*~ keyword if it matches a width specification like ~#+ATTR_HTML: :width 300px~ and fall back on that number if none is found.
+When set to ~nil~, try to get the width from an ~#+ATTR.*~ keyword and fall back on the original width if none is found.
+
+This requires Emacs >= 24.1, build with imagemagick support.
+
+#+BEGIN_SRC emacs-lisp
+        (setq org-image-actual-width nil)
+#+END_SRC
+
+...and finally finish configuring.
+
+#+BEGIN_SRC emacs-lisp
+)
+#+END_SRC
+
+Store all my org files in ~/org.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/org")
+#+END_SRC
+
+And all of those files should be in included agenda.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("~/org"))
+#+END_SRC
+
+* Linking
+
+Insert web link and fetch the description for it from the title of the page.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-web-tools)
+(global-set-key (kbd "C-x p i") 'org-web-tools-insert-link-for-url)
+#+END_SRC
+
+* TODO Emoji
+
+#+BEGIN_SRC emacs-lisp
+(use-package emojify)
+
+(add-hook 'after-init-hook #'global-emojify-mode)
+
+(use-package company-emoji)
+(add-to-list 'company-backends 'company-emoji)
+
+(defun --set-emoji-font (frame)
+  "Adjust the font settings of FRAME so Emacs can display emoji properly."
+  (if (eq system-type 'darwin)
+      ;; For NS/Cocoa
+      (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") frame 'prepend)
+    ;; For Linux
+    (set-fontset-font t 'symbol (font-spec :family "Symbola") frame 'prepend)))
+
+(--set-emoji-font nil)
+(add-hook 'after-make-frame-functions '--set-emoji-font)
+#+END_SRC

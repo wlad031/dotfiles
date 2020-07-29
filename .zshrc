@@ -7,6 +7,8 @@ alias xx="exit"
 # TODO: correct working with python and pyenv
 export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
 
+export EMACSD_DIR="$HOME/.emacs.d/"
+
 # TODO: use simplified syntax
 if [ -f "$HOME/.load_sdkman.sh" ]; then source "$HOME/.load_sdkman.sh"; fi
 if [ -f "$HOME/.load_gcsdk.sh" ]; then source "$HOME/.load_gcsdk.sh"; fi
