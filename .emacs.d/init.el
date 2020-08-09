@@ -18,5 +18,5 @@
   (require 'org-install)
   (require 'ob-tangle))
 
-;; load up all literate org-mode files in this directory
-(mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
+;; load up all "emacs" literate org-mode files in this directory
+(mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\emacs.org$"))
