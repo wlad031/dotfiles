@@ -24,6 +24,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'bling/vim-airline'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'jceb/vim-orgmode'
 
 if iCanHazVundle == 0
     echo "Installing Vundles, please ignore key map error messages"
@@ -33,6 +34,9 @@ endif
 call vundle#end()            " required
 
 filetype plugin indent on    " required
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functions                                     "
@@ -65,7 +69,9 @@ imap ii <Esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Colors                                        "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set term=xterm-256color         " need to avoid graphic bugs
+if !has('nvim')
+    set term=xterm-256color         " need to avoid graphic bugs
+endif
 syntax enable                   " enable syntax highlighting
 set background=dark             " dark or light
 
@@ -116,3 +122,15 @@ let g:nerdtree_tabs_open_on_console_startup=0
 set showtabline=2
 
 
+let &t_SI.="\e[6 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[2 q" "EI = NORMAL mode (ELSE)
+
+"Cursor settings:
+
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar

@@ -7,3 +7,5 @@ report.zip
 gradlew
 gradlew.bat
 gradle/wrapper/*
+*.env
+*.env.json
