@@ -11,6 +11,8 @@ endif
 "                                    Plugins                                  "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
+set hidden
+set showtabline=0
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -22,9 +24,14 @@ Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
-Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'jceb/vim-orgmode'
+Plugin 'ctrlpvim/ctrlp.vim'
+"TODO: too slow, is there any way to speed it up?
+"Plugin 'vim-ctrlspace/vim-ctrlspace' 
+Plugin 'benmills/vimux'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 if iCanHazVundle == 0
     echo "Installing Vundles, please ignore key map error messages"
@@ -39,24 +46,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Functions                                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" toggle between number and relativenumber
-function! ToggleNumber()
-    if(&relativenumber == 1)
-        set norelativenumber
-        set number
-    else
-        set relativenumber
-    endif
-endfunc
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Mapping                                       "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F2> call ToggleNumber()
-set pastetoggle=<F11>
-
 map <C-n> :NERDTreeToggle<CR>
 
 map <C-J> <C-W>j<C-W>_
@@ -65,6 +56,8 @@ map <C-H> <C-W>h<C-W>_
 map <C-L> <C-W>l<C-W>_
 
 imap ii <Esc>
+
+map <Leader>vp :VimuxPromptCommand<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Colors                                        "
@@ -94,8 +87,7 @@ set shiftwidth=4
 "                                 UI                                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showcmd             " show command in bottom bar
-"set number              " show line numbers
-
+"set relativenumber      " show relative line numbers
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to
 set showmatch           " highlight matching [{()}]
@@ -116,11 +108,7 @@ set backspace=indent,eol,start
 set laststatus=2
 set t_Co=256
 
-
-let g:nerdtree_tabs_open_on_console_startup=0
-
 set showtabline=2
-
 
 let &t_SI.="\e[6 q" "SI = INSERT mode
 let &t_SR.="\e[4 q" "SR = REPLACE mode

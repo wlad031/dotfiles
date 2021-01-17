@@ -428,6 +428,16 @@ Disable blinking cursor.
 (blink-cursor-mode 0)
 #+END_SRC
 
+** centered-window
+
+[[https://github.com/anler/centered-window-mode][Github repo]]
+
+Global minor mode that centers the text of the window.
+
+#+begin_src emacs-lisp
+(use-package centered-window)
+#+end_src
+
 ** Font
 
 #+BEGIN_SRC emacs-lisp
@@ -438,7 +448,15 @@ Disable blinking cursor.
 (use-package fira-code-mode)
 #+end_src
 
-** TODO Theme
+** Theme
+
+[[https://github.com/purcell/color-theme-sanityinc-tomorrow][Github repo]]
+
+#+begin_src emacs-lisp
+(use-package color-theme-sanityinc-tomorrow)
+(color-theme-sanityinc-tomorrow-night)
+#+end_src
+
 ** all-the-icons
 
 [[https://github.com/domtronn/all-the-icons.el][all-the-icons - Github page]]
@@ -454,6 +472,13 @@ In order for the icons to work it is very important that you install the Resourc
 ~M-x all-the-icons-install-fonts~
 
 Bear in mind, this will also run ~fc-cache -f -v~ on MacOS and Linux which can take some time to complete. For Windows, this function will prompt for a download directory for you to install them manually.
+
+#+begin_src emacs-lisp
+(use-package all-the-icons-ivy
+  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
+(setq all-the-icons-ivy-file-commands
+      '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))
+#+end_src
 
 ** Modeline
 *** General settings
@@ -615,6 +640,7 @@ Other dashboard settings
 (setq dashboard-set-navigator t)
 (setq dashboard-set-init-info t)
 (setq dashboard-set-footer nil)
+(setq dashboard-center-content t)
 #+END_SRC
 
 * TODO Navigation
@@ -900,6 +926,29 @@ Make Ivy a bit more friendly by adding information to ivy buffers, e.g. descript
 	     (ivy-rich-mode 1)
 	     (setq ivy-rich-path-style 'abbrev)) ;; Abbreviate paths using abbreviate-file-name (e.g. replace “/home/username” with “~”)
 #+END_SRC
+
+** ivy-posframe
+
+[[https://github.com/tumashu/ivy-posframe][ivy-posframe]] is a ivy extension, which let ivy use posframe to show its candidate menu.
+
+#+begin_src emacs-lisp
+(use-package ivy-posframe)
+(require 'ivy-posframe)
+;; display at `ivy-posframe-style'
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+(ivy-posframe-mode 1)
+
+(setq ivy-posframe-parameters
+      '((left-fringe . 24)
+        (right-fringe . 24)))
+
+#+end_src
+
 * TODO Code completion
 
 #+BEGIN_SRC emacs-lisp
@@ -1096,6 +1145,25 @@ Set the directory for exported org files
 (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
 #+END_SRC
 
+Set languages which could be evaluated inside code blocks
+
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+    (org . t)
+    (python . t)
+    (emacs-lisp . t)
+    (ditaa . t)
+    (sed . t)
+    (plantuml . t)
+    ))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.emacs-ext/plantuml.jar"))
+
+#+end_src
+
 ** TODO Super-agenda
 
 [[https://github.com/alphapapa/org-super-agenda][Github repo]]
@@ -1162,7 +1230,15 @@ Install and enable Projectile
   :delight '(:eval (concat " P[" (projectile-project-name) "]"))) ; show just P[<project-name>] in modeline
 (projectile-mode t)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(setq projectile-indexing-method 'alien)
 #+END_SRC
+
+Set ivy as a completion option
+
+#+begin_src emacs-lisp
+(setq projectile-completion-system 'ivy)
+#+end_src
+
 * TODO Narrowing
 #+BEGIN_SRC emacs-lisp
 (put 'narrow-to-region 'disabled nil)
