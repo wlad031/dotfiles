@@ -2,7 +2,7 @@
 	email = gerasimovvs@yahoo.com
 	name = Vladislav Gerasimov
 [core]
-    editor = "vim -u /Users/vgerasimov/.vimrc_light"
+    editor = "vim"
     pager = delta
 	excludesfile = /Users/vgerasimov/.gitignore_global
 	autocrlf = input
@@ -25,3 +25,4 @@
 	required = true
 [init]
 	defaultBranch = master
+

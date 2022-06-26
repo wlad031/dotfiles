@@ -20,16 +20,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'preservim/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-surround'
-"Plugin 'bling/vim-airline'
 Plugin 'itchyny/lightline.vim'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ctrlpvim/ctrlp.vim'
-"TODO: too slow, is there any way to speed it up?
-"Plugin 'vim-ctrlspace/vim-ctrlspace' 
 Plugin 'benmills/vimux'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 
