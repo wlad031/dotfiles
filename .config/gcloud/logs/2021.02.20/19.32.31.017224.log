@@ -1,0 +1,52 @@
+2021-02-20 19:32:31,127 DEBUG    root            Loaded Command Group: [u'gcloud', u'info']
+2021-02-20 19:32:31,131 DEBUG    root            Running [gcloud.info] with arguments: []
+2021-02-20 19:32:31,265 INFO     root            Explicit Display.
+2021-02-20 19:32:31,267 INFO     ___FILE_ONLY___ Google Cloud SDK [246.0.0]
+
+Platform: [Mac OS X, x86_64] ('Darwin', 'vgerasimov-ws-krakow', '20.3.0', 'Darwin Kernel Version 20.3.0: Thu Jan 21 00:07:06 PST 2021; root:xnu-7195.81.3~1/RELEASE_X86_64', 'x86_64', 'i386')
+Python Version: [2.7.16 (default, Dec 21 2020, 23:00:36)  [GCC Apple LLVM 12.0.0 (clang-1200.0.30.4) [+internal-os, ptrauth-isa=sign+stri]
+Python Location: [/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python]
+Site Packages: [Disabled]
+
+Installation Root: [/Users/vgerasimov/.google-cloud-sdk]
+Installed Components:
+  docker-credential-gcr: []
+  core: [2019.05.10]
+  gsutil: [4.38]
+  bq: [2.0.43]
+System PATH: [/Users/vgerasimov/Library/Application Support/Coursier/bin:/Users/vgerasimov/.coursier:/Users/vgerasimov/.cargo/bin:/Users/vgerasimov/.jetbrains:/usr/local/sbin:/Users/vgerasimov/.ignite/bin:/usr/local/Cellar/go/1.13/bin:42094GOPATH/bin:/usr/local/Cellar/pyenv-virtualenv/1.1.5/shims:/Users/vgerasimov/.pyenv/shims:/Users/vgerasimov/.google-cloud-sdk/bin:/Users/vgerasimov/.sdkman/candidates/scala/current/bin:/Users/vgerasimov/.sdkman/candidates/sbt/current/bin:/Users/vgerasimov/.sdkman/candidates/maven/current/bin:/Users/vgerasimov/.sdkman/candidates/java/current/bin:/Users/vgerasimov/.sdkman/candidates/gradle/current/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Users/vgerasimov/.ebcli-virtual-env/executables:/usr/local/opt/fzf/bin:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/lib:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/pip:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/lein:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/docker:/Users/vgerasimov/.antigen/bundles/wfxr/forgit:/Users/vgerasimov/.antigen/bundles/kazhala/dotbare:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/sbt:/Users/vgerasimov/.antigen/bundles/zsh-users/zsh-syntax-highlighting:/Users/vgerasimov/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/web-search]
+Python PATH: [/Users/vgerasimov/.google-cloud-sdk/lib/third_party:/Users/vgerasimov/.google-cloud-sdk/lib:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old:/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload]
+Cloud SDK on PATH: [True]
+Kubectl on PATH: [/usr/local/bin/kubectl]
+
+Installation Properties: [/Users/vgerasimov/.google-cloud-sdk/properties]
+User Config Directory: [/Users/vgerasimov/.config/gcloud]
+Active Configuration Name: [default]
+Active Configuration Path: [/Users/vgerasimov/.config/gcloud/configurations/config_default]
+
+Account: [vladislav.gerasimov@kohls.com]
+Project: [None]
+
+Current Properties:
+  [core]
+    account: [vladislav.gerasimov@kohls.com]
+    disable_usage_reporting: [True]
+
+Logs Directory: [/Users/vgerasimov/.config/gcloud/logs]
+Last Log File: [/Users/vgerasimov/.config/gcloud/logs/2021.02.20/19.31.35.986905.log]
+
+git: [git version 2.30.0]
+ssh: [OpenSSH_8.1p1, LibreSSL 2.7.3]
+
+
+
+2021-02-20 19:32:31,276 DEBUG    root            Checking for updates...
+2021-02-20 19:32:31,824 DEBUG    root            Updating notification cache...
+2021-02-20 19:32:31,825 DEBUG    root            Activating notification: [default]
+2021-02-20 19:32:31,825 INFO     ___FILE_ONLY___ 
+
+Updates are available for some Cloud SDK components.  To install them,
+please run:
+  $ gcloud components update
+
+

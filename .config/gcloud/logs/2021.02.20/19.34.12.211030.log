@@ -1,0 +1,10 @@
+2021-02-20 19:34:12,214 DEBUG    root            Loaded Command Group: [u'gcloud', u'auth']
+2021-02-20 19:34:12,218 DEBUG    root            Loaded Command Group: [u'gcloud', u'auth', u'revoke']
+2021-02-20 19:34:12,221 DEBUG    root            Running [gcloud.auth.revoke] with arguments: [ACCOUNTS:1: "[u'vladislav.gerasimov@kohls.com']"]
+2021-02-20 19:34:12,250 INFO     oauth2client.client Revoking token
+2021-02-20 19:34:12,823 WARNING  root            [vladislav.gerasimov@kohls.com] already inactive (previously revoked?)
+2021-02-20 19:34:12,824 INFO     root            Display format: "list[title="Revoked credentials:"]"
+2021-02-20 19:34:12,824 INFO     ___FILE_ONLY___ Revoked credentials:
+
+2021-02-20 19:34:12,825 INFO     ___FILE_ONLY___  - vladislav.gerasimov@kohls.com
+

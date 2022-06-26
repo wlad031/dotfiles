@@ -1,0 +1,30 @@
+2021-02-20 19:34:39,607 DEBUG    root            Loaded Command Group: [u'gcloud', u'config']
+2021-02-20 19:34:39,609 DEBUG    root            Loaded Command Group: [u'gcloud', u'config', u'configurations']
+2021-02-20 19:34:39,656 DEBUG    root            Loaded Command Group: [u'gcloud', u'config', u'configurations', u'list']
+2021-02-20 19:34:39,659 DEBUG    root            Running [gcloud.config.configurations.list] with arguments: []
+2021-02-20 19:34:39,661 INFO     root            Display format: "table(
+        name,
+        is_active,
+        properties.core.account,
+        properties.core.project,
+        properties.compute.zone:label=DEFAULT_ZONE,
+        properties.compute.region:label=DEFAULT_REGION)
+    "
+2021-02-20 19:34:39,665 INFO     ___FILE_ONLY___ NAME
+2021-02-20 19:34:39,665 INFO     ___FILE_ONLY___      
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___ IS_ACTIVE
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___   
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___ ACCOUNT
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___   
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___ PROJECT
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___   
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___ DEFAULT_ZONE
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___   
+2021-02-20 19:34:39,666 INFO     ___FILE_ONLY___ DEFAULT_REGION
+2021-02-20 19:34:39,667 INFO     ___FILE_ONLY___ 
+
+2021-02-20 19:34:39,667 INFO     ___FILE_ONLY___ default
+2021-02-20 19:34:39,667 INFO     ___FILE_ONLY___   
+2021-02-20 19:34:39,667 INFO     ___FILE_ONLY___ True
+2021-02-20 19:34:39,667 INFO     ___FILE_ONLY___ 
+
