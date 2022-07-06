@@ -89,5 +89,11 @@ else
     alias at=tmux_create_session_and_attach
 fi
 
+if ! command -v fnm &> /dev/null
+then
+else
+    eval "$(fnm env --use-on-cd)"
+fi
+
 # Uncomment for profiling this script
 # zprof
