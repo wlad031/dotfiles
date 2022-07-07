@@ -1,6 +1,10 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
+if [ -f "$HOME/.env" ]; then
+  export $(echo $(cat "$HOME/.env" | sed 's/#.*//g'| xargs) | envsubst)
+fi
+
 export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 
