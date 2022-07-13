@@ -4,6 +4,25 @@
         "**/.metals": true,
         "**/.ammonite": true
     },
+    "files.exclude": {
+      "**/.git/": true,
+      "**/node_modules/": true,
+      ".bloop/": true,
+      ".bsp/": true,
+      ".idea/": true,
+      ".metals/": true,
+      ".vscode/": true
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, node_modules/",
+    },
     "explorer.confirmDelete": false,
-    "workbench.editor.showTabs": false
+    "workbench.editor.showTabs": false,
+    "editor.minimap.enabled": false
 }
