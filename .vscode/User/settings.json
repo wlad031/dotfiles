@@ -1,0 +1,9 @@
+{
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "explorer.confirmDelete": false,
+    "workbench.editor.showTabs": false
+}
