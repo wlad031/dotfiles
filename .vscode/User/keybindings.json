@@ -164,5 +164,33 @@
         "key": "shift+cmd+v",
         "command": "-markdown.showPreview",
         "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    },
+    {
+      "key": "cmd+r",
+      "command": "-workbench.action.reloadWindow",
+      "when": "isDevelopment"
+    },
+    {
+      "key": "cmd+r",
+      "command": "editor.action.startFindReplaceAction",
+      "when": "editorFocus || editorIsOpen"
+    },
+    {
+      "key": "alt+cmd+f",
+      "command": "-editor.action.startFindReplaceAction",
+      "when": "editorFocus || editorIsOpen"
+    },
+    {
+      "key": "shift+cmd+r",
+      "command": "-rerunSearchEditorSearch",
+      "when": "inSearchEditor"
+    },
+    {
+      "key": "shift+cmd+r",
+      "command": "workbench.action.replaceInFiles"
+    },
+    {
+      "key": "shift+cmd+h",
+      "command": "-workbench.action.replaceInFiles"
     }
 ]

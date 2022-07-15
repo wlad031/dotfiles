@@ -1,8 +1,8 @@
 {
     "files.watcherExclude": {
-        "**/.bloop": true,
-        "**/.metals": true,
-        "**/.ammonite": true
+      "**/.bloop": true,
+      "**/.metals": true,
+      "**/.ammonite": true
     },
     "files.exclude": {
         "**/.git/": true,
@@ -13,6 +13,17 @@
         ".metals/": true,
         ".vscode/": true
     },
+
+    // "customizeUI.font.regular": "Hack Nerd Font",
+    // "customizeUI.font.monospace": "Hack Nerd Font Mono",
+
+    "editor.fontFamily": "Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 12,
+    "[Log]": {
+      "editor.fontFamily": "Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+      "editor.fontSize": 11
+    },
+
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "*.ts": "${capture}.js",
@@ -20,15 +31,17 @@
         "*.jsx": "${capture}.js",
         "*.tsx": "${capture}.ts",
         "tsconfig.json": "tsconfig.*.json",
-        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
     },
     "explorer.confirmDelete": false,
+    
     "workbench.editor.showTabs": false,
+    
     "editor.minimap.enabled": false,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.rulers": [ 100 ],
 
-    // Extensions
-
-    // Comment highlighter
     "better-comments.tags": [
         {
             "tag": "todo",
