@@ -1,17 +1,13 @@
 {
     "files.watcherExclude": {
+      "**/target": true,
+      "**/.trunk/*out": true,
       "**/.bloop": true,
       "**/.metals": true,
       "**/.ammonite": true
     },
     "files.exclude": {
-        "**/.git/": true,
-        "**/node_modules/": true,
-        ".bloop/": true,
-        ".bsp/": true,
-        ".idea/": true,
-        ".metals/": true,
-        ".vscode/": true
+      "**/.trunk/*out": true
     },
 
     // "customizeUI.font.regular": "Hack Nerd Font",
@@ -61,5 +57,9 @@
             "bold": false,
             "italic": false
         }
-    ]
+    ],
+    "trunk.trunkGrayOutNonBlockingIssues": false,
+    "[scala]": {
+      "editor.defaultFormatter": "scalameta.metals"
+    }
 }
