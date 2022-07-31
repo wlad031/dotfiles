@@ -8,6 +8,7 @@ fi
 export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 
+export SCRIPTS_DIR="$HOME/scripts"
 export EMACSD_DIR="$HOME/.emacs.d/"
 
 [ -f "$HOME/.secrets.sh" ] && source "$HOME/.secrets.sh"
@@ -28,6 +29,14 @@ else
     echo "[ERROR] Oh My Zsh isn't installed yet" 
 fi
 
+if [ -f "$SCRIPTS_DIR/theme-observer.swift" ]; then
+    ps aux | grep "theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
+    if [ $? -ne 0 ]; then
+        $SCRIPTS_DIR/theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
+    fi
+fi
+
+
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
     antigen use oh-my-zsh &> /dev/null
@@ -41,6 +50,8 @@ else
     echo "[ERROR] Antigen isn't installed yet"
 fi
 
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
 bkp() {
     FILE=$1
     BKP="$FILE.bkp"
@@ -49,6 +60,18 @@ bkp() {
 }
 
 alias ll="ls -la"
+
+if ! command -v nvim &> /dev/null
+then
+else
+    alias vim="nvim"
+fi
+
+if ! command -v codium &> /dev/null
+then
+else
+    alias code="codium"
+fi
 
 if ! command -v exa &> /dev/null
 then

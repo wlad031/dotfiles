@@ -31,7 +31,10 @@
     },
     "explorer.confirmDelete": false,
     
+    "window.autoDetectColorScheme": true,
     "workbench.editor.showTabs": false,
+    "workbench.preferredLightColorTheme":"Solarized Light",
+    "workbench.preferredDarkColorTheme": "Solarized Dark",
     
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
@@ -61,5 +64,6 @@
     "trunk.trunkGrayOutNonBlockingIssues": false,
     "[scala]": {
       "editor.defaultFormatter": "scalameta.metals"
-    }
+    },
+    "workbench.colorTheme": "Solarized Light"
 }
