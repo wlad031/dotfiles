@@ -132,5 +132,23 @@ else
     eval "$(fnm env --use-on-cd)"
 fi
 
+if ! command -v docker &> /dev/null
+then
+else
+    function dock() {
+      if [[ "$@" == "ps" ]]; then
+        command docker ps --format 'table {{.Names}}\t{{.Status}} : {{.RunningFor}}\t{{.ID}}\t{{.Image}}'
+      elif [[ "$@" == "psa" ]]; then
+        # docker ps -a includes all containers
+        command docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Size}}\n{{.ID}}\t{{.Image}}{{if .Ports}}{{with $p := split .Ports ", "}}\t{{len $p}} port(s) on {{end}}{{- .Networks}}{{else}}\tNo Ports on {{ .Networks }}{{end}}\n'
+      elif [[ "$@" == "psnet" ]]; then
+        # docker ps with network information
+        command docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Networks}}\n{{.ID}}{{if .Ports}}{{with $p := split .Ports ", "}}{{range $p}}\t\t{{println .}}{{end}}{{end}}{{else}}\t\t{{println "No Ports"}}{{end}}'
+      else
+        command docker "$@"
+      fi
+    }
+fi
+
 # Uncomment for profiling this script
 # zprof
