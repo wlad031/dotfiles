@@ -89,6 +89,16 @@ fi
 if ! command -v tmux &> /dev/null 
 then
 else
+    TMUX_DIR="$HOME/.tmux"
+    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
+
+    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
+    then
+    else
+        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
+        echo "Tmux plugin manager is installed"
+    fi
+
     alias tls="tmux ls"
 
     tmux_create_session_if_not_exists() {
