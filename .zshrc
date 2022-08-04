@@ -29,10 +29,10 @@ else
     echo "[ERROR] Oh My Zsh isn't installed yet" 
 fi
 
-if [ -f "$SCRIPTS_DIR/theme-observer.swift" ]; then
-    ps aux | grep "theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
+if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
+    ps aux | grep "macos-theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
     if [ $? -ne 0 ]; then
-        $SCRIPTS_DIR/theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
+        $SCRIPTS_DIR/macos-theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
     fi
 fi
 
