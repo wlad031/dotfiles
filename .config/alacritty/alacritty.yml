@@ -2,21 +2,21 @@ import:
   - .config/alacritty/colors.yml
 
 key_bindings:
-  - { key: T,    mods: Command, chars: "\x02\x63" }
-  - { key: W,    mods: Command, chars: "\x02\x78" }
-  - { key: E,    mods: Command, chars: "\x02\x65" }
-  - { key: Key1, mods: Command, chars: "\x02\x31" }
-  - { key: Key2, mods: Command, chars: "\x02\x32" }
-  - { key: Key3, mods: Command, chars: "\x02\x33" }
-  - { key: Key4, mods: Command, chars: "\x02\x34" }
-  - { key: Key5, mods: Command, chars: "\x02\x35" }
-  - { key: Key6, mods: Command, chars: "\x02\x36" }
-  - { key: Key7, mods: Command, chars: "\x02\x37" }
-  - { key: Key8, mods: Command, chars: "\x02\x38" }
-  - { key: Key9, mods: Command, chars: "\x02\x39" }
-  - { key: Q,    mods: Command, chars: "\x02\x64" }
-    # - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" }
-    # - { key: RBracket, mods: Command|Shift, chars: "\x02\x6e" }
+  - { key: T,    mods: Command, chars: "\x01\x63" }
+  - { key: W,    mods: Command, chars: "\x01\x78" }
+  - { key: E,    mods: Command, chars: "\x01\x65" }
+  - { key: Key1, mods: Command, chars: "\x01\x31" }
+  - { key: Key2, mods: Command, chars: "\x01\x32" }
+  - { key: Key3, mods: Command, chars: "\x01\x33" }
+  - { key: Key4, mods: Command, chars: "\x01\x34" }
+  - { key: Key5, mods: Command, chars: "\x01\x35" }
+  - { key: Key6, mods: Command, chars: "\x01\x36" }
+  - { key: Key7, mods: Command, chars: "\x01\x37" }
+  - { key: Key8, mods: Command, chars: "\x01\x38" }
+  - { key: Key9, mods: Command, chars: "\x01\x39" }
+  - { key: Q,    mods: Command, chars: "\x01\x64" }
+    # - { key: LBracket, mods: Command|Shift, chars: "\x01\x70" }
+    # - { key: RBracket, mods: Command|Shift, chars: "\x01\x6e" }
     
 window:
   padding:
