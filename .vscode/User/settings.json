@@ -30,11 +30,13 @@
         "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
     },
     "explorer.confirmDelete": false,
-    
-    "window.autoDetectColorScheme": true,
     "workbench.editor.showTabs": false,
-    "workbench.preferredLightColorTheme":"Solarized Light",
-    "workbench.preferredDarkColorTheme": "Solarized Dark",
+    "workbench.preferredLightColorTheme":"Gitpod Light",
+    "workbench.preferredDarkColorTheme": "Gitpod Dark",
+    "workbench.tree.indent": 8,
+    "workbench.colorCustomizations": {
+      "tree.indentGuidesStroke": "#00ff00"
+    },
     
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
@@ -65,5 +67,8 @@
     "[scala]": {
       "editor.defaultFormatter": "scalameta.metals"
     },
-    "workbench.colorTheme": "Solarized Light"
+    "workbench.colorTheme": "Gitpod Dark",
+    "window.autoDetectColorScheme": true,
+    "metals.serverVersion": "0.11.8",
+    "window.restoreWindows": "none",
 }

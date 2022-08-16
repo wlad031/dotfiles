@@ -39,7 +39,7 @@ fi
 
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
-    antigen use oh-my-zsh &> /dev/null
+#    antigen use oh-my-zsh &> /dev/null
     antigen bundle git &> /dev/null
     antigen bundle kazhala/dotbare &> /dev/null
     antigen bundle zsh-users/zsh-syntax-highlighting &> /dev/null
