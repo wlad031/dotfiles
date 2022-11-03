@@ -61,6 +61,19 @@ bkp() {
 
 alias ll="ls -la"
 
+if [[ -d "$HOME/.go" ]]
+then
+    export GOROOT="$HOME/.go/current"
+    export GOPATH="$HOME/.go"
+    export PATH="$GOROOT:$PATH"
+fi
+
+if [[ -d "$HOME/.flutter" ]]
+then
+    export FLUTTERPATH="$HOME/.flutter"
+    export PATH="$FLUTTERPATH/bin:$PATH"
+fi
+
 if ! command -v nvim &> /dev/null
 then
 else
@@ -150,5 +163,16 @@ else
     }
 fi
 
+if [ -f '/Users/vgerasimov/Downloads/google-cloud-sdk/path.zsh.inc' ]; 
+then 
+    . '/Users/vgerasimov/Downloads/google-cloud-sdk/path.zsh.inc'; 
+fi
+
+if [ -f '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc' ]; 
+then 
+    . '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc'; 
+fi
+
 # Uncomment for profiling this script
 # zprof
+
