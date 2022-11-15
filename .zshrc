@@ -5,6 +5,8 @@ if [ -f "$HOME/.env" ]; then
   export $(echo $(cat "$HOME/.env" | sed 's/#.*//g'| xargs) | envsubst)
 fi
 
+export UID=$(id -u)
+export GID=$(id -g)
 export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 
