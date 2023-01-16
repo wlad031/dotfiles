@@ -69,10 +69,23 @@
     "[scala]": {
       "editor.defaultFormatter": "scalameta.metals"
     },
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "workbench.colorTheme": "Default Light+",
     "window.autoDetectColorScheme": true,
-    "metals.serverVersion": "0.11.8",
+    "metals.serverVersion": "0.11.10",
     "window.restoreWindows": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "diffEditor.ignoreTrimWhitespace": false,
+    "[dart]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnType": true,
+      "editor.rulers": [
+        80
+      ],
+      "editor.selectionHighlight": false,
+      "editor.suggest.snippetsPreventQuickSuggestions": false,
+      "editor.suggestSelection": "first",
+      "editor.tabCompletion": "onlySnippets",
+      "editor.wordBasedSuggestions": false
+    },
+    "gitlens.mode.active": "zen",
 }
