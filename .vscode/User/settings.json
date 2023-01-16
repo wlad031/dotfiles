@@ -69,7 +69,6 @@
     "[scala]": {
       "editor.defaultFormatter": "scalameta.metals"
     },
-    "workbench.colorTheme": "Default Light+",
     "window.autoDetectColorScheme": true,
     "metals.serverVersion": "0.11.10",
     "window.restoreWindows": "none",
@@ -88,4 +87,7 @@
       "editor.wordBasedSuggestions": false
     },
     "gitlens.mode.active": "zen",
+    "workbench.iconTheme": "simple-icons",
+    "simpleIcons.hideArrows": false,
+    "workbench.colorTheme": "Gruvbox Light Hard",
 }

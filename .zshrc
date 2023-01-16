@@ -7,6 +7,7 @@ fi
 
 export UID=$(id -u)
 export GID=$(id -g)
+
 export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 
