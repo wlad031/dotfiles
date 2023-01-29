@@ -89,5 +89,5 @@
     "gitlens.mode.active": "zen",
     "workbench.iconTheme": "simple-icons",
     "simpleIcons.hideArrows": false,
-    "workbench.colorTheme": "Gruvbox Light Hard",
+    "workbench.colorTheme": "Gruvbox Dark Hard",
 }

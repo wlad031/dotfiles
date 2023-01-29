@@ -122,6 +122,7 @@ else
         tmux has-session -t $SESSION 2>/dev/null
         if [ $? != 0 ]; then
             tmux new-session -d -t $SESSION
+            tmux rename-window -t 1 main
         fi
     }
 
