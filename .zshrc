@@ -1,8 +1,14 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
+renv() {
+    file=$1
+    echo "Loading env file: $file"
+    export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
+}
+
 if [ -f "$HOME/.env" ]; then
-  export $(echo $(cat "$HOME/.env" | sed 's/#.*//g'| xargs) | envsubst)
+    renv "$HOME/.env"
 fi
 
 export UID=$(id -u)
@@ -64,16 +70,18 @@ bkp() {
 
 alias ll="ls -la"
 
-if [[ -d "$HOME/.go" ]]
+GO_DIR="$HOME/.go"
+if [[ -d "$GO_DIR" ]]
 then
-    export GOROOT="$HOME/.go/current"
-    export GOPATH="$HOME/.go"
+    export GOROOT="$GO_DIR/current"
+    export GOPATH="$GO_DIR"
     export PATH="$GOROOT:$PATH"
 fi
 
-if [[ -d "$HOME/.flutter" ]]
+FLUTTER_DIR="$HOME/.flutter"
+if [[ -d "$FLUTTER_DIR" ]]
 then
-    export FLUTTERPATH="$HOME/.flutter"
+    export FLUTTERPATH="$FLUTTER_DIR"
     export PATH="$FLUTTERPATH/bin:$PATH"
 fi
 
@@ -175,6 +183,14 @@ fi
 if [ -f '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc' ]; 
 then 
     . '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc'; 
+fi
+
+RVM_DIR="$HOME/.rvm"
+if [[ -d "$RVM_DIR" ]]
+then
+    # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+    export PATH="$PATH:$RVM_DIR/bin"
+    eval "$(brew shellenv)"
 fi
 
 # Uncomment for profiling this script
