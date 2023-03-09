@@ -87,6 +87,7 @@
       "editor.wordBasedSuggestions": false
     },
     "gitlens.mode.active": "zen",
+    "git.allowForcePush": true,
     "workbench.iconTheme": "simple-icons",
     "simpleIcons.hideArrows": false,
     "workbench.colorTheme": "Gruvbox Dark Hard",
