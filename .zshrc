@@ -45,7 +45,6 @@ if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
     fi
 fi
 
-
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
 #    antigen use oh-my-zsh &> /dev/null
@@ -192,6 +191,10 @@ then
     export PATH="$PATH:$RVM_DIR/bin"
     eval "$(brew shellenv)"
 fi
+
+export LOGSEQ_DIR="$HOME/Logseq"
+export LEDGER_DIR="$LOGSEQ_DIR/ledger"
+export LEDGER_FILE="$LEDGER_DIR/main.hledger"
 
 # Uncomment for profiling this script
 # zprof
