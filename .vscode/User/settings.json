@@ -91,4 +91,5 @@
     "workbench.iconTheme": "simple-icons",
     "simpleIcons.hideArrows": false,
     "workbench.colorTheme": "Gruvbox Dark Hard",
+    "window.zoomLevel": -1,
 }
