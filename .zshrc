@@ -59,7 +59,15 @@ else
 fi
 
 git_autocommit() {
-    git add . && git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
+    git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
+}
+
+gitac() {
+    git add . && git_autocommit
+}
+
+gitacp() {
+    gitac && git push
 }
 
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
