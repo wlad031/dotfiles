@@ -25,6 +25,7 @@ export EMACSD_DIR="$HOME/.emacs.d/"
 export SDKMAN_DIR="$HOME/.sdkman"
 [ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.jetbrains:$PATH"
 
