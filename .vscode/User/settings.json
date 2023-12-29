@@ -70,7 +70,7 @@
       "editor.defaultFormatter": "scalameta.metals"
     },
     "window.autoDetectColorScheme": true,
-    "metals.serverVersion": "0.11.11",
+    "metals.serverVersion": "1.1.0",
     "window.restoreWindows": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "diffEditor.ignoreTrimWhitespace": false,
@@ -90,6 +90,12 @@
     "git.allowForcePush": true,
     "workbench.iconTheme": "simple-icons",
     "simpleIcons.hideArrows": false,
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "workbench.colorTheme": "Jetbrains Dark Theme",
     "window.zoomLevel": -1,
+    "python.autoComplete.extraPaths": [
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.5-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.7-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.10-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.15-darwin-arm64"
+    ],
 }

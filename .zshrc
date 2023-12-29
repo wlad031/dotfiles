@@ -187,14 +187,14 @@ else
     }
 fi
 
-if [ -f '/Users/vgerasimov/Downloads/google-cloud-sdk/path.zsh.inc' ]; 
+if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ]; 
 then 
-    . '/Users/vgerasimov/Downloads/google-cloud-sdk/path.zsh.inc'; 
+    . "$HOME/apps/google-cloud-sdk/path.zsh.inc"; 
 fi
 
-if [ -f '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc' ]; 
+if [ -f "$HOME/apps/google-cloud-sdk/completion.zsh.inc" ]; 
 then 
-    . '/Users/vgerasimov/Downloads/google-cloud-sdk/completion.zsh.inc'; 
+    . "$HOME/apps/google-cloud-sdk/completion.zsh.inc"; 
 fi
 
 RVM_DIR="$HOME/.rvm"
