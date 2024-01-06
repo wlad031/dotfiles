@@ -1,10 +1,3 @@
-font_family = "Hack Nerd Font Mono"
-theme = "vscode.dark"
-
-[colors]
-author = "senpai-10"
-name = "vscode (dark)"
-
 [colors.bright]
 black = "#666666"
 blue = "#3b8eea"
@@ -47,11 +40,6 @@ style = "Italic"
 [font.normal]
 family = "Hack Nerd Font Mono"
 style = "Regular"
-
-[font_families]
-fira_mono_for_powerline = "Fira Mono for Powerline"
-hack_nerd_font_mono = "Hack Nerd Font Mono"
-pt_mono = "PT Mono"
 
 [[keyboard.bindings]]
 chars = "\u0001c"
