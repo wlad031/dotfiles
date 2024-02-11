@@ -1,0 +1,101 @@
+{
+    "files.watcherExclude": {
+      "**/target": true,
+      "**/.trunk/*out": true,
+      "**/.bloop": true,
+      "**/.metals": true,
+      "**/.ammonite": true
+    },
+    "files.exclude": {
+      "**/.trunk/*out": true
+    },
+
+    // "customizeUI.font.regular": "Hack Nerd Font",
+    // "customizeUI.font.monospace": "Hack Nerd Font Mono",
+
+    "editor.fontFamily": "Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 12,
+    "[Log]": {
+      "editor.fontFamily": "Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+      "editor.fontSize": 11
+    },
+
+    "explorer.openEditors.sortOrder": "alphabetical",
+    "explorer.openEditors.visible": 5,
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
+    },
+    "explorer.confirmDelete": false,
+    "workbench.editor.showTabs": false,
+    "workbench.preferredLightColorTheme": "Gruvbox Light Hard",
+    "workbench.preferredDarkColorTheme": "Gruvbox Dark Hard",
+    "workbench.tree.indent": 8,
+    "workbench.colorCustomizations": {
+      "tree.indentGuidesStroke": "#00ff00"
+    },
+    
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.rulers": [ 100 ],
+
+    "better-comments.tags": [
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "fixme",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        }
+    ],
+    "trunk.trunkGrayOutNonBlockingIssues": false,
+    "[scala]": {
+      "editor.defaultFormatter": "scalameta.metals"
+    },
+    "window.autoDetectColorScheme": true,
+    "metals.serverVersion": "1.1.0",
+    "window.restoreWindows": "none",
+    "security.workspace.trust.untrustedFiles": "open",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[dart]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnType": true,
+      "editor.rulers": [
+        80
+      ],
+      "editor.selectionHighlight": false,
+      "editor.suggest.snippetsPreventQuickSuggestions": false,
+      "editor.suggestSelection": "first",
+      "editor.tabCompletion": "onlySnippets",
+      "editor.wordBasedSuggestions": false
+    },
+    "gitlens.mode.active": "zen",
+    "git.allowForcePush": true,
+    "workbench.iconTheme": "simple-icons",
+    "simpleIcons.hideArrows": false,
+    "workbench.colorTheme": "Jetbrains Dark Theme",
+    "window.zoomLevel": -1,
+    "python.autoComplete.extraPaths": [
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.5-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.7-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.10-darwin-arm64",
+      "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.15-darwin-arm64"
+    ],
+}
