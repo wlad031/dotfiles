@@ -1,0 +1,111 @@
+[colors.bright]
+black = "#666666"
+blue = "#3b8eea"
+cyan = "#29b8db"
+green = "#23d18b"
+magenta = "#d670d6"
+red = "#f14c4c"
+white = "#e5e5e5"
+yellow = "#f5f543"
+
+[colors.cursor]
+cursor = "#cccccc"
+text = "#1d1f21"
+
+[colors.normal]
+black = "#000000"
+blue = "#2472c8"
+cyan = "#11a8cd"
+green = "#0dbc79"
+magenta = "#bc3fbc"
+red = "#cd3131"
+white = "#e5e5e5"
+yellow = "#e5e510"
+
+[colors.primary]
+background = "#1E1E1E"
+foreground = "#D4D4D4"
+
+[font]
+size = 12
+
+[font.bold]
+family = "Hack Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "Hack Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "Hack Nerd Font Mono"
+style = "Regular"
+
+[[keyboard.bindings]]
+chars = "\u0001c"
+key = "T"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0001x"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0001e"
+key = "E"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00011"
+key = "Key1"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00012"
+key = "Key2"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00013"
+key = "Key3"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00014"
+key = "Key4"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00015"
+key = "Key5"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00016"
+key = "Key6"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00017"
+key = "Key7"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00018"
+key = "Key8"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00019"
+key = "Key9"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0001d"
+key = "Q"
+mods = "Command"
+
+[window.padding]
+x = 5
+y = 0

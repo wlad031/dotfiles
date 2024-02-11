@@ -1,0 +1,73 @@
+#import:
+#  - /Users/vgerasimov/.config/alacritty/colors.yml
+
+key_bindings:
+  - { key: T, mods: Command, chars: "\x01c" }
+  - { key: W, mods: Command, chars: "\x01x" }
+  - { key: E, mods: Command, chars: "\x01e" }
+  - { key: Key1, mods: Command, chars: "\x011" }
+  - { key: Key2, mods: Command, chars: "\x012" }
+  - { key: Key3, mods: Command, chars: "\x013" }
+  - { key: Key4, mods: Command, chars: "\x014" }
+  - { key: Key5, mods: Command, chars: "\x015" }
+  - { key: Key6, mods: Command, chars: "\x016" }
+  - { key: Key7, mods: Command, chars: "\x017" }
+  - { key: Key8, mods: Command, chars: "\x018" }
+  - { key: Key9, mods: Command, chars: "\x019" }
+  - { key: Q, mods: Command, chars: "\x01d" }
+  # - { key: LBracket, mods: Command|Shift, chars: "\x01\x70" }
+  # - { key: RBracket, mods: Command|Shift, chars: "\x01\x6e" }
+
+window:
+  padding:
+    x: 5
+    y: 0
+
+font_families:
+  hack_nerd_font_mono: &hack_nerd_font_mono "Hack Nerd Font Mono"
+  pt_mono: &pt_mono "PT Mono"
+  fira_mono_for_powerline: &fira_mono_for_powerline "Fira Mono for Powerline"
+font_family: &font_family "Hack Nerd Font Mono"
+
+font:
+  size: 12
+
+  normal:
+    family: *font_family
+    style: Regular
+
+  bold:
+    family: *font_family
+    style: Bold
+
+  italic:
+    family: *font_family
+    style: Italic
+colors:
+  name: vscode (dark)
+  author: senpai-10
+  primary:
+    background: "#1E1E1E"
+    foreground: "#D4D4D4"
+  cursor:
+    text: "#1d1f21"
+    cursor: "#cccccc"
+  normal:
+    black: "#000000"
+    red: "#cd3131"
+    green: "#0dbc79"
+    yellow: "#e5e510"
+    blue: "#2472c8"
+    magenta: "#bc3fbc"
+    cyan: "#11a8cd"
+    white: "#e5e5e5"
+  bright:
+    black: "#666666"
+    red: "#f14c4c"
+    green: "#23d18b"
+    yellow: "#f5f543"
+    blue: "#3b8eea"
+    magenta: "#d670d6"
+    cyan: "#29b8db"
+    white: "#e5e5e5"
+theme: vscode.dark

@@ -1,0 +1,30 @@
+[user]
+	email = gerasimovvs@yahoo.com
+	name = Vladislav Gerasimov
+[core]
+    editor = "vim"
+    pager = delta
+	excludesfile = /Users/vgerasimov/.gitignore_global
+	autocrlf = input
+[push]
+	default = current
+[alias]
+	commend = commit --amend --no-edit
+	it = !git init && git commit -m 'Empty initialization commit' --allow-empty
+	lg = log --oneline
+	st = status --short --branch
+	co = checkout
+	cp = cherry-pick
+    rbm = rebase origin/master
+[delta]
+	side-by-side = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[init]
+	defaultBranch = master
+
+[pull]
+	rebase = true
