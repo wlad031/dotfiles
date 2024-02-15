@@ -147,8 +147,13 @@ else
     }
 
     default_tmux_session="main"
-    tmux_create_session_if_not_exists $default_tmux_session
-    tmux attach-session -t $default_tmux_session
+
+    if [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]
+    then 
+      ZSH_TMUX_AUTOSTART=true
+      tmux_create_session_if_not_exists $default_tmux_session
+      tmux attach-session -t $default_tmux_session
+    fi
 
     tmux_create_session_and_attach() {
         if ! [ -z "$1" ]; then 
