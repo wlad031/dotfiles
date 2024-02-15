@@ -206,8 +206,10 @@ then
 fi
 
 export LOGSEQ_DIR="$HOME/Logseq"
-export LEDGER_DIR="$LOGSEQ_DIR/ledger"
-export LEDGER_FILE="$LEDGER_DIR/main.hledger"
+export LEDGER_DIR="$HOME/ledger"
+export LEDGER_FILE="$LEDGER_DIR/2024.hledger"
+
+eval "$(zoxide init --cmd cd zsh)"
 
 # Uncomment for profiling this script
 # zprof

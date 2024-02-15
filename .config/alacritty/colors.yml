@@ -158,3 +158,4 @@ schemes:
       white:   '#f8f8f8'
 
 colors: *gruvbox_material_medium_dark
+

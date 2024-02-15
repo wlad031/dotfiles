@@ -1,3 +1,5 @@
 {
-  "enable-windows-desktop": true
+  "enable-linux-desktop": false,
+  "enable-macos-desktop": false,
+  "enable-windows-desktop": false
 }

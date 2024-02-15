@@ -42,6 +42,7 @@
     
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
+    "editor.lineHeight": 1.2,
     "editor.detectIndentation": false,
     "editor.rulers": [ 100 ],
 
@@ -88,7 +89,7 @@
     },
     "gitlens.mode.active": "zen",
     "git.allowForcePush": true,
-    "workbench.iconTheme": "simple-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "simpleIcons.hideArrows": false,
     "workbench.colorTheme": "Jetbrains Dark Theme",
     "window.zoomLevel": -1,
