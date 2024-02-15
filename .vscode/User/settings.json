@@ -91,7 +91,7 @@
     "git.allowForcePush": true,
     "workbench.iconTheme": "material-icon-theme",
     "simpleIcons.hideArrows": false,
-    "workbench.colorTheme": "Jetbrains Dark Theme",
+    "workbench.colorTheme": "Gitpod Dark",
     "window.zoomLevel": -1,
     "python.autoComplete.extraPaths": [
       "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.5-darwin-arm64",
