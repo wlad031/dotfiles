@@ -71,7 +71,7 @@
       "editor.defaultFormatter": "scalameta.metals"
     },
     "window.autoDetectColorScheme": true,
-    "metals.serverVersion": "1.1.0",
+    "metals.serverVersion": "1.2.2",
     "window.restoreWindows": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "diffEditor.ignoreTrimWhitespace": false,
