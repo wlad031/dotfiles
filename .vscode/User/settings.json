@@ -69,21 +69,7 @@
     "window.restoreWindows": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "diffEditor.ignoreTrimWhitespace": false,
-<<<<<<< HEAD
-=======
-    "[dart]": {
-      "editor.formatOnSave": true,
-      "editor.formatOnType": true,
-      "editor.rulers": [
-        80
-      ],
-      "editor.selectionHighlight": false,
-      "editor.suggest.snippetsPreventQuickSuggestions": false,
-      "editor.suggestSelection": "first",
-      "editor.tabCompletion": "onlySnippets",
-      "editor.wordBasedSuggestions": "off"
-    },
->>>>>>> e4a7d08 ([autocommit] 2024-02-28T22:01:00+0100)
+   
     "gitlens.mode.active": "zen",
     "git.allowForcePush": true,
     "workbench.iconTheme": "material-icon-theme",
