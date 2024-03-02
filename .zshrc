@@ -174,6 +174,14 @@ else
     eval "$(fnm env --use-on-cd)"
 fi
 
+if ! command -v pyenv &> /dev/null
+then
+else
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
 if ! command -v docker &> /dev/null
 then
 else
