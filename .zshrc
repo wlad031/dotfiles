@@ -1,9 +1,43 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
+# TODO: How about such logging, huh?
+
+if [ ! -z "$ZSHRC_LOG_INFO" ]; then
+else
+    ZSHRC_LOG_INFO=true
+fi
+if [ ! -z "$ZSHRC_LOG_ERROR" ]; then
+else
+    ZSHRC_LOG_ERROR=true
+fi
+if [ ! -z "$ZSHRC_LOG_DEBUG" ]; then
+else
+    ZSHRC_LOG_DEBUG=false
+fi
+
+
+log_info() {
+    if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
+        echo "[INFO ] $*"
+    fi
+}
+
+log_error() {
+    if "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
+        echo "[ERROR] $*"
+    fi
+}
+
+log_debug() {
+    if "$ZSHRC_LOG_DEBUG"; then
+        echo "[DEBUG] $*"
+    fi
+}
+
 renv() {
     file=$1
-    echo "Loading env file: $file"
+    log_debug "Loading env file: $file"
     export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
 }
 
@@ -20,6 +54,7 @@ export LC_ALL=en_US.UTF-8
 export SCRIPTS_DIR="$HOME/scripts"
 export EMACSD_DIR="$HOME/.emacs.d/"
 
+alias xx='exit'
 [ -f "$HOME/.secrets.sh" ] && source "$HOME/.secrets.sh"
 
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -36,7 +71,7 @@ export ZSH_THEME="robbyrussell"
 if [ -f "$ZSH/oh-my-zsh.sh" ]; then
     source $ZSH/oh-my-zsh.sh
 else
-    echo "[ERROR] Oh My Zsh isn't installed yet" 
+    log_error "Oh My Zsh isn't installed yet" 
 fi
 
 if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
@@ -56,7 +91,7 @@ if [ -f "$HOME/.antigen.zsh" ]; then
 #    antigen theme robbyrussell &> /dev/null
     antigen apply
 else
-    echo "[ERROR] Antigen isn't installed yet"
+    log_error "Antigen isn't installed yet"
 fi
 
 git_autocommit() {
@@ -132,7 +167,7 @@ else
     then
     else
         git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-        echo "Tmux plugin manager is installed"
+        log_info "Tmux plugin manager is installed"
     fi
 
     alias tls="tmux ls"
