@@ -23,6 +23,7 @@ brew "colima"
 brew "coreutils"
 brew "harfbuzz"
 brew "coursier"
+brew "ctop"
 brew "docker"
 brew "docker-compose", link: false
 brew "exa"
