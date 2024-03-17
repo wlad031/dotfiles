@@ -17,8 +17,6 @@
       "editor.fontFamily": "Inconsolata, Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
       "editor.fontSize": 11
     },
-
-    "explorer.openEditors.sortOrder": "alphabetical",
     "explorer.openEditors.visible": 5,
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
@@ -30,7 +28,6 @@
         "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
     },
     "explorer.confirmDelete": false,
-    "workbench.editor.showTabs": "single",
     "workbench.preferredLightColorTheme": "Gruvbox Light Hard",
     "workbench.preferredDarkColorTheme": "Gruvbox Dark Hard",
     "workbench.tree.indent": 8,
@@ -106,4 +103,8 @@
       "editor.tabCompletion": "onlySnippets",
       "editor.wordBasedSuggestions": "off"
     },
+    "explorer.openEditors.minVisible": 5,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.excludeDirty": true,
+    "workbench.editor.showTabs": "single",
 }
