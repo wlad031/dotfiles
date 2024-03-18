@@ -107,4 +107,5 @@
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.excludeDirty": true,
     "workbench.editor.showTabs": "single",
+    "redhat.telemetry.enabled": false,
 }
