@@ -205,12 +205,14 @@ fi
 
 if ! command -v fnm &> /dev/null
 then
+  log_warn "fnm (Node.js version manager) is not installed"
 else
     eval "$(fnm env --use-on-cd)"
 fi
 
 if ! command -v pyenv &> /dev/null
 then
+  log_warn "pyenv (Python version manager) is not installed"
 else
     export PYENV_ROOT="$HOME/.pyenv"
     [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -220,6 +222,7 @@ fi
 
 if ! command -v docker &> /dev/null
 then
+  log_warn "Docker is not installed"
 else
     function dock() {
       if [[ "$@" == "ps" ]]; then
@@ -252,6 +255,19 @@ then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$RVM_DIR/bin"
     eval "$(brew shellenv)"
+fi
+
+if ! command -v coursier &> /dev/null
+then
+  log_warn "Coursier is not installed"
+else 
+  COURSIER_DIR="$HOME/Library/Application Support/Coursier"
+  if [[ -d "$COURSIER_DIR" ]]
+  then 
+    export PATH="$PATH:$COURSIER_DIR/bin"
+  else
+    log_error "Coursier installed in an unknown directory"
+  fi
 fi
 
 export LOGSEQ_DIR="$HOME/Logseq"
