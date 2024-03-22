@@ -15,7 +15,14 @@ return {
     config = function()
       local lspconfig = require("mason-lspconfig")
       lspconfig.setup({
-        ensure_installed = { "lua_ls" }
+        ensure_installed = {
+          "lua_ls",
+          -- "google-java-format",
+          -- "java-debug-adapter",
+          -- "java-test",
+          "jdtls",
+          -- "vscode-java-decompiler"
+        }
       })
     end
   },
