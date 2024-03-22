@@ -51,7 +51,7 @@ telescope.setup {
 }
 
 require("catppuccin").setup()
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "catppuccin-mocha"
 
 local config = require("nvim-treesitter.configs")
 config.setup({
