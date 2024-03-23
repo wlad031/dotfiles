@@ -2,9 +2,6 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    setup = function()
-      require('lualine').setup()
-    end
   },
   {
     'AndreM222/copilot-lualine',
@@ -13,7 +10,7 @@ return {
       lualine.setup({
         options = {
             icons_enabled = true,
-            theme = cozynight,
+            theme = auto,
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
             disabled_filetypes = {},
