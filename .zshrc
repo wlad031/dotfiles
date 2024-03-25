@@ -1,6 +1,13 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # TODO: How about such logging, huh?
 
 if [ ! -z "$ZSHRC_LOG_INFO" ]; then
@@ -83,13 +90,14 @@ fi
 
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
-#    antigen use oh-my-zsh &> /dev/null
     antigen bundle git &> /dev/null
-    antigen bundle kazhala/dotbare &> /dev/null
     antigen bundle zsh-users/zsh-syntax-highlighting &> /dev/null
-#    antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
-#    antigen theme robbyrussell &> /dev/null
+    antigen theme romkatv/powerlevel10k
     antigen apply
+
+    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 else
     log_error "Antigen isn't installed yet"
 fi
@@ -278,4 +286,3 @@ eval "$(zoxide init zsh)"
 
 # Uncomment for profiling this script
 # zprof
-
