@@ -14,9 +14,9 @@ return {
       desc = "Open Neotree automatically",
       group = "neotree",
       callback = function()
-        if vim.fn.argc() == 0 then
-          vim.cmd "Neotree toggle"
-        end
+--        if vim.fn.argc() == 0 then
+--          vim.cmd "Neotree toggle"
+--        end
       end,
     })
     neotree = require("neo-tree")
