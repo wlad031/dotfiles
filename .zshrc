@@ -1,12 +1,65 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
+
+if [ ! -z "$TMUX_AUTO_ATTACH" ]; then
+else
+  TMUX_AUTO_ATTACH=false
+fi
+
+if ! command -v tmux &> /dev/null 
+#if [ -z "$TMUX" ]
+then
+else
+    TMUX_DIR="$HOME/.tmux"
+    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
+
+    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
+    then
+    else
+        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
+        log_info "Tmux plugin manager is installed"
+    fi
+
+    alias tls="tmux ls"
+
+    tmux_create_session_if_not_exists() {
+        SESSION=$1
+        tmux has-session -t $SESSION 2>/dev/null
+        if [ $? != 0 ]; then
+            tmux new-session -d -t $SESSION
+            tmux rename-window -t 1 main
+        fi
+    }
+
+    default_tmux_session="main"
+
+    if "$TMUX_AUTO_ATTACH"; then
+      if [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+        tmux_create_session_if_not_exists $default_tmux_session
+        tmux attach-session -t $default_tmux_session
+      fi
+    fi
+
+    tmux_create_session_and_attach() {
+        if ! [ -z "$1" ]; then 
+            SESSION=$1
+        else
+            SESSION=$default_tmux_session
+        fi
+        tmux_create_session_if_not_exists $SESSION
+        tmux attach-session -t $SESSION || tmux switch-client -t $SESSION
+    }
+
+    alias at=tmux_create_session_and_attach
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 
 # TODO: How about such logging, huh?
 
@@ -92,12 +145,12 @@ if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
     antigen bundle git &> /dev/null
     antigen bundle zsh-users/zsh-syntax-highlighting &> /dev/null
-    antigen theme romkatv/powerlevel10k
+    # antigen theme romkatv/powerlevel10k
     antigen apply
 
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-    typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+    #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    #typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 else
     log_error "Antigen isn't installed yet"
 fi
@@ -165,51 +218,6 @@ else
     alias cat="bat"
 fi
 
-if ! command -v tmux &> /dev/null 
-then
-else
-    TMUX_DIR="$HOME/.tmux"
-    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
-
-    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
-    then
-    else
-        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-        log_info "Tmux plugin manager is installed"
-    fi
-
-    alias tls="tmux ls"
-
-    tmux_create_session_if_not_exists() {
-        SESSION=$1
-        tmux has-session -t $SESSION 2>/dev/null
-        if [ $? != 0 ]; then
-            tmux new-session -d -t $SESSION
-            tmux rename-window -t 1 main
-        fi
-    }
-
-    default_tmux_session="main"
-
-    if [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]
-    then 
-      ZSH_TMUX_AUTOSTART=true
-      tmux_create_session_if_not_exists $default_tmux_session
-      tmux attach-session -t $default_tmux_session
-    fi
-
-    tmux_create_session_and_attach() {
-        if ! [ -z "$1" ]; then 
-            SESSION=$1
-        else
-            SESSION=$default_tmux_session
-        fi
-        tmux_create_session_if_not_exists $SESSION
-        tmux attach-session -t $SESSION || tmux switch-client -t $SESSION
-    }
-
-    alias at=tmux_create_session_and_attach
-fi
 
 if ! command -v fnm &> /dev/null
 then
@@ -276,6 +284,13 @@ else
   else
     log_error "Coursier installed in an unknown directory"
   fi
+fi
+
+if ! command -v thefuck &> /dev/null
+then
+  #eval $(thefuck --alias)
+else
+  log_debug "the fuck is not installed"
 fi
 
 export LOGSEQ_DIR="$HOME/Logseq"
