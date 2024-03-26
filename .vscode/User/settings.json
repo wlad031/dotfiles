@@ -69,9 +69,9 @@
    
     "gitlens.mode.active": "zen",
     "git.allowForcePush": true,
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "catppuccin-macchiato",
     "simpleIcons.hideArrows": false,
-    "workbench.colorTheme": "Gitpod Dark",
+    "workbench.colorTheme": "Catppuccin Macchiato",
     "python.autoComplete.extraPaths": [
       "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.5-darwin-arm64",
       "/Users/vgerasimov/.vscode-oss/extensions/continue.continue-0.6.7-darwin-arm64",
@@ -108,4 +108,5 @@
     "workbench.editor.limit.excludeDirty": true,
     "workbench.editor.showTabs": "single",
     "redhat.telemetry.enabled": false,
+    "editor.accessibilitySupport": "off",
 }

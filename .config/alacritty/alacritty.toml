@@ -117,3 +117,6 @@ mods = "Command"
 [window.padding]
 x = 5
 y = 0
+
+[window]
+opacity = 1.0
