@@ -172,8 +172,9 @@ gitacp() {
 bkp() {
     FILE=$1
     BKP="$FILE.bkp"
-    echo "Backup file $FILE to $BKP"
+    echo "Copying $FILE to $BKP"
     cp $FILE $BKP
+    echo "Backup file $FILE to $BKP"
 }
 
 alias ll="ls -la"
@@ -195,18 +196,21 @@ fi
 
 if ! command -v nvim &> /dev/null
 then
+  log_warn "Neovim is not installed"
 else
     alias vim="nvim"
 fi
 
 if ! command -v codium &> /dev/null
 then
+  log_warn "VSCodium is not installed"
 else
     alias code="codium"
 fi
 
 if ! command -v exa &> /dev/null
 then
+  log_warn "Exa is not installed"
 else
     alias ls="exa"
     alias tree="exa --tree"
@@ -214,6 +218,7 @@ fi
 
 if ! command -v bat &> /dev/null
 then
+  log_warn "Bat is not installed"
 else
     alias cat="bat"
 fi
@@ -288,9 +293,16 @@ fi
 
 if ! command -v thefuck &> /dev/null
 then
-  eval $(thefuck --alias)
-else
   log_debug "the fuck is not installed"
+else
+  eval $(thefuck --alias)
+fi
+
+if ! command -v lazygit &> /dev/null
+then
+  log_warn "Lazygit is not installed"
+else
+  alias lgit=lazygit
 fi
 
 export LOGSEQ_DIR="$HOME/Logseq"
