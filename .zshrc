@@ -288,7 +288,7 @@ fi
 
 if ! command -v thefuck &> /dev/null
 then
-  #eval $(thefuck --alias)
+  eval $(thefuck --alias)
 else
   log_debug "the fuck is not installed"
 fi
