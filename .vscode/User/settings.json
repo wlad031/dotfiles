@@ -10,7 +10,7 @@
       "**/.trunk/*out": true
     },
 
-    "editor.fontFamily": "Inconsolata, Hack Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "Hack Nerd Font, Inconsolata, Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
 
     "[Log]": {
