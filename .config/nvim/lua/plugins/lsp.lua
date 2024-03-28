@@ -79,67 +79,48 @@ return {
         },
       })
 
-      --     local opts = { buffer = ev.buf }
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>bb", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>bb", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set('n', '<leader>fc', function()
-        vim.lsp.buf.format { async = true }
-      end, {})
-      vim.keymap.set('n', '<C-p>', vim.lsp.buf.signature_help, {})
-      --      vim.keymap.set("n", "<leader>fc", vim.lsp.buf.formatting, {})
+      vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, {})
+      vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, {})
 
       local cmp = require("cmp")
+
+      local function cmp_confirm()
+        local only_explicitly_selected = false
+        cmp.mapping.confirm({ select = not only_explicitly_selected })
+      end
+
       cmp.setup({
         snippet = {
-          -- REQUIRED - you must specify a snippet engine
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-            -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+            vim.fn["vsnip#anonymous"](args.body)
           end,
         },
         window = {
-          -- completion = cmp.config.window.bordered(),
-          -- documentation = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         mapping = {
           ['<C-k>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end),
           ['<C-j>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          --['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          -- ["<Tab>"] = cmp.mapping(
-          --   function(fallback)
-          --     -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-          --     if cmp.visible() then
-          --       local entry = cmp.get_selected_entry()
-          --       if not entry then
-          --         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-          --       end
-          --       cmp.confirm()
-          --     else
-          --       fallback()
-          --     end
-          --   end
-          -- ),
+          ['<CR>'] = cmp_confirm(),
+          ['<Tab>'] = cmp_confirm(),
         },
-        sources = cmp.config.sources({
-          { name = 'copilot' },
-          { name = 'metals' },
-          { name = 'nvim_lsp' },
-          { name = 'vsnip' }, -- For vsnip users.
-          -- { name = 'luasnip' }, -- For luasnip users.
-          -- { name = 'ultisnips' }, -- For ultisnips users.
-          -- { name = 'snippy' }, -- For snippy users.
-        }, {
-          { name = 'buffer' },
-        })
+        sources = cmp.config.sources(
+          {
+            { name = 'copilot' },
+            { name = 'metals' },
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+          },
+          {
+            { name = 'buffer' },
+          })
       })
 
       -- Set configuration for specific filetype.
@@ -169,34 +150,6 @@ return {
         }),
         matching = { disallow_symbol_nonprefix_matching = false }
       })
-      --  cmp.setup({
-      --    sources = {
-      --      { name = "nvim_lsp" },
-      --      { name = "metals" },
-      --      { name = "copilot", group_index = 2 },
-      --    },
-      --    snippet = {
-      --      expand = function(args)
-      --      end,
-      --    },
-      --    mapping = cmp.mapping.preset.insert({
-      --      ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      --      ["<Tab>"] = function(fallback)
-      --        if cmp.visible() then
-      --          cmp.select_next_item()
-      --        else
-      --          fallback()
-      --        end
-      --      end,
-      --      ["<S-Tab>"] = function(fallback)
-      --        if cmp.visible() then
-      --          cmp.select_prev_item()
-      --        else
-      --          fallback()
-      --        end
-      --      end,
-      --    })
-      --  })
     end
   },
   {
