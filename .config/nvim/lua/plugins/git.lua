@@ -1,5 +1,5 @@
 return {
-  { "tpope/vim-fugitive" },
+  -- { "tpope/vim-fugitive" }, -- I don't thing I really need to add/commit/push/pull from inside vim
   {
     "lewis6991/gitsigns.nvim",
     config = function()
