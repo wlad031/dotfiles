@@ -1,3 +1,7 @@
+local function VimTestSbtTransform(cmd)
+  return "consoleProject;" + cmd
+end
+
 return {
   {
     "williamboman/mason.nvim",
@@ -188,5 +192,9 @@ return {
     vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>'),
     vim.keymap.set('n', '<leader>tl', ':TestLast<CR>'),
     vim.cmd("let test#strategy = 'vimux'"),
+    config = function()
+      vim.g['test#custom_transformations'] = {sbttest = VimTestSbtTransform}
+      vim.g['test#transformation'] = 'sbttest'
+    end
   }
 }
