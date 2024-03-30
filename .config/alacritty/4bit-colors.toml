@@ -1,0 +1,35 @@
+# --- ~/.config/alacritty/alacritty.yml ----------------------------------------
+# ------------------------------------------------------------------------------
+# --- generated with 4bit Terminal Color Scheme Designer -----------------------
+# ------------------------------------------------------------------------------
+# --- http://ciembor.github.com/4bit -------------------------------------------
+# ------------------------------------------------------------------------------
+
+[colors.primary]
+background= '0x000000'
+foreground= '0xdfdfdf'
+
+[colors.normal]
+black= '0x000000'
+red='0xbf4060'
+green= '0x60bf40'
+yellow= '0xbf9f40'
+blue= '0x4060bf'
+magenta= '0x9f40bf'
+cyan= '0x40bf9f'
+white= '0xdfdfdf'
+
+[colors.bright]
+black= '0x202020'
+red= '0xdf9faf'
+green= '0xafdf9f'
+yellow= '0xdfcf9f'
+blue= '0x9fafdf'
+magenta= '0xcf9fdf'
+cyan= '0x9fdfcf'
+white= '0xffffff'
+
+# ------------------------------------------------------------------------------
+# --- end of terminal colors section -------------------------------------------
+# ------------------------------------------------------------------------------
+
