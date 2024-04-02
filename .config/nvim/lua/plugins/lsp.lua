@@ -84,7 +84,8 @@ return {
       })
 
       vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
+      --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "<leader>cr", function() require('telescope.builtin').lsp_references() end, { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
       vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, {})
       vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, {})
@@ -96,6 +97,16 @@ return {
         cmp.mapping.confirm({ select = not only_explicitly_selected })
       end
 
+      local cmp_mapping = {
+        ['<C-k>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end),
+        ['<C-j>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp_confirm(),
+        ['<Tab>'] = cmp_confirm(),
+      }
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -106,15 +117,7 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
-        mapping = {
-          ['<C-k>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end),
-          ['<C-j>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end),
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp_confirm(),
-          ['<Tab>'] = cmp_confirm(),
-        },
+        mapping = cmp_mapping,
         sources = cmp.config.sources(
           {
             { name = 'copilot' },
@@ -127,16 +130,6 @@ return {
           })
       })
 
-      -- Set configuration for specific filetype.
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-        }, {
-          { name = 'buffer' },
-        })
-      })
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
@@ -144,14 +137,16 @@ return {
         }
       })
 
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline' }
-        }),
+        sources = cmp.config.sources(
+          {
+            { name = 'path' }
+          },
+          {
+            { name = 'cmdline' }
+          }),
         matching = { disallow_symbol_nonprefix_matching = false }
       })
     end
@@ -193,7 +188,7 @@ return {
     vim.keymap.set('n', '<leader>tl', ':TestLast<CR>'),
     vim.cmd("let test#strategy = 'vimux'"),
     config = function()
-      vim.g['test#custom_transformations'] = {sbttest = VimTestSbtTransform}
+      vim.g['test#custom_transformations'] = { sbttest = VimTestSbtTransform }
       vim.g['test#transformation'] = 'sbttest'
     end
   }
