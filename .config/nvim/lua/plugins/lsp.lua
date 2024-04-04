@@ -188,8 +188,8 @@ return {
     vim.keymap.set('n', '<leader>tl', ':TestLast<CR>'),
     vim.cmd("let test#strategy = 'vimux'"),
     config = function()
-      vim.g['test#custom_transformations'] = { sbttest = VimTestSbtTransform }
-      vim.g['test#transformation'] = 'sbttest'
+      -- vim.g['test#custom_transformations'] = { sbttest = VimTestSbtTransform }
+      -- vim.g['test#transformation'] = 'sbttest'
     end
   }
 }

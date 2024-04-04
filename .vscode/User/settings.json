@@ -108,5 +108,5 @@
     "workbench.editor.showTabs": "single",
     "redhat.telemetry.enabled": false,
     "editor.accessibilitySupport": "off",
-    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.colorTheme": "Gruvbox Dark Hard",
 }
