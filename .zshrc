@@ -258,6 +258,13 @@ else
         command docker "$@"
       fi
     }
+
+    if ! command -v lazydocker &> /dev/null
+    then
+      log_warn "Lazydocker is not installed"
+    else
+      alias ldocker=lazydocker
+    fi
 fi
 
 if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ]; 
