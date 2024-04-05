@@ -1,8 +1,4 @@
-local function VimTestSbtTransform(cmd)
-  return "consoleProject;" + cmd
-end
-
-return {
+local plugins = {
   {
     "williamboman/mason.nvim",
     lazy = false,
@@ -31,41 +27,6 @@ return {
     end
   },
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-    },
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    opts = {},
-    event = "VimEnter",
-    config = function()
-      vim.defer_fn(function()
-        require("copilot").setup()
-      end, 100)
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      "zbirenbaum/copilot.lua",
-      "hrsh7th/nvim-cmp"
-    },
-    config = function()
-      require("copilot_cmp").setup()
-    end
-  },
-  {
-    "hrsh7th/vim-vsnip",
-    setup = function()
-      require("vim-vsnip").setup()
-    end
-  },
-  {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
@@ -83,12 +44,13 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Go to definition" })
       --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>cr", function() require('telescope.builtin').lsp_references() end, { noremap = true, silent = true })
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, {})
-      vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, {})
+      vim.keymap.set("n", "<leader>cr", function() require('telescope.builtin').lsp_references() end,
+        { noremap = true, silent = true, desc = "Find references" })
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+      vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Format code" })
+      vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Signature help" })
 
       local cmp = require("cmp")
 
@@ -120,7 +82,7 @@ return {
         mapping = cmp_mapping,
         sources = cmp.config.sources(
           {
-            { name = 'copilot' },
+            --{ name = 'copilot' },
             { name = 'metals' },
             { name = 'nvim_lsp' },
             { name = 'vsnip' },
@@ -129,15 +91,12 @@ return {
             { name = 'buffer' },
           })
       })
-
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = 'buffer' }
         }
       })
-
-
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
@@ -152,33 +111,6 @@ return {
     end
   },
   {
-    "scalameta/nvim-metals",
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "j-hui/fidget.nvim",    opts = {} },
-    },
-    ft = { "scala", "sbt", "java" },
-    opts = function()
-      local metals_config = require("metals").bare_config()
-      metals_config.init_options.statusBarProvider = "on"
-      metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-      metals_config.on_attach = function(client, bufnr)
-      end
-
-      return metals_config
-    end,
-    config = function(self, metals_config)
-      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = self.ft,
-        callback = function()
-          require("metals").initialize_or_attach(metals_config)
-        end,
-        group = nvim_metals_group,
-      })
-    end
-  },
-  {
     "vim-test/vim-test",
     dependencies = {
       "preservim/vimux",
@@ -188,8 +120,8 @@ return {
     vim.keymap.set('n', '<leader>tl', ':TestLast<CR>'),
     vim.cmd("let test#strategy = 'vimux'"),
     config = function()
-      -- vim.g['test#custom_transformations'] = { sbttest = VimTestSbtTransform }
-      -- vim.g['test#transformation'] = 'sbttest'
     end
   }
 }
+
+return plugins
