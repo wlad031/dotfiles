@@ -126,31 +126,24 @@ export PATH="$HOME/.jetbrains:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="robbyrussell"
-if [ -f "$ZSH/oh-my-zsh.sh" ]; then
-    source $ZSH/oh-my-zsh.sh
-else
-    log_error "Oh My Zsh isn't installed yet" 
-fi
+# export ZSH="$HOME/.oh-my-zsh"
+# export ZSH_THEME="robbyrussell"
+# if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+#     source $ZSH/oh-my-zsh.sh
+# else
+#     log_error "Oh My Zsh isn't installed yet" 
+# fi
 
-if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
-    ps aux | grep "macos-theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
-    if [ $? -ne 0 ]; then
-        $SCRIPTS_DIR/macos-theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
-    fi
-fi
+# if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
+#     ps aux | grep "macos-theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
+#     if [ $? -ne 0 ]; then
+#         $SCRIPTS_DIR/macos-theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
+#     fi
+# fi
 
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
-    antigen bundle git &> /dev/null
-    antigen bundle zsh-users/zsh-syntax-highlighting &> /dev/null
-    # antigen theme romkatv/powerlevel10k
-    antigen apply
-
-    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-    #typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+    antigen init ~/.antigenrc
 else
     log_error "Antigen isn't installed yet"
 fi
