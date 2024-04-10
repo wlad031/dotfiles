@@ -1,9 +1,9 @@
 import = [
   #"~/.config/alacritty/catppuccin-latte.toml"
   #"~/.config/alacritty/catppuccin-frappe.toml"
-  "~/.config/alacritty/catppuccin-macchiato.toml"
+  #"~/.config/alacritty/catppuccin-macchiato.toml"
   #"~/.config/alacritty/catppuccin-mocha.toml"
-  #"~/.config/alacritty/4bit-colors.toml"
+  "~/.config/alacritty/4bit-colors.toml"
 ]
 
 [font]
@@ -14,8 +14,8 @@ italic = { family = "Hack Nerd Font", style = "Italic"  }
 
 [window]
 # It is just not pretty
-#opacity = 0.8
-#blur = true
+opacity = 0.75
+blur = true
 padding = { x = 5, y = 0 }
 
 [[keyboard.bindings]]

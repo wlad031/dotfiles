@@ -12,7 +12,7 @@ local catppuccin = {
   end
 }
 
-function lualine_copilot()
+local function lualine_copilot()
   return {
     'copilot',
     symbols = {
