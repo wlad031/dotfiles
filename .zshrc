@@ -1,65 +1,8 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
-
-if [ ! -z "$TMUX_AUTO_ATTACH" ]; then
-else
-  TMUX_AUTO_ATTACH=false
-fi
-
-if ! command -v tmux &> /dev/null 
-#if [ -z "$TMUX" ]
-then
-else
-    TMUX_DIR="$HOME/.tmux"
-    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
-
-    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
-    then
-    else
-        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-        log_info "Tmux plugin manager is installed"
-    fi
-
-    alias tls="tmux ls"
-
-    tmux_create_session_if_not_exists() {
-        SESSION=$1
-        tmux has-session -t $SESSION 2>/dev/null
-        if [ $? != 0 ]; then
-            tmux new-session -d -t $SESSION
-            tmux rename-window -t 1 main
-        fi
-    }
-
-    default_tmux_session="main"
-
-    if "$TMUX_AUTO_ATTACH"; then
-      if [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
-        tmux_create_session_if_not_exists $default_tmux_session
-        tmux attach-session -t $default_tmux_session
-      fi
-    fi
-
-    tmux_create_session_and_attach() {
-        if ! [ -z "$1" ]; then 
-            SESSION=$1
-        else
-            SESSION=$default_tmux_session
-        fi
-        tmux_create_session_if_not_exists $SESSION
-        tmux attach-session -t $SESSION || tmux switch-client -t $SESSION
-    }
-
-    alias at=tmux_create_session_and_attach
-fi
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
+###############################################################################
+# Logging
 
 # TODO: How about such logging, huh?
 
@@ -75,7 +18,6 @@ if [ ! -z "$ZSHRC_LOG_DEBUG" ]; then
 else
     ZSHRC_LOG_DEBUG=false
 fi
-
 
 log_info() {
     if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
@@ -94,6 +36,8 @@ log_debug() {
         echo "[DEBUG] $*"
     fi
 }
+
+###############################################################################
 
 renv() {
     file=$1
@@ -126,21 +70,6 @@ export PATH="$HOME/.jetbrains:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# export ZSH="$HOME/.oh-my-zsh"
-# export ZSH_THEME="robbyrussell"
-# if [ -f "$ZSH/oh-my-zsh.sh" ]; then
-#     source $ZSH/oh-my-zsh.sh
-# else
-#     log_error "Oh My Zsh isn't installed yet" 
-# fi
-
-# if [ -f "$SCRIPTS_DIR/macos-theme-observer.swift" ]; then
-#     ps aux | grep "macos-theme-observer.swift" | grep "alacritty-theme-changer.sh" | grep -v "grep" &> /dev/null
-#     if [ $? -ne 0 ]; then
-#         $SCRIPTS_DIR/macos-theme-observer.swift $SCRIPTS_DIR/alacritty-theme-changer.sh &>/dev/null & disown
-#     fi
-# fi
-
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
     antigen init ~/.antigenrc
@@ -148,17 +77,57 @@ else
     log_error "Antigen isn't installed yet"
 fi
 
-git_autocommit() {
-    git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
-}
 
-gitac() {
-    git add . && git_autocommit
-}
+###############################################################################
+# Tmux
 
-gitacp() {
-    gitac && git push
-}
+if [ ! -z "$TMUX_AUTO_ATTACH" ]; then
+else
+  TMUX_AUTO_ATTACH=false
+fi
+
+if ! command -v tmux &> /dev/null 
+then
+  log_warn "Tmux is not installed"
+else
+    TMUX_DIR="$HOME/.tmux"
+    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
+
+    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
+    then
+    else
+        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
+        log_info "Tmux plugin manager is installed"
+    fi
+
+    # Attaches tmux to the last session; creates a new session if none exists.
+    alias t='tmux attach || tmux new-session'
+    # Attaches tmux to a session (example: ta portal)
+    alias ta='tmux attach'
+    # Creates a new session
+    alias tn='tmux new-session'
+    # Lists all ongoing sessions
+    alias tls='tmux list-sessions'
+fi
+
+###############################################################################
+
+if ! command -v git &> /dev/null 
+then
+  log_warn "Git is not installed"
+else
+  git_autocommit() {
+      git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
+  }
+
+  gitac() {
+      git add . && git_autocommit
+  }
+
+  gitacp() {
+      gitac && git push
+  }
+fi
 
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
@@ -308,8 +277,6 @@ fi
 export LOGSEQ_DIR="$HOME/Logseq"
 export LEDGER_DIR="$HOME/ledger"
 export LEDGER_FILE="$LEDGER_DIR/2024.hledger"
-
-eval "$(zoxide init zsh)"
 
 # Uncomment for profiling this script
 # zprof
