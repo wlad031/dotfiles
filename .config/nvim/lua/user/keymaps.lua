@@ -21,6 +21,45 @@ function SetCommonMappings()
   vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
   vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
   vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+  local harpoon = require("harpoon")
+  vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)
+  vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end)
+  vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end)
+  vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end)
+  -- -- Toggle previous & next buffers stored within Harpoon list
+  -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+  -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+  -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2
+  vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end, { desc = "Append to harpoon" })
+  vim.keymap.set("n", "<leader>hh", function()
+      local conf = require("telescope.config").values
+      local harpoon_files = harpoon:list()
+      local file_paths = {}
+      for _, item in ipairs(harpoon_files.items) do
+        table.insert(file_paths, item.value)
+      end
+      require("telescope.pickers").new({}, {
+        prompt_title = "Harpoon",
+        finder = require("telescope.finders").new_table({
+          results = file_paths,
+        }),
+        previewer = conf.file_previewer({}),
+        sorter = conf.generic_sorter({}),
+      }):find()
+    end,
+    { desc = "Open harpoon window" })
+end
+
+function GetFlashKeys()
+  -- stylua: ignore
+  return {
+    { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+    { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+    { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+    { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+  }
 end
 
 function GetCmpMapping()

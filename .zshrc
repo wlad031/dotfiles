@@ -4,7 +4,7 @@
 ###############################################################################
 # Logging
 
-# TODO: How about such logging, huh?
+# TODO: Find some better way to do logging
 
 if [ ! -z "$ZSHRC_LOG_INFO" ]; then
 else
