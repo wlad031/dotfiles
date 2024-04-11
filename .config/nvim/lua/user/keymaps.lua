@@ -49,6 +49,8 @@ function SetCommonMappings()
       }):find()
     end,
     { desc = "Open harpoon window" })
+
+  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 end
 
 function GetFlashKeys()

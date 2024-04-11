@@ -1,4 +1,4 @@
-return {
+local neotree = {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   dependencies = {
@@ -20,3 +20,19 @@ return {
     })
   end,
 }
+
+local oil = {
+  'stevearc/oil.nvim',
+  opts = {},
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    require("oil").setup()
+  end
+}
+
+local plugins = {
+  neotree,
+  oil
+}
+
+return plugins

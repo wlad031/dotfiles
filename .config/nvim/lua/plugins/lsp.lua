@@ -7,7 +7,19 @@ local treesitter = {
     local config = require("nvim-treesitter.configs")
     config.setup({
       auto_install = true,
-      ensure_installed = { "lua", "java", "scala", "python", "bash", "markdown", "xml", "json", "yaml", "markdown_inline" },
+      ensure_installed = {
+        "lua",
+        "java",
+        "scala",
+        "python",
+        "bash",
+        "markdown",
+        "xml",
+        "json",
+        "yaml",
+        "markdown_inline",
+        "ledger"
+      },
       highlight = { enable = true },
       indent = { enable = true },
     })
@@ -78,6 +90,7 @@ local lspconfig = {
         {
           --{ name = 'copilot' },
           { name = 'metals' },
+          { name = "hledger" },
           { name = 'nvim_lsp' },
           { name = 'vsnip' },
         },
