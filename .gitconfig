@@ -4,14 +4,14 @@
 [core]
     editor = "vim"
     pager = delta
-	excludesfile = /Users/vgerasimov/.gitignore_global
+	excludesfile = "/Users/vgerasimov/.gitignore_global"
 	autocrlf = input
 [push]
 	default = current
 [alias]
 	commend = commit --amend --no-edit
 	it = !git init && git commit -m 'Empty initialization commit' --allow-empty
-	lg = log --oneline
+  lg = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	st = status --short --branch
 	co = checkout
 	cp = cherry-pick
@@ -25,6 +25,5 @@
 	required = true
 [init]
 	defaultBranch = master
-
 [pull]
 	rebase = true
