@@ -9,3 +9,4 @@ gradlew.bat
 gradle/wrapper/*
 *.env
 *.env.json
+__pycache__/
