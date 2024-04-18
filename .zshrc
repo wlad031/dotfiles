@@ -86,7 +86,7 @@ fi
 
 if ! command -v tmux &> /dev/null 
 then
-  log_warn "Tmux is not installed"
+  log_error "Tmux is not installed"
 else
     TMUX_DIR="$HOME/.tmux"
     TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
@@ -112,7 +112,7 @@ fi
 
 if ! command -v git &> /dev/null 
 then
-  log_warn "Git is not installed"
+  log_error "Git is not installed"
 else
   git_autocommit() {
       git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
@@ -156,21 +156,21 @@ fi
 
 if ! command -v nvim &> /dev/null
 then
-  log_warn "Neovim is not installed"
+  log_error "Neovim is not installed"
 else
     alias vim="nvim"
 fi
 
 if ! command -v codium &> /dev/null
 then
-  log_warn "VSCodium is not installed"
+  log_error "VSCodium is not installed"
 else
     alias code="codium"
 fi
 
 if ! command -v eza &> /dev/null
 then
-  log_warn "eza is not installed"
+  log_error "eza is not installed"
 else
     alias ls="eza"
     alias tree="eza --tree"
@@ -178,7 +178,7 @@ fi
 
 if ! command -v bat &> /dev/null
 then
-  log_warn "Bat is not installed"
+  log_error "Bat is not installed"
 else
     alias cat="bat"
 fi
@@ -186,14 +186,14 @@ fi
 
 if ! command -v fnm &> /dev/null
 then
-  log_warn "fnm (Node.js version manager) is not installed"
+  log_error "fnm (Node.js version manager) is not installed"
 else
     eval "$(fnm env --use-on-cd)"
 fi
 
 if ! command -v pyenv &> /dev/null
 then
-  log_warn "pyenv (Python version manager) is not installed"
+  log_error "pyenv (Python version manager) is not installed"
 else
     export PYENV_ROOT="$HOME/.pyenv"
     [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -203,7 +203,7 @@ fi
 
 if ! command -v docker &> /dev/null
 then
-  log_warn "Docker is not installed"
+  log_error "Docker is not installed"
 else
     function dock() {
       if [[ "$@" == "ps" ]]; then
@@ -221,7 +221,7 @@ else
 
     if ! command -v lazydocker &> /dev/null
     then
-      log_warn "Lazydocker is not installed"
+      log_error "Lazydocker is not installed"
     else
       alias ldocker=lazydocker
     fi
@@ -247,7 +247,7 @@ fi
 
 if ! command -v coursier &> /dev/null
 then
-  log_warn "Coursier is not installed"
+  log_error "Coursier is not installed"
 else 
   COURSIER_DIR="$HOME/Library/Application Support/Coursier"
   if [[ -d "$COURSIER_DIR" ]]
@@ -267,7 +267,7 @@ fi
 
 if ! command -v lazygit &> /dev/null
 then
-  log_warn "Lazygit is not installed"
+  log_error "Lazygit is not installed"
 else
   alias lgit=lazygit
 fi

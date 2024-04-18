@@ -16,7 +16,7 @@ italic = { family = "Hack Nerd Font", style = "Italic"  }
 # It is just not pretty
 opacity = 0.75
 blur = true
-padding = { x = 5, y = 0 }
+padding = { x = 10, y = 10 }
 decorations = "Buttonless"
 
 [[keyboard.bindings]]
