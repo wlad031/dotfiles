@@ -17,6 +17,7 @@ italic = { family = "Hack Nerd Font", style = "Italic"  }
 opacity = 0.75
 blur = true
 padding = { x = 5, y = 0 }
+decorations = "Buttonless"
 
 [[keyboard.bindings]]
 chars = "\u0001c"
