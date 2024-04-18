@@ -68,8 +68,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.jetbrains:$PATH"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 if [ -f "$HOME/.antigen.zsh" ]; then
     source ~/.antigen.zsh
     antigen init ~/.antigenrc
@@ -170,12 +168,12 @@ else
     alias code="codium"
 fi
 
-if ! command -v exa &> /dev/null
+if ! command -v eza &> /dev/null
 then
-  log_warn "Exa is not installed"
+  log_warn "eza is not installed"
 else
-    alias ls="exa"
-    alias tree="exa --tree"
+    alias ls="eza"
+    alias tree="eza --tree"
 fi
 
 if ! command -v bat &> /dev/null
@@ -277,6 +275,56 @@ fi
 export LOGSEQ_DIR="$HOME/Logseq"
 export LEDGER_DIR="$HOME/ledger"
 export LEDGER_FILE="$LEDGER_DIR/2024.hledger"
+
+###############################################################################
+# fzf
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
+
+# -- Use fd instead of fzf --
+
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo $'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
+  esac
+}
+
+#if [ -n "$TMUX" ]; then
+#   enable-fzf-tab
+#fi
+
+#zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+
+###############################################################################
 
 # Uncomment for profiling this script
 # zprof
