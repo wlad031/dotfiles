@@ -1,26 +1,28 @@
 function SetCommonMappings()
   --vim.keymap.set('n', '<C-d><C-d>', '"_dd')
-  vim.keymap.set('n', '<C-d>', '<C-d>zz')     -- Go down half a page and center page vertically
-  vim.keymap.set('n', '<C-u>', '<C-u>zz')     -- Go up half a page and center page vertically
-  vim.keymap.set('n', '<C-x><C-x>', ':x<CR>') -- Another way out
+  vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = "Go down half a page and center page vertically" })
+  vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
+  vim.keymap.set('n', '<C-x><C-x>', ':x<CR>', { desc = "Another way out" })
+  vim.keymap.set('n', '<leader>//', ":nohl<CR>", { desc = "Clear search highlights" })
 
-  vim.keymap.set('n', '<leader>tf', ':TestFile<CR>')
-  vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>')
-  vim.keymap.set('n', '<leader>tl', ':TestLast<CR>')
-
-  vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Go to definition" })
-  --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
-  vim.keymap.set("n", "<leader>cr", function() require('telescope.builtin').lsp_references() end,
-    { noremap = true, silent = true, desc = "Find references" })
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Format code" })
-  vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Signature help" })
+  vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { desc = "Test file" })
+  vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
+  vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { desc = "Test last" })
 
   local builtin = require("telescope.builtin")
-  vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-  vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-  vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-  vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+  vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
+  --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
+  vim.keymap.set("n", "<leader>cr", function() builtin.lsp_references() end,
+    { noremap = true, silent = true, desc = "Telescope: LSP references" })
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code actions" })
+  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format code" })
+  vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "LSP: Signature help" })
+
+  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope: Find files" })
+  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Telescope: Live grep" })
+  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope: Buffers" })
+  vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Telescope: Help tags" })
 
   local harpoon = require("harpoon")
   vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)
@@ -31,7 +33,7 @@ function SetCommonMappings()
   -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
   -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
   -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2
-  vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end, { desc = "Append to harpoon" })
+  vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end, { desc = "Harpoon: Append" })
   vim.keymap.set("n", "<leader>hh", function()
       local conf = require("telescope.config").values
       local harpoon_files = harpoon:list()
@@ -48,19 +50,19 @@ function SetCommonMappings()
         sorter = conf.generic_sorter({}),
       }):find()
     end,
-    { desc = "Open harpoon window" })
+    { desc = "Harpoon: Open window" })
 
-  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil: Open parent directory" })
 end
 
 function GetFlashKeys()
   -- stylua: ignore
   return {
-    { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-    { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-    { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-    { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash: Jump" },
+    { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash: Treesitter" },
+    { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Flash: Remote" },
+    { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Flash: Treesitter Search" },
+    { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Flash: Toggle Search" },
   }
 end
 
