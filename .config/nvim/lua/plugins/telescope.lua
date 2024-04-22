@@ -21,6 +21,7 @@ return {
             "node_modules",
             ".git",
             "target",
+            ".metals",
             -- "build",
           },
         },
