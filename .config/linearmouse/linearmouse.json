@@ -1,0 +1,68 @@
+{
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5",
+  "schemes" : [
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x4c",
+          "productName" : "Magic Mouse",
+          "productID" : "0x269",
+          "serialNumber" : "94-f6-d6-bb-bf-be"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productID" : "0xc542",
+          "productName" : "Wireless Receiver",
+          "category" : "mouse"
+        }
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            }
+          },
+          "horizontal" : {
+            "control" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "reverse" : {
+          "vertical" : true
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productName" : "G603",
+          "vendorID" : "0x46d",
+          "productID" : "0xb01c",
+          "serialNumber" : "CEF768E73B0A4F10",
+          "category" : "mouse"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 0.5063,
+        "disableAcceleration" : false
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        }
+      }
+    }
+  ]
+}
