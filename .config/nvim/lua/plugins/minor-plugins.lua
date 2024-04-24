@@ -29,11 +29,19 @@ local better_escape = {
   end,
 }
 
+local tint = {
+  "levouh/tint.nvim",
+  config = function()
+    require("tint").setup()
+  end
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
   mini_starter,
-  better_escape
+  better_escape,
+  tint
 }
 
 return plugins
