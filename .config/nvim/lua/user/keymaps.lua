@@ -76,14 +76,30 @@ function GetCmpMapping()
     cmp.mapping.confirm({ select = not only_explicitly_selected })
   end
 
+  local function idea_like_cmp_confirm()
+    -- If no completion is selected, insert the first one in the list.
+    -- If a completion is selected, insert this one.
+    cmp.mapping(function(fallback)
+      if cmp.visible() then
+        local entry = cmp.get_selected_entry()
+        if not entry then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        end
+        cmp.confirm()
+      else
+        fallback()
+      end
+    end, { "i", "s", "c", })
+  end
+
   return {
     ['<C-k>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end),
     ['<C-j>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp_confirm(),
-    ['<Tab>'] = cmp_confirm(),
+    ['<CR>'] = idea_like_cmp_confirm(),
+    ['<Tab>'] = idea_like_cmp_confirm(),
   }
 end
 
