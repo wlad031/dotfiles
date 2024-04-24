@@ -4,6 +4,8 @@ function SetCommonMappings()
   vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
   vim.keymap.set('n', '<C-x><C-x>', ':x<CR>', { desc = "Another way out" })
   vim.keymap.set('n', '<leader>//', ":nohl<CR>", { desc = "Clear search highlights" })
+  vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = "Split vertically" })
+  vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = "Split horizontally" })
 
   vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { desc = "Test file" })
   vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
