@@ -12,6 +12,13 @@ local catppuccin = {
   end
 }
 
+local tokyonight = {
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {},
+}
+
 local lualine = {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons', opt = false },
@@ -82,6 +89,7 @@ local plugins = {
   zenmode,
   catppuccin,
   lualine,
+  tokyonight,
   --copilot_lualine,
 }
 
