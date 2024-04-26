@@ -2,8 +2,8 @@
 	email = gerasimovvs@yahoo.com
 	name = Vladislav Gerasimov
 [core]
-    editor = "vim"
-    pager = delta
+  editor = "vim"
+  pager = delta
 	excludesfile = "/Users/vgerasimov/.gitignore_global"
 	autocrlf = input
 [push]
@@ -15,7 +15,7 @@
 	st = status --short --branch
 	co = checkout
 	cp = cherry-pick
-    rbm = rebase origin/master
+  rbm = rebase origin/master
 [delta]
 	side-by-side = true
 [filter "lfs"]
