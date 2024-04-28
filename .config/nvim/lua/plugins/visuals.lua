@@ -19,6 +19,22 @@ local tokyonight = {
   opts = {},
 }
 
+local cyberdream = {
+  "scottmckendry/cyberdream.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require("cyberdream").setup({
+      -- Recommended - see "Configuring" below for more config options
+      transparent = true,
+      italic_comments = true,
+      hide_fillchars = true,
+      borderless_telescope = true,
+      terminal_colors = true,
+    })
+  end,
+}
+
 local lualine = {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons', opt = false },
@@ -55,9 +71,11 @@ local lualine = {
       end
     end
 
+    local cyberdream = require("lualine.themes.cyberdream")
     lualine.setup({
       options = {
-        theme = 'auto',
+        --theme = 'auto',
+        theme = 'cyberdream',
         icons_enabled = true,
       },
       sections = {
@@ -90,6 +108,7 @@ local plugins = {
   catppuccin,
   lualine,
   tokyonight,
+  cyberdream,
   --copilot_lualine,
 }
 

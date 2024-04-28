@@ -1,15 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
 - /Users/vgerasimov/dotfiles
-- /Users/vgerasimov/Projects/myhub/myhub-ril
-- /Users/vgerasimov/Projects/sephora/order-experience-service-app
-- /Users/vgerasimov/Logseq
-- /Users/vgerasimov/Projects/common-scala
-- /Users/vgerasimov/Projects/md4s
 startuppopupversion: 5
 lastversion: 0.41.0
-customcommandshistory:
-- q
+customcommandshistory: []
 hidecommandlog: false
 ignorewhitespaceindiffview: false
 diffcontextsize: 3
