@@ -2,6 +2,10 @@ local zenmode = {
   "folke/zen-mode.nvim"
 }
 
+local gruvbox = {
+  "ellisonleao/gruvbox.nvim"
+}
+
 local catppuccin = {
   "catppuccin/nvim",
   lazy = false,
@@ -109,6 +113,7 @@ local plugins = {
   lualine,
   tokyonight,
   cyberdream,
+  gruvbox,
   --copilot_lualine,
 }
 

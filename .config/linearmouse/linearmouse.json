@@ -1,29 +1,28 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5",
   "schemes" : [
     {
-      "if" : {
-        "device" : {
-          "productName" : "Magic Mouse",
-          "serialNumber" : "94-f6-d6-bb-bf-be",
-          "productID" : "0x269",
-          "category" : "mouse",
-          "vendorID" : "0x4c"
-        }
-      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x4c",
+          "productName" : "Magic Mouse",
+          "serialNumber" : "94-f6-d6-bb-bf-be",
+          "category" : "mouse",
+          "productID" : "0x269"
         }
       }
     },
     {
       "if" : {
         "device" : {
-          "productName" : "Wireless Receiver",
-          "productID" : "0xc542",
+          "vendorID" : "0x46d",
           "category" : "mouse",
-          "vendorID" : "0x46d"
+          "productID" : "0xc542",
+          "productName" : "Wireless Receiver"
         }
       },
       "scrolling" : {
@@ -45,28 +44,54 @@
       }
     },
     {
-      "buttons" : {
-        "universalBackForward" : true
-      },
       "if" : {
         "device" : {
-          "productName" : "G603",
           "serialNumber" : "CEF768E73B0A4F10",
-          "productID" : "0xb01c",
+          "productName" : "G603",
           "category" : "mouse",
-          "vendorID" : "0x46d"
+          "vendorID" : "0x46d",
+          "productID" : "0xb01c"
         }
-      },
-      "pointer" : {
-        "acceleration" : 0.5063,
-        "speed" : 0.067,
-        "disableAcceleration" : false
       },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
         }
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      },
+      "pointer" : {
+        "disableAcceleration" : false,
+        "acceleration" : 0.5063,
+        "speed" : 0.067
+      }
+    },
+    {
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            }
+          }
+        },
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
+        }
+      },
+      "if" : {
+        "device" : {
+          "productName" : "USB Receiver",
+          "vendorID" : "0x46d",
+          "category" : "mouse",
+          "productID" : "0xc539"
+        }
       }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
 }

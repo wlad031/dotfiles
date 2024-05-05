@@ -4,7 +4,11 @@ import = [
   #"~/.config/alacritty/catppuccin-macchiato.toml"
   #"~/.config/alacritty/catppuccin-mocha.toml"
   #"~/.config/alacritty/4bit-colors.toml"
-  "~/.config/alacritty/tokyo-night.toml"
+  #"~/.config/alacritty/tokyo-night.toml"
+
+  # Collection of Alacritty color schemes
+  # https://github.com/alacritty/alacritty-theme
+  "~/dotfiles/.config/alacritty/themes/themes/gruvbox_material_medium_dark.toml"
 ]
 
 [font]
