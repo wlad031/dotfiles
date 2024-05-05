@@ -201,6 +201,24 @@ else
     export PIPX_DEFAULT_PYTHON="$PYENV_ROOT/versions/3.12.2/bin/python"
 fi
 
+###############################################################################
+# Colima
+
+if ! command -v colima &> /dev/null
+then
+  log_error "Colima is not installed"
+else
+  export COLIMA_DIR="$HOME/.colima"
+  # TODO: Actually, "./docker/" part is dependent on colima's VMs,
+  #  so, it might have sense to make it more generic.
+  export DOCKER_HOST="unix://$COLIMA_DIR/docker/docker.sock"
+fi
+
+###############################################################################
+
+###############################################################################
+# Docker
+
 if ! command -v docker &> /dev/null
 then
   log_error "Docker is not installed"
@@ -226,6 +244,8 @@ else
       alias ldocker=lazydocker
     fi
 fi
+
+###############################################################################
 
 if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ]; 
 then 
@@ -326,6 +346,18 @@ _fzf_comprun() {
 #fi
 
 #zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+
+###############################################################################
+
+###############################################################################
+# fastfetch
+
+if ! command -v fastfetch &> /dev/null
+then
+  log_debug "fastfetch is not installed"
+else
+  fastfetch
+fi
 
 ###############################################################################
 
