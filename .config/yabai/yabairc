@@ -44,6 +44,10 @@ yabai -m rule --add app="^Bitwarden$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
-yabai -m rule --add app="^Alacritty$" space=1 native-fullscreen=on
+#yabai -m rule --add app="^Alacritty$" space=1 native-fullscreen=on
+
+yabai -m rule --add app="^.*IDEA.*$" title="^Rename|Delete|Evaluate|Plugin Updates$" manage=off
+yabai -m rule --add app="^.*IDEA.*$" title="^.*Error.*$" manage=off
+yabai -m rule --add app="^.*IDEA.*$" title="^.*Commit.*$" manage=off
 
 echo "yabairc loaded"
