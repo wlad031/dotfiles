@@ -46,8 +46,8 @@ local mason_lspconfig = {
       ensure_installed = {
         "lua_ls",
         -- "google-java-format",
-        -- "java-debug-adapter",
-        -- "java-test",
+        "java-debug-adapter",
+        "java-test",
         "jdtls",
         -- "vscode-java-decompiler"
       }
@@ -142,8 +142,8 @@ local vim_test = {
   dependencies = {
     "preservim/vimux",
   },
-  vim.cmd("let test#strategy = 'vimux'"),
   config = function()
+    vim.cmd("let test#strategy = 'vimux'")
   end
 }
 
