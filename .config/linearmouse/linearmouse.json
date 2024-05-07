@@ -91,6 +91,28 @@
           "productID" : "0xc539"
         }
       }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productName" : "USB Receiver",
+          "productID" : "0xc539",
+          "category" : "mouse",
+          "vendorID" : "0x46d"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        },
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            }
+          }
+        }
+      }
     }
   ],
   "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
