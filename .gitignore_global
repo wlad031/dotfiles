@@ -3,6 +3,7 @@
 report.zip
 .idea/
 *IGNORED*
+*ignored*
 .gradle/
 gradlew
 gradlew.bat
