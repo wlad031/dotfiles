@@ -52,6 +52,7 @@ yabai -m config mouse_action2               resize
 # when window is dropped in center of another window, swap them (on edges it will split it)
 yabai -m mouse_drop_action swap
 
+yabai -m rule --add app="^Raycast$" title="^Raycast Settings$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^AppCleaner$" manage=off
