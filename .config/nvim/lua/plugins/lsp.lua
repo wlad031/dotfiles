@@ -46,8 +46,8 @@ local mason_lspconfig = {
       ensure_installed = {
         "lua_ls",
         -- "google-java-format",
-        "java-debug-adapter",
-        "java-test",
+        -- "java-debug-adapter",
+        --"java-test",
         "jdtls",
         -- "vscode-java-decompiler"
       }
