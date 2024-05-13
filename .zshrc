@@ -139,13 +139,15 @@ bkp() {
 
 alias ll="ls -la"
 
-GO_DIR="$HOME/.go"
-if [[ -d "$GO_DIR" ]]
-then
-    export GOROOT="$GO_DIR/current"
-    export GOPATH="$GO_DIR"
-    export PATH="$GOROOT:$PATH"
-fi
+export PATH="$HOME/go/bin:$PATH"
+
+#GO_DIR="$HOME/.go"
+#if [[ -d "$GO_DIR" ]]
+#then
+#    export GOROOT="$GO_DIR/current"
+#    export GOPATH="$GO_DIR"
+#    export PATH="$GOROOT:$PATH"
+#fi
 
 FLUTTER_DIR="$HOME/.flutter"
 if [[ -d "$FLUTTER_DIR" ]]
@@ -363,3 +365,7 @@ fi
 
 # Uncomment for profiling this script
 # zprof
+# g shell setup
+if [ -f "${HOME}/.g/env" ]; then
+    . "${HOME}/.g/env"
+fi
