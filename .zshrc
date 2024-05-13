@@ -213,7 +213,7 @@ else
   export COLIMA_DIR="$HOME/.colima"
   # TODO: Actually, "./docker/" part is dependent on colima's VMs,
   #  so, it might have sense to make it more generic.
-  export DOCKER_HOST="unix://$COLIMA_DIR/docker/docker.sock"
+  export DOCKER_HOST="unix://$COLIMA_DIR/default/docker.sock"
 fi
 
 ###############################################################################
