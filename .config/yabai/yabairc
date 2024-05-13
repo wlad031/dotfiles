@@ -4,6 +4,12 @@
 # yabai -m config layout float
 yabai -m config layout bsp
 
+yabai -m config top_padding     0
+yabai -m config bottom_padding  0
+yabai -m config left_padding    0
+yabai -m config right_padding   0
+yabai -m config window_gap      0
+
 # New window spawns to the right if vertical split, or bottom if horizontal split
 yabai -m config window_placement second_child
 
@@ -13,6 +19,7 @@ d1h=$(yabai -m query --displays --display 1 | jq ".frame.h")
 d1h=${d1h%.*}
 
 display_large_w="2500"
+display_small_w="1450"
 if [[ d1w -gt display_large_w ]]; then
   echo "yabai: Display 1: large: ${d1w}x${d1h}"
   yabai -m config top_padding    250
@@ -20,13 +27,11 @@ if [[ d1w -gt display_large_w ]]; then
   yabai -m config left_padding   250
   yabai -m config right_padding  250
   yabai -m config window_gap      20
+elif [[ d1w -lt display_small_w ]]; then
+  echo "yabai: Display 1: small: ${d1w}x${d1h}"
+  yabai -m config layout stack
 else
   echo "yabai: Display 1: normal: ${d1w}x${d1h}"
-  yabai -m config top_padding     0
-  yabai -m config bottom_padding  0
-  yabai -m config left_padding    0
-  yabai -m config right_padding   0
-  yabai -m config window_gap      0
 fi
 
 yabai -m config mouse_follows_focus         off
