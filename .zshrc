@@ -125,6 +125,17 @@ else
   gitacp() {
       gitac && git push
   }
+
+  if ! command -v devmoji &> /dev/null
+  then
+    log_debug "devmoji is not installed"
+  else
+    gitcoji() {
+      local msg
+      msg=$1
+      git commit -m "$(devmoji --commit -t "$msg")" 
+    }
+  fi
 fi
 
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
