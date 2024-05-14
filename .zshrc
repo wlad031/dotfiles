@@ -224,13 +224,16 @@ else
   export COLIMA_DIR="$HOME/.colima"
   # TODO: Actually, "./docker/" part is dependent on colima's VMs,
   #  so, it might have sense to make it more generic.
-  export DOCKER_HOST="unix://$COLIMA_DIR/default/docker.sock"
+  # export DOCKER_HOST="unix://$COLIMA_DIR/default/docker.sock"
 fi
 
 ###############################################################################
 
 ###############################################################################
 # Docker
+
+### Rancher Desktop
+export PATH="/Users/vgerasimov/.rd/bin:$PATH"
 
 if ! command -v docker &> /dev/null
 then
@@ -380,3 +383,4 @@ fi
 if [ -f "${HOME}/.g/env" ]; then
     . "${HOME}/.g/env"
 fi
+
