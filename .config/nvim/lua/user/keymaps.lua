@@ -35,6 +35,7 @@ function SetCommonMappings()
   -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
   -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
   -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2
+
   vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon: Add" })
   vim.keymap.set("n", "<leader>hh", function()
       local conf = require("telescope.config").values
@@ -55,6 +56,8 @@ function SetCommonMappings()
     { desc = "Harpoon: Open window" })
 
   vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil: Open parent directory" })
+
+  vim.keymap.set('n', '<leader>ce', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Diagnostics: Open float" })
 end
 
 function GetFlashKeys()

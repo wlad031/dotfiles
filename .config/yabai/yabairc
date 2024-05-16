@@ -79,6 +79,7 @@ yabai -m rule --add app="^.*IDEA.*$" title="^.*Data Sources and Drivers.*$" mana
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Error.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Commit.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Create.*$" manage=off
+yabai -m rule --add app="^.*IDEA.*$" title="^.*Modify.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Confirm Drop.*$" manage=off
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
