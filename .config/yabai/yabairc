@@ -60,7 +60,7 @@ yabai -m config mouse_action2               resize
 # when window is dropped in center of another window, swap them (on edges it will split it)
 #yabai -m mouse_drop_action swap
 
-yabai -m rule --add app="^Raycast$" title="^Raycast Settings$" manage=off
+#yabai -m rule --add app="^Raycast$" title="^Raycast Settings$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
@@ -81,5 +81,12 @@ yabai -m rule --add app="^.*IDEA.*$" title="^.*Commit.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Create.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Modify.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Confirm Drop.*$" manage=off
+
+yabai -m signal --add event=window_created action='
+  yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
+  yabai -m window $YABAI_WINDOW_ID --toggle float && \
+  yabai -m window $YABAI_WINDOW_ID --layer above && \
+  yabai -m window $YABAI_WINDOW_ID --grid 3:3:1:1:1:1
+'
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
