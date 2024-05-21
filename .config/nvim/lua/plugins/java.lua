@@ -8,12 +8,22 @@ local jdtls = {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "java",
         callback = function()
-          local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+          local jdtls = require('jdtls')
 
-          local workspace_dir = '~/.jdtls/workspaces/' .. project_name
+          local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+          local workspace_dir = vim.env.HOME .. '/.jdtls/workspaces/' .. project_name
+
+          local extendedClientCapabilities = jdtls.extendedClientCapabilities;
+          extendedClientCapabilities.onCompletionItemSelectedCommand = "editor.action.triggerParameterHints"
+
+          local on_attach = function(client, bufnr)
+            --vim.lsp.inlay_hint.get({ bufnr = bufnr })
+          end
 
           -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
           local config = {
+            on_attach = on_attach,
+
             -- The command that starts the language server
             -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
             cmd = {
@@ -66,6 +76,7 @@ local jdtls = {
             -- for a list of options
             settings = {
               java = {
+                inlayHints = { parameterNames = { enabled = "all" } },
               }
             },
 
@@ -77,12 +88,15 @@ local jdtls = {
             --
             -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
             init_options = {
+              extendedClientCapabilities = extendedClientCapabilities,
               bundles = {}
             },
           }
           -- This starts a new client & server,
           -- or attaches to an existing client & server depending on the `root_dir`.
           require('jdtls').start_or_attach(config)
+
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end
       })
     end
