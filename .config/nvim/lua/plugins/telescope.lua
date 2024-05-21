@@ -27,6 +27,7 @@ return {
         },
         pickers = {
           find_files = {
+            mappings = GetTelescopeMapping(),
             hidden = true
           },
           grep_string = {
@@ -35,7 +36,7 @@ return {
           live_grep = {
             additional_args = { "--hidden" }
           },
-        }
+        },
       })
       telescope.load_extension("ui-select")
     end
