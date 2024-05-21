@@ -6,3 +6,4 @@ vim.opt.number = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
 vim.opt.wrap = false
+vim.opt.colorcolumn = { "80", "100", "120" }
