@@ -81,6 +81,7 @@ yabai -m rule --add app="^.*IDEA.*$" title="^.*Commit.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Create.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Modify.*$" manage=off
 yabai -m rule --add app="^.*IDEA.*$" title="^.*Confirm Drop.*$" manage=off
+yabai -m rule --add app="^.*IDEA.*$" title="^.*Merge Revisions.*$" manage=off
 
 yabai -m signal --add event=window_created action='
   yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
