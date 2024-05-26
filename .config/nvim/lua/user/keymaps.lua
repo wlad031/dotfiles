@@ -11,20 +11,19 @@ function SetCommonMappings()
   vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
   vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { desc = "Test last" })
 
-  local builtin = require("telescope.builtin")
-
   vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
   --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
-  vim.keymap.set("n", "<leader>cr", function() builtin.lsp_references() end,
+  vim.keymap.set("n", "<leader>cr", function() require("telescope.builtin").lsp_references() end,
     { noremap = true, silent = true, desc = "Telescope: LSP references" })
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code actions" })
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format code" })
   vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "LSP: Signature help" })
 
-  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope: Find files" })
-  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Telescope: Live grep" })
-  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope: Buffers" })
-  vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Telescope: Help tags" })
+  vim.keymap.set('n', '<leader>ff', require("telescope.builtin").find_files, { desc = "Telescope: Find files" })
+  vim.keymap.set('n', '<leader>fg', require("telescope.builtin").live_grep, { desc = "Telescope: Live grep" })
+  vim.keymap.set('n', '<leader>fb', require("telescope.builtin").buffers, { desc = "Telescope: Buffers" })
+  vim.keymap.set('n', '<leader>fe', require("telescope.builtin").oldfiles, { desc = "Telescope: Old files" })
+  vim.keymap.set('n', '<leader>fh', require("telescope.builtin").help_tags, { desc = "Telescope: Help tags" })
 
   local harpoon = require("harpoon")
   vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)
@@ -62,11 +61,8 @@ end
 
 function GetTelescopeMapping()
   local actions = require('telescope.actions')
-  return {
+  local common = {
     i = {
-      -- map actions.which_key to <C-h> (default: <C-/>)
-      -- actions.which_key shows the mappings for your picker,
-      -- e.g. git_{create, delete, ...}_branch for the git_branches picker
       ["<C-h>"] = "which_key",
       ["<C-j>"] = {
         actions.move_selection_next,
@@ -79,6 +75,11 @@ function GetTelescopeMapping()
         opts = { nowait = true, silent = true }
       },
     }
+  }
+  return {
+    find_files = common,
+    live_grep = common,
+    lsp_references = common,
   }
 end
 

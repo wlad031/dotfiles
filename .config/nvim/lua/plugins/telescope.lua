@@ -10,6 +10,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local telescope = require("telescope")
+      local mappings = GetTelescopeMapping()
       telescope.setup({
         extensions = {
           ["ui-select"] = {
@@ -27,14 +28,18 @@ return {
         },
         pickers = {
           find_files = {
-            mappings = GetTelescopeMapping(),
+            mappings = mappings.find_files,
             hidden = true
           },
           grep_string = {
             additional_args = { "--hidden" }
           },
           live_grep = {
+            mappings = mappings.live_grep,
             additional_args = { "--hidden" }
+          },
+          lsp_references = {
+            mappings = mappings.lsp_references,
           },
         },
       })
