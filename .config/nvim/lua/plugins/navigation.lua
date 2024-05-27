@@ -25,23 +25,10 @@ local mini_bracketed = {
   end
 }
 
-local cutlass = {
-  "gbprod/cutlass.nvim",
-  opts = {
-    cut_key = 'x',
-    registers = {
-      select = "s",
-      delete = "d",
-      change = "c",
-    },
-  }
-}
-
 local plugins = {
   flash,
   harpoon,
   mini_bracketed,
-  cutlass
 }
 
 return plugins
