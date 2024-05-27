@@ -190,8 +190,9 @@ if ! command -v eza &> /dev/null
 then
   log_error "eza is not installed"
 else
-    alias ls="eza"
-    alias tree="eza --tree"
+  eza_default_args="--git --icons=auto"
+  alias ls="eza $eza_default_args"
+  alias tree="eza $eza_default_args --tree"
 fi
 
 if ! command -v bat &> /dev/null
@@ -337,13 +338,19 @@ then
     eval "$(brew shellenv)"
 fi
 
+# TODO: What is that?
+# g shell setup
+if [ -f "${HOME}/.g/env" ]; then
+    . "${HOME}/.g/env"
+fi
+
 if ! command -v coursier &> /dev/null
 then
   log_error "Coursier is not installed"
-else 
+else
   COURSIER_DIR="$HOME/Library/Application Support/Coursier"
   if [[ -d "$COURSIER_DIR" ]]
-  then 
+  then
     export PATH="$PATH:$COURSIER_DIR/bin"
   else
     log_error "Coursier installed in an unknown directory"
@@ -433,14 +440,11 @@ fi
 
 ###############################################################################
 
+###############################################################################
+# Starship
+eval "$(starship init zsh)"
+###############################################################################
+
 # Uncomment for profiling this script
 # zprof
-# g shell setup
-if [ -f "${HOME}/.g/env" ]; then
-    . "${HOME}/.g/env"
-fi
 
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/vgerasimov/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
