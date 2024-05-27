@@ -1,3 +1,5 @@
+require "user.keymaps"
+
 local number_toggle = {
   "sitiom/nvim-numbertoggle"
 }
@@ -38,13 +40,6 @@ local better_escape = {
   end,
 }
 
-local tint = {
-  "levouh/tint.nvim",
-  config = function()
-    require("tint").setup()
-  end
-}
-
 local indent_blankline = {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
@@ -77,13 +72,33 @@ local indent_blankline = {
   end
 }
 
+-- TODO: Remap 's' because it is bound to Flash plugin
+local mini_surround = {
+  'echasnovski/mini.surround',
+  version = '*',
+  config = function()
+    require('mini.surround').setup({
+      mappings = GetMiniSurroundMappings()
+    })
+  end
+}
+
+local mini_trailspace = {
+  'echasnovski/mini.trailspace',
+  version = false,
+  config = function()
+    require('mini.trailspace').setup({})
+  end
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
   mini_starter,
   better_escape,
-  tint,
-  indent_blankline
+  indent_blankline,
+  mini_surround,
+  mini_trailspace
 }
 
 return plugins

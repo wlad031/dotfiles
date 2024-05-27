@@ -107,6 +107,13 @@ local copilot_lualine = {
   dependencies = { 'nvim-lualine/lualine.nvim', opt = false }
 }
 
+local tint = {
+  "levouh/tint.nvim",
+  config = function()
+    require("tint").setup()
+  end
+}
+
 local plugins = {
   zenmode,
   catppuccin,
@@ -114,6 +121,7 @@ local plugins = {
   tokyonight,
   cyberdream,
   gruvbox,
+  tint
   --copilot_lualine,
 }
 

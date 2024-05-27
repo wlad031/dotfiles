@@ -16,33 +16,32 @@ local harpoon = {
   end
 }
 
--- https://github.com/tris203/precognition.nvim
--- 💭👀precognition.nvim - Precognition uses virtual text and gutter signs to show available motions.
-local precognition = {
-  "tris203/precognition.nvim",
-  config = {
-    -- startVisible = true,
-    -- hints = {
-    --     ["^"] = { text = "^", prio = 1 },
-    --     ["$"] = { text = "$", prio = 1 },
-    --     ["w"] = { text = "w", prio = 10 },
-    --     ["b"] = { text = "b", prio = 10 },
-    --     ["e"] = { text = "e", prio = 10 },
-    -- },
-    -- gutterHints = {
-    --     --prio is not currentlt used for gutter hints
-    --     ["G"] = { text = "G", prio = 1 },
-    --     ["gg"] = { text = "gg", prio = 1 },
-    --     ["{"] = { text = "{", prio = 1 },
-    --     ["}"] = { text = "}", prio = 1 },
-    -- },
-  },
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md#features
+local mini_bracketed = {
+  'echasnovski/mini.bracketed',
+  version = false,
+  config = function()
+    require('mini.bracketed').setup()
+  end
+}
+
+local cutlass = {
+  "gbprod/cutlass.nvim",
+  opts = {
+    cut_key = 'x',
+    registers = {
+      select = "s",
+      delete = "d",
+      change = "c",
+    },
+  }
 }
 
 local plugins = {
   flash,
   harpoon,
-  --precognition
+  mini_bracketed,
+  cutlass
 }
 
 return plugins
