@@ -76,6 +76,15 @@ local lualine = {
     end
 
     local cyberdream = require("lualine.themes.cyberdream")
+
+    local nvim_remote = {
+      function()
+        return vim.g.remote_neovim_host and ("Remote: %s"):format(vim.uv.os_gethostname()) or ""
+      end,
+      padding = { right = 1, left = 1 },
+      separator = { left = "", right = "" },
+    }
+
     lualine.setup({
       options = {
         --theme = 'auto',
@@ -84,7 +93,7 @@ local lualine = {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
+        lualine_b = { 'branch', nvim_remote },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
