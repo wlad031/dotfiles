@@ -54,7 +54,7 @@ style = "blue bold"
 only_with_files = true
 detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
 detect_folders = []
-disabled = false
+disabled = true
 
 [gcloud]
 disabled = true
@@ -64,18 +64,23 @@ symbol = " "
 
 [golang]
 symbol = " "
+disabled = true
 
 [hg_branch]
 symbol = " "
+disabled = true
 
 [java]
 symbol = " "
+disabled = true
 
 [memory_usage]
 symbol = " "
+disabled = true
 
 [package]
 symbol = " "
+disabled = true
 
 [python]
 symbol = " "
@@ -86,6 +91,7 @@ pyenv_prefix = "venv "
 python_binary = ["./venv/bin/python", "python", "python3", "python2"]
 detect_extensions = ["py"]
 version_format = "v${raw}"
+disabled = true
 
 [ruby]
 symbol = " "
@@ -93,17 +99,22 @@ disabled = true
 
 [rust]
 symbol = " "
+disabled = true
 
 [scala]
 symbol = " "
+disabled = true
 
 [shlvl]
 symbol = " "
+disabled = true
 
 [swift]
 symbol = "ﯣ "
+disabled = true
 
 [nodejs]
 format = "via [ Node.js $version](bold green) "
 detect_files = ["package.json", ".node-version"]
 detect_folders = ["node_modules"]
+disabled = true
