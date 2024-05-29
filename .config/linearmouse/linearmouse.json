@@ -1,34 +1,31 @@
 {
   "schemes" : [
     {
+      "if" : {
+        "device" : {
+          "productName" : "Magic Mouse",
+          "serialNumber" : "94-f6-d6-bb-bf-be",
+          "vendorID" : "0x4c",
+          "productID" : "0x269",
+          "category" : "mouse"
+        }
+      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
-        }
-      },
-      "if" : {
-        "device" : {
-          "vendorID" : "0x4c",
-          "productName" : "Magic Mouse",
-          "serialNumber" : "94-f6-d6-bb-bf-be",
-          "category" : "mouse",
-          "productID" : "0x269"
         }
       }
     },
     {
       "if" : {
         "device" : {
-          "vendorID" : "0x46d",
           "category" : "mouse",
+          "productName" : "Wireless Receiver",
           "productID" : "0xc542",
-          "productName" : "Wireless Receiver"
+          "vendorID" : "0x46d"
         }
       },
       "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
         "modifiers" : {
           "horizontal" : {
             "control" : {
@@ -36,23 +33,23 @@
             }
           },
           "vertical" : {
+            "command" : {
+              "type" : "zoom"
+            },
             "control" : {
               "type" : "alterOrientation"
             }
           }
+        },
+        "reverse" : {
+          "vertical" : true
+        },
+        "acceleration" : {
+          "vertical" : 1
         }
       }
     },
     {
-      "if" : {
-        "device" : {
-          "serialNumber" : "CEF768E73B0A4F10",
-          "productName" : "G603",
-          "category" : "mouse",
-          "vendorID" : "0x46d",
-          "productID" : "0xb01c"
-        }
-      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
@@ -65,12 +62,35 @@
         "disableAcceleration" : false,
         "acceleration" : 0.5063,
         "speed" : 0.067
+      },
+      "if" : {
+        "device" : {
+          "serialNumber" : "CEF768E73B0A4F10",
+          "category" : "mouse",
+          "productName" : "G603",
+          "vendorID" : "0x46d",
+          "productID" : "0xb01c"
+        }
       }
     },
     {
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productName" : "USB Receiver",
+          "productID" : "0xc539",
+          "category" : "mouse"
+        }
+      },
       "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        },
         "modifiers" : {
           "vertical" : {
+            "command" : {
+              "type" : "zoom"
+            },
             "control" : {
               "type" : "alterOrientation"
             }
@@ -78,39 +98,6 @@
         },
         "acceleration" : {
           "vertical" : 1
-        },
-        "reverse" : {
-          "vertical" : true
-        }
-      },
-      "if" : {
-        "device" : {
-          "productName" : "USB Receiver",
-          "vendorID" : "0x46d",
-          "category" : "mouse",
-          "productID" : "0xc539"
-        }
-      }
-    },
-    {
-      "if" : {
-        "device" : {
-          "productName" : "USB Receiver",
-          "productID" : "0xc539",
-          "category" : "mouse",
-          "vendorID" : "0x46d"
-        }
-      },
-      "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
-        "modifiers" : {
-          "vertical" : {
-            "control" : {
-              "type" : "alterOrientation"
-            }
-          }
         }
       }
     }
