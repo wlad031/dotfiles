@@ -13,6 +13,8 @@ local jdtls = {
           local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
           local workspace_dir = vim.env.HOME .. '/.jdtls/workspaces/' .. project_name
 
+          local lombok_path = vim.env.HOME .. '/.lib/lombok.jar'
+
           local extendedClientCapabilities = jdtls.extendedClientCapabilities;
           extendedClientCapabilities.onCompletionItemSelectedCommand = "editor.action.triggerParameterHints"
 
@@ -38,6 +40,7 @@ local jdtls = {
               '-Dlog.protocol=true',
               '-Dlog.level=ALL',
               '-Xmx1g',
+              '-javaagent:' .. lombok_path,
               '--add-modules=ALL-SYSTEM',
               '--add-opens', 'java.base/java.util=ALL-UNNAMED',
               '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
