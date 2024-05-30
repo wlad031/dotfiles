@@ -72,16 +72,35 @@ yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
 #yabai -m rule --add app="^Alacritty$" space=1 native-fullscreen=on
 
-yabai -m rule --add app="^.*IDEA.*$" title="^Settings|Project Structure|Rename|Delete|Evaluate|Plugin Updates$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^Run/Debug Configurations|Environment Variables$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Select Methods to Implement.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Data Sources and Drivers.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Error.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Commit.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Create.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Modify.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Confirm Drop.*$" manage=off
-yabai -m rule --add app="^.*IDEA.*$" title="^.*Merge Revisions.*$" manage=off
+idea_windows=(
+  "Settings"
+  "Project Structure"
+  ".*Rename.*"
+  "Delete"
+  "Evaluate"
+  "Plugin Updates"
+  "Run/Debug Configurations"
+  "Environment Variables"
+  "Select Methods to Implement"
+  "Data Sources and Drivers"
+  "Error"
+  "Commit"
+  "Create"
+  "Modify"
+  "Confirm Drop"
+  "Merge Revisions.*"
+  "Introduce Variable"
+  "Conflicts Detected.*"
+  ".*Choose.*"
+  ".*Git.*"
+  ".*Configure.*"
+  "Move"
+)
+
+for title in "${idea_windows[@]}"
+do
+  yabai -m rule --add app="^.*IDEA.*$" title="^$title$" manage=off
+done
 
 yabai -m signal --add event=window_created action='
   yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
@@ -91,3 +110,4 @@ yabai -m signal --add event=window_created action='
 '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
+
