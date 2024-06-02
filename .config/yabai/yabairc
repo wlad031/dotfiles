@@ -84,7 +84,7 @@ idea_windows=(
   "Select Methods to Implement"
   "Data Sources and Drivers"
   "Error"
-  "Commit"
+  ".*Commit.*"
   "Create"
   "Modify"
   "Confirm Drop"
@@ -94,7 +94,11 @@ idea_windows=(
   ".*Choose.*"
   ".*Git.*"
   ".*Configure.*"
-  "Move"
+  ".*Move.*"
+  ".*Copy.*"
+  "Push Commits.*"
+  ".*Data Sources.*"
+  "Create New Profile"
 )
 
 for title in "${idea_windows[@]}"
@@ -102,12 +106,17 @@ do
   yabai -m rule --add app="^.*IDEA.*$" title="^$title$" manage=off
 done
 
+# https://github.com/koekeishiya/yabai/issues/1317
 yabai -m signal --add event=window_created action='
-  yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
-  yabai -m window $YABAI_WINDOW_ID --toggle float && \
-  yabai -m window $YABAI_WINDOW_ID --layer above && \
-  yabai -m window $YABAI_WINDOW_ID --grid 3:3:1:1:1:1
+  yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" || \
+  yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2
 '
+# yabai -m signal --add event=window_created action='
+#   yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
+#   yabai -m window $YABAI_WINDOW_ID --toggle float && \
+#   yabai -m window $YABAI_WINDOW_ID --layer above && \
+#   yabai -m window $YABAI_WINDOW_ID --grid 3:3:1:1:1:1
+# '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
 
