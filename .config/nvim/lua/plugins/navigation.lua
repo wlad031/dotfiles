@@ -25,10 +25,29 @@ local mini_bracketed = {
   end
 }
 
+local mini_ai = {
+  'echasnovski/mini.ai',
+  version = '*',
+  config = function()
+    require('mini.ai').setup()
+  end
+}
+
+local mini_move = {
+  'echasnovski/mini.move',
+  version = '*',
+  config = function()
+    -- TODO: Setup keymaps for mini.move
+    require('mini.move').setup()
+  end
+}
+
 local plugins = {
   flash,
   harpoon,
   mini_bracketed,
+  mini_ai,
+  mini_move
 }
 
 return plugins

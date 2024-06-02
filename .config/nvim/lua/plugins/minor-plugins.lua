@@ -91,6 +91,14 @@ local mini_trailspace = {
   end
 }
 
+local mini_pairs = {
+  'echasnovski/mini.pairs',
+  version = '*',
+  config  = function()
+    require('mini.pairs').setup()
+  end
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
@@ -98,7 +106,8 @@ local plugins = {
   better_escape,
   indent_blankline,
   mini_surround,
-  mini_trailspace
+  mini_trailspace,
+  mini_pairs
 }
 
 return plugins
