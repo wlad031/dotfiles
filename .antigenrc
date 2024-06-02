@@ -1,7 +1,10 @@
-  antigen use oh-my-zsh
-  antigen bundle git # &> /dev/null
-  antigen bundle agkozak/zsh-z # &> /dev/null
-  antigen bundle zsh-users/zsh-syntax-highlighting # &> /dev/null
-  antigen bundle Aloxaf/fzf-tab
-  antigen theme clean # &> /dev/null
-  antigen apply
+antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+  git
+  Aloxaf/fzf-tab
+  zsh-users/zsh-syntax-highlighting
+EOBUNDLES
+
+antigen theme clean
+antigen apply
