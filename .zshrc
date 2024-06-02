@@ -80,6 +80,14 @@ else
     log_error "Antigen isn't installed yet"
 fi
 
+function sesh_connect_i() {
+  # Prepend "info" to the command line and run it.
+  BUFFER="sesh connect $(sesh list | fzf) $BUFFER"
+  zle accept-line
+}
+# Define a widget called "run_info", mapped to our function above.
+zle -N sesh_connect_i
+bindkey "^f" sesh_connect_i
 
 ###############################################################################
 # Tmux
@@ -437,7 +445,11 @@ then
 else
   fastfetch
 fi
+###############################################################################
 
+###############################################################################
+# zoxide
+eval "$(zoxide init zsh)"
 ###############################################################################
 
 ###############################################################################
