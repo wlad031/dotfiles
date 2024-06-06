@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
 
+# TODO:Implement this idea
+# - first space is always main
+# - space created, destroyed, etc -> run script
+# - space 2 -> terminal
+# - space 3 -> idea
+# paddings per displays
+
 yabai -m space 1 --label main1
 yabai -m space 2 --label idea
 yabai -m space 6 --label terminal
@@ -113,27 +120,14 @@ do
   yabai -m rule --add app="^.*IDEA.*$" title="^$title$" manage=off
 done
 
-yabai -m signal --add event=window_created action='
-  yabai -m query --windows --window $yabai_window_id | jq -er ".\"app\" == \"Alacritty\"" && \
-  yabai -m window $yabai_window_id --space terminal
-'
-
-yabai -m signal --add event=window_created action='
-  yabai -m query --windows --window $yabai_window_id | jq -er ".\"app\" == \"IntelliJ IDEA\"" && \
-  yabai -m window $yabai_window_id --space idea
-'
+yabai -m rule --add app="^.*IDEA.*$" --space idea
+yabai -m rule --add app="^.*Alacritty.*$" --space terminal
 
 # https://github.com/koekeishiya/yabai/issues/1317
 yabai -m signal --add event=window_created action='
   yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" && \
   yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2
 '
-# yabai -m signal --add event=window_created action='
-#   yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || \
-#   yabai -m window $YABAI_WINDOW_ID --toggle float && \
-#   yabai -m window $YABAI_WINDOW_ID --layer above && \
-#   yabai -m window $YABAI_WINDOW_ID --grid 3:3:1:1:1:1
-# '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
 
