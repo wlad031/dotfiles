@@ -102,7 +102,7 @@ local mini_pairs = {
 local plugins = {
   number_toggle,
   todo_comments,
-  mini_starter,
+  -- mini_starter,
   better_escape,
   indent_blankline,
   mini_surround,

@@ -261,7 +261,7 @@ local plugins = {
   cyberdream,
   gruvbox,
   tint,
-  noice,
+  -- noice, -- it is fucking causing that cursor blinks when there is message
   edgy
   -- mini_animate
   --copilot_lualine,
