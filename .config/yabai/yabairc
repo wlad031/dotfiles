@@ -125,8 +125,9 @@ yabai -m rule --add app="^.*Alacritty.*$" --space terminal
 
 # https://github.com/koekeishiya/yabai/issues/1317
 yabai -m signal --add event=window_created action='
-  yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" && \
-  yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2
+  yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" || \
+  yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2 || \
+  terminal-notifier -title "yabai" -subtitle "$yabai_window_id" -message "No resizable window"
 '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
