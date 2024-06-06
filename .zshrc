@@ -80,70 +80,85 @@ else
     log_error "Antigen isn't installed yet"
 fi
 
-# TODO: Move it to better place
-function sesh_connect() {
-  sesh connect \"$(
-    sesh list | fzf-tmux -p 55%,60% \
-      --no-sort --border-label ' sesh ' --prompt '⚡  ' \
-      --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-      --bind 'tab:down,btab:up' \
-      --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
-      --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
-      --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
-      --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
-      --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-      --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
-  )
-}
-function sesh_connect_i() {
-  # Prepend "info" to the command line and run it.
-  BUFFER="sesh_connect $BUFFER"
-  zle accept-line
-}
-# Define a widget called "run_info", mapped to our function above.
-zle -N sesh_connect_i
-bindkey "^f" sesh_connect_i
-
 ###############################################################################
 # Tmux
-
+is_tmux_installed=false
 if [ ! -z "$TMUX_AUTO_ATTACH" ]; then
 else
   TMUX_AUTO_ATTACH=false
 fi
 
-if ! command -v tmux &> /dev/null 
+if ! command -v tmux &> /dev/null
 then
   log_error "Tmux is not installed"
+  is_tmux_installed=false
 else
-    TMUX_DIR="$HOME/.tmux"
-    TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
+  is_tmux_installed=true
+  TMUX_DIR="$HOME/.tmux"
+  TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
 
-    if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]] 
-    then
-    else
-        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-        log_info "Tmux plugin manager is installed"
-    fi
+  if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]]
+  then
+  else
+    git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
+    log_info "Tmux plugin manager is installed"
+  fi
 
-    # Attaches tmux to the last session; creates a new session if none exists.
-    alias t='tmux attach || tmux new-session'
-    # Attaches tmux to a session (example: ta portal)
-    alias ta='tmux attach'
-    # Creates a new session
-    alias tn='tmux new-session'
-    # Lists all ongoing sessions
-    alias tls='tmux list-sessions'
+  # Attaches tmux to the last session; creates a new session if none exists.
+  alias t='tmux attach || tmux new-session'
+  # Attaches tmux to a session (example: ta portal)
+  alias ta='tmux attach'
+  # Creates a new session
+  alias tn='tmux new-session'
+  # Lists all ongoing sessions
+  alias tls='tmux list-sessions'
 fi
 
 ###############################################################################
 
-if ! command -v git &> /dev/null 
+###############################################################################
+# sesh
+
+if ! command -v sesh &> /dev/null
+then
+  log_debug "sesh is not installed"
+else
+  if [[ "$is_tmux_installed" = true ]]; then
+    function sesh_connect() {
+      sesh connect \"$(
+        sesh list | fzf-tmux -p 55%,60% \
+          --no-sort \
+          --border-label ' sesh ' \
+          --prompt '⚡  ' \
+          --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+          --bind 'tab:down,btab:up' \
+          --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
+          --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
+          --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
+          --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
+          --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+          --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
+      )
+    }
+
+    function sesh_connect_i() {
+      BUFFER="sesh_connect $BUFFER"
+      zle accept-line
+    }
+
+    zle -N sesh_connect_i
+    bindkey "^f" sesh_connect_i
+  fi
+fi
+
+###############################################################################
+
+if ! command -v git &> /dev/null
 then
   log_error "Git is not installed"
 else
   git_autocommit() {
-      git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')" 
+      git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')"
   }
 
   gitac() {
@@ -161,7 +176,7 @@ else
     gitcoji() {
       local msg
       msg=$1
-      git commit -m "$(devmoji --commit -t "$msg")" 
+      git commit -m "$(devmoji --commit -t "$msg")"
     }
   fi
 fi
@@ -343,14 +358,14 @@ fi
 
 ###############################################################################
 
-if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ]; 
-then 
-    . "$HOME/apps/google-cloud-sdk/path.zsh.inc"; 
+if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ];
+then
+    . "$HOME/apps/google-cloud-sdk/path.zsh.inc";
 fi
 
-if [ -f "$HOME/apps/google-cloud-sdk/completion.zsh.inc" ]; 
-then 
-    . "$HOME/apps/google-cloud-sdk/completion.zsh.inc"; 
+if [ -f "$HOME/apps/google-cloud-sdk/completion.zsh.inc" ];
+then
+    . "$HOME/apps/google-cloud-sdk/completion.zsh.inc";
 fi
 
 RVM_DIR="$HOME/.rvm"
@@ -458,7 +473,8 @@ if ! command -v fastfetch &> /dev/null
 then
   log_debug "fastfetch is not installed"
 else
-  fastfetch
+  # TODO: Make this configurable
+  # fastfetch
 fi
 ###############################################################################
 
