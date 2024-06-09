@@ -1,8 +1,6 @@
-shift + alt - m : yabai -m window --toggle zoom-fullscreen
+# At some day a will find a fucking working keys
 
-# Navigation
-shift - alt - h : yabai -m window --focus west
-shift - alt - j : yabai -m window --focus south
-shift - alt - k : yabai -m window --focus north
-shift - alt - l : yabai -m window --focus east
+ctrl - opt - y ; yabai
+yabai < ctrl - opt -y ; default
 
+yabai < r : yabai --restart-service; skhd -k "ctrl - opt - y"
