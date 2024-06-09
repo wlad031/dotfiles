@@ -481,7 +481,7 @@ fi
 ###############################################################################
 # Oh My Posh
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/pararussel.omp.json)"
+  eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/zen.toml)"
 fi
 ###############################################################################
 
