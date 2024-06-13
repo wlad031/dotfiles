@@ -34,6 +34,8 @@ local oil = {
   end
 }
 
+-- FIXME: Sometimes when I open `vim directory/` NeoTree opens, and sometimes - oil.
+
 local plugins = {
   neotree,
   oil

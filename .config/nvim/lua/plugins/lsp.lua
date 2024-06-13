@@ -49,6 +49,7 @@ local mason_lspconfig = {
         -- "java-debug-adapter",
         --"java-test",
         "jdtls",
+        "pyright"
         -- "vscode-java-decompiler"
       }
     })

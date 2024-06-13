@@ -57,6 +57,11 @@ function SetCommonMappings()
   vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil: Open parent directory" })
 
   vim.keymap.set('n', '<leader>ce', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Diagnostics: Open float" })
+
+  vim.keymap.set('n', 'C-S-j', '<cmd>lua require("tmux").resize_down()<cr>')
+  vim.keymap.set('n', 'C-S-k', '<cmd>lua require("tmux").resize_up()<cr>')
+  vim.keymap.set('n', 'C-S-h', '<cmd>lua require("tmux").resize_left()<cr>')
+  vim.keymap.set('n', 'C-S-l', '<cmd>lua require("tmux").resize_right()<cr>')
 end
 
 function GetTelescopeMapping()

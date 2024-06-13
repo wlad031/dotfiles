@@ -24,68 +24,86 @@ italic = { family = "Hack Nerd Font", style = "Italic"  }
 padding = { x = 10, y = 10 }
 #decorations = "Buttonless"
 
-[[keyboard.bindings]]
-chars = "\u0001c"
-key = "T"
-mods = "Command"
+[keyboard]
+bindings = [
+  { key = "ArrowLeft", mods = "Option", chars = "\u001bb" },    # Jump left a word
+  { key = "ArrowRight", mods = "Option", chars = "\u001bf" },   # Jump right a word
+  { key = "ArrowLeft", mods = "Command", chars = "\u001bOH" },  # Start of line
+  { key = "ArrowRight", mods = "Command", chars = "\u001bOF" }, # End of line
+  { key = "Backspace", mods = "Command", chars = "\u0015" },    # delete word/line
+  { key = "H", mods = "Control|Shift", chars = "\u001b[72;5u" },
+  { key = "J", mods = "Control|Shift", chars = "\u001b[74;5u" },
+  { key = "K", mods = "Control|Shift", chars = "\u001b[75;5u" },
+  { key = "L", mods = "Control|Shift", chars = "\u001b[76;5u" },
+]
 
-[[keyboard.bindings]]
-chars = "\u0001x"
-key = "W"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0001e"
-key = "E"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00011"
-key = "Key1"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00012"
-key = "Key2"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00013"
-key = "Key3"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00014"
-key = "Key4"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00015"
-key = "Key5"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00016"
-key = "Key6"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00017"
-key = "Key7"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00018"
-key = "Key8"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u00019"
-key = "Key9"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0001d"
-key = "Q"
-mods = "Command"
+# [[keyboard.bindings]]
+# chars = "\\x1b[74;5u"
+# key = "J"
+# mods = "Control|Shift"
+#
+# [[keyboard.bindings]]
+# chars = "\u0001c"
+# key = "T"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u0001x"
+# key = "W"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u0001e"
+# key = "E"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00011"
+# key = "Key1"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00012"
+# key = "Key2"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00013"
+# key = "Key3"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00014"
+# key = "Key4"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00015"
+# key = "Key5"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00016"
+# key = "Key6"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00017"
+# key = "Key7"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00018"
+# key = "Key8"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u00019"
+# key = "Key9"
+# mods = "Command"
+#
+# [[keyboard.bindings]]
+# chars = "\u0001d"
+# key = "Q"
+# mods = "Command"
 

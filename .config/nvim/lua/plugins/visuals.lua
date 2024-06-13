@@ -242,11 +242,11 @@ local edgy = {
         pinned = true,
         open = "Neotree position=top buffers",
       },
-      {
-        ft = "Outline",
-        pinned = true,
-        open = "SymbolsOutlineOpen",
-      },
+      -- {
+      --   ft = "Outline",
+      --   pinned = true,
+      --   open = "SymbolsOutlineOpen",
+      -- },
       -- any other neo-tree windows
       "neo-tree",
     },

@@ -104,7 +104,7 @@ local plugins = {
   todo_comments,
   -- mini_starter,
   better_escape,
-  indent_blankline,
+  -- indent_blankline,
   mini_surround,
   mini_trailspace,
   mini_pairs
