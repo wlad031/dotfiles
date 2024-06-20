@@ -16,6 +16,14 @@ local harpoon = {
   end
 }
 
+local portal = {
+  "cbochs/portal.nvim",
+  -- Optional dependencies
+  dependencies = {
+    "ThePrimeagen/harpoon"
+  },
+}
+
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md#features
 local mini_bracketed = {
   'echasnovski/mini.bracketed',
@@ -45,6 +53,7 @@ local mini_move = {
 local plugins = {
   flash,
   harpoon,
+  portal,
   mini_bracketed,
   mini_ai,
   mini_move

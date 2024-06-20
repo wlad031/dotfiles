@@ -5,7 +5,8 @@
 --vim.cmd.colorscheme "catppuccin-mocha"
 --vim.cmd.colorscheme "tokyonight-moon"
 --vim.cmd.colorscheme "cyberdream"
-vim.cmd.colorscheme "gruvbox"
+--vim.cmd.colorscheme "gruvbox"
+vim.cmd.colorscheme "kanagawa"
 vim.o.termguicolors = true
 
 -- Enables Alacritty's transparency. However, it works very bad with Telescope.

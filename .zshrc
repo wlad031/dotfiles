@@ -495,3 +495,7 @@ eval "$(zoxide init zsh)"
 # Uncomment for profiling this script
 # zprof
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/vgerasimov/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

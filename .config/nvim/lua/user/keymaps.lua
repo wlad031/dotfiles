@@ -62,6 +62,9 @@ function SetCommonMappings()
   vim.keymap.set('n', 'C-S-k', '<cmd>lua require("tmux").resize_up()<cr>')
   vim.keymap.set('n', 'C-S-h', '<cmd>lua require("tmux").resize_left()<cr>')
   vim.keymap.set('n', 'C-S-l', '<cmd>lua require("tmux").resize_right()<cr>')
+
+  vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
+  vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 end
 
 function GetTelescopeMapping()
