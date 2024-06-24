@@ -1,6 +1,20 @@
 # At some day a will find a fucking working keys
 
-ctrl - opt - y ; yabai
-yabai < ctrl - opt -y ; default
+# ctrl - alt - y ; yabai
+# yabai < ctrl - alt -y ; default
+#
+# yabai < r : yabai --restart-service; skhd -k "ctrl - alt - y"
 
-yabai < r : yabai --restart-service; skhd -k "ctrl - opt - y"
+# shift + alt - h : yabai -m window --warp west
+# shift + alt - j : yabai -m window --warp south
+# shift + alt - k : yabai -m window --warp north
+# shift + alt - l : yabai -m window --warp east
+
+alt + shift - h : yabai -m window --swap west  || $(yabai -m window --display west; yabai -m display --focus west)
+alt + shift - j : yabai -m window --swap south || $(yabai -m window --display south; yabai -m display --focus south)
+alt + shift - k : yabai -m window --swap north || $(yabai -m window --display north; yabai -m display --focus north)
+alt + shift - l : yabai -m window --swap east  || $(yabai -m window --display east; yabai -m display --focus east)
+
+alt + lctrl - left : yabai -m window --space prev --focus
+alt + lctrl - right : yabai -m window --space next --focus
+
