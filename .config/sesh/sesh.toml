@@ -5,7 +5,7 @@
 name = "Main"
 
 [[session]]
-name = "Downloads 📥"
+name = "Downloads"
 path = "~/Downloads"
 startup_command = "ll"
 
@@ -17,4 +17,8 @@ path = "~/Projects/gpc"
 name = "Dotfiles"
 path = "~/dotfiles"
 startup_command = "~/dotfiles/.config/sesh/dotfiles_startup_script.sh"
+
+[[session]]
+name = "🏠 Homelab"
+path = "~/selfhosting"
 
