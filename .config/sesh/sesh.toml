@@ -2,19 +2,19 @@
 # startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]
-name = "Main"
+name = "🙂 Main"
 
 [[session]]
-name = "Downloads"
+name = "📂 Downloads"
 path = "~/Downloads"
 startup_command = "ll"
 
 [[session]]
-name = "GPC"
+name = "💼 GPC"
 path = "~/Projects/gpc"
 
 [[session]]
-name = "Dotfiles"
+name = "⊙ Dotfiles"
 path = "~/dotfiles"
 startup_command = "~/dotfiles/.config/sesh/dotfiles_startup_script.sh"
 
