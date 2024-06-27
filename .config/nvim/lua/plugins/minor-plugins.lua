@@ -99,6 +99,13 @@ local mini_pairs = {
   end
 }
 
+local highlight_colors = {
+  'brenoprata10/nvim-highlight-colors',
+  config = function()
+    require('nvim-highlight-colors').setup({})
+  end
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
@@ -107,7 +114,8 @@ local plugins = {
   -- indent_blankline,
   mini_surround,
   mini_trailspace,
-  mini_pairs
+  mini_pairs,
+  highlight_colors
 }
 
 return plugins
