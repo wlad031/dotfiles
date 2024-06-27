@@ -22,3 +22,6 @@ startup_command = "~/dotfiles/.config/sesh/dotfiles_startup_script.sh"
 name = "🏠 Homelab"
 path = "~/selfhosting"
 
+[[session]]
+name = "⌨️ Keyboard"
+path = "~/Projects/my-keeb"
