@@ -7,6 +7,14 @@ local flash = {
   keys = GetFlashKeys(),
 }
 
+local hop = {
+  'smoka7/hop.nvim',
+  version = "*",
+  opts = {
+    keys = 'etovxqpdygfblzhckisuran'
+  }
+}
+
 local harpoon = {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
@@ -51,7 +59,8 @@ local mini_move = {
 }
 
 local plugins = {
-  flash,
+  -- flash,
+  hop,
   harpoon,
   portal,
   mini_bracketed,
