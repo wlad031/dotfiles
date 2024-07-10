@@ -1,74 +1,6 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
-###############################################################################
-# Logging
-
-# TODO: Find some better way to do logging
-
-CL_RED='\033[0;31m'
-CL_BLUE='\033[0;34m'
-CL_LGRAY='\033[0;37m'
-CL_NO='\033[0m'
-
-if [ ! -z "$ZSHRC_LOG_INFO" ]; then
-else
-    ZSHRC_LOG_INFO=true
-fi
-if [ ! -z "$ZSHRC_LOG_ERROR" ]; then
-else
-    ZSHRC_LOG_ERROR=true
-fi
-if [ ! -z "$ZSHRC_LOG_DEBUG" ]; then
-else
-    ZSHRC_LOG_DEBUG=false
-fi
-
-log_info() {
-    if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
-        echo -e "${CL_RED}[INFO ]${CL_NO} $*"
-    fi
-}
-
-log_error() {
-    if "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
-        echo -e "${CL_RED}[ERROR]${CL_NO} $*"
-    fi
-}
-
-log_debug() {
-    if "$ZSHRC_LOG_DEBUG"; then
-        echo -e "${CL_LGRAY}[DEBUG]${CL_NO} $*"
-    fi
-}
-
-###############################################################################
-
-renv() {
-    file=$1
-    log_debug "Loading env file: $file"
-    export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
-}
-
-if [ -f "$HOME/.env" ]; then
-    renv "$HOME/.env"
-fi
-
-export UID=$(id -u)
-export GID=$(id -g)
-
-export EDITOR='vim'
-export LC_ALL=en_US.UTF-8
-
-export SCRIPTS_DIR="$HOME/scripts"
-export EMACSD_DIR="$HOME/.emacs.d/"
-
-alias xx='exit'
-[ -f "$HOME/.secrets.sh" ] && source "$HOME/.secrets.sh"
-
-export SDKMAN_DIR="$HOME/.sdkman"
-[ -f "$SDKMAN_DIR/bin/sdkman-init.sh" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.jetbrains:$PATH"
@@ -180,18 +112,6 @@ else
     }
   fi
 fi
-
-[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-
-bkp() {
-    FILE=$1
-    BKP="$FILE.bkp"
-    echo "Copying $FILE to $BKP"
-    cp $FILE $BKP
-    echo "Backup file $FILE to $BKP"
-}
-
-alias ll="ls -la"
 
 export PATH="$HOME/go/bin:$PATH"
 
@@ -374,12 +294,6 @@ then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$RVM_DIR/bin"
     eval "$(brew shellenv)"
-fi
-
-# TODO: What is that?
-# g shell setup
-if [ -f "${HOME}/.g/env" ]; then
-    . "${HOME}/.g/env"
 fi
 
 if ! command -v coursier &> /dev/null
