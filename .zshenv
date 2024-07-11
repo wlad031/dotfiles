@@ -35,6 +35,12 @@ fi
 read_env    "$HOME/.env"
 source_safe "$HOME/.cargo/env"
 source_safe "$HOME/.g/env"
+source_safe "$HOME/scripts/zshrc_git.sh"
+source_safe "$HOME/scripts/zshrc_tmux.sh"
+source_safe "$HOME/scripts/zshrc_docker.sh"
+source_safe "$HOME/scripts/zshrc_sesh.sh"
+source_safe "$HOME/scripts/zshrc_lazygit.sh"
+source_safe "$HOME/scripts/zshrc_devmoji.sh"
 source_safe "$HOME/.sdkman/bin/sdkman-init.sh"
 ###############################################################################
 

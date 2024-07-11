@@ -6,112 +6,18 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.jetbrains:$PATH"
 
 if [ -f "$HOME/.antigen.zsh" ]; then
-    source ~/.antigen.zsh
-    antigen init ~/.antigenrc
+    source "$HOME/.antigen.zsh"
+    antigen init "$HOME/.antigenrc"
 else
     log_error "Antigen isn't installed yet"
 fi
 
-###############################################################################
-# Tmux
-is_tmux_installed=false
-if [ ! -z "$TMUX_AUTO_ATTACH" ]; then
-else
-  TMUX_AUTO_ATTACH=false
-fi
-
-if ! command -v tmux &> /dev/null
-then
-  log_error "Tmux is not installed"
-  is_tmux_installed=false
-else
-  is_tmux_installed=true
-  TMUX_DIR="$HOME/.tmux"
-  TMUX_PLUGINS_DIR="$TMUX_DIR/plugins"
-
-  if [[ -d "$TMUX_PLUGINS_DIR/tpm" ]]
-  then
-  else
-    git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-    log_info "Tmux plugin manager is installed"
-  fi
-
-  # Attaches tmux to the last session; creates a new session if none exists.
-  alias t='tmux attach || tmux new-session'
-  # Attaches tmux to a session (example: ta portal)
-  alias ta='tmux attach'
-  # Creates a new session
-  alias tn='tmux new-session'
-  # Lists all ongoing sessions
-  alias tls='tmux list-sessions'
-fi
-
-###############################################################################
-
-###############################################################################
-# sesh
-
-if ! command -v sesh &> /dev/null
-then
-  log_debug "sesh is not installed"
-else
-  if [[ "$is_tmux_installed" = true ]]; then
-    function sesh_connect() {
-      sesh connect \"$(
-        sesh list | fzf-tmux -p 55%,60% \
-          --no-sort \
-          --border-label ' sesh ' \
-          --prompt '⚡  ' \
-          --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-          --bind 'tab:down,btab:up' \
-          --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
-          --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
-          --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
-          --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
-          --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-          --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
-      )
-    }
-
-    function sesh_connect_i() {
-      BUFFER="sesh_connect $BUFFER"
-      zle accept-line
-    }
-
-    zle -N sesh_connect_i
-    bindkey "^f" sesh_connect_i
-  fi
-fi
-
-###############################################################################
-
-if ! command -v git &> /dev/null
-then
-  log_error "Git is not installed"
-else
-  git_autocommit() {
-      git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')"
-  }
-
-  gitac() {
-      git add . && git_autocommit
-  }
-
-  gitacp() {
-      gitac && git push
-  }
-
-  if ! command -v devmoji &> /dev/null
-  then
-    log_debug "devmoji is not installed"
-  else
-    gitcoji() {
-      local msg
-      msg=$1
-      git commit -m "$(devmoji --commit -t "$msg")"
-    }
-  fi
-fi
+setup_env "git"
+setup_env "docker"
+setup_env "tmux"
+setup_env "sesh"
+setup_env "lazygit"
+setup_env "devmoji"
 
 export PATH="$HOME/go/bin:$PATH"
 
@@ -179,105 +85,6 @@ else
 fi
 
 
-###############################################################################
-# Docker
-
-# Colima
-is_colima_installed=false
-COLIMA_DIR="$HOME/.colima"
-if ! command -v colima &> /dev/null
-then
-  is_colima_installed=false
-else
-  is_colima_installed=true
-fi
-
-# Rancher Desktop
-is_rancher_installed=false
-RANCHER_DIR="$HOME/.rd"
-if [[ -d "$RANCHER_DIR" ]]; then
-  export PATH="$PATH:$RANCHER_DIR/bin"
-  is_rancher_installed=true
-else
-  is_rancher_installed=false
-fi
-
-# Common
-if ! command -v docker &> /dev/null
-then
-  log_error "Docker is not installed"
-else
-  local default_host
-  if [[ "$is_colima_installed" = false && "$is_colima_installed" = false ]]; then
-    log_error "None of [colima, rancher] is installed"
-  elif [[ "$is_rancher_installed" = true ]]; then
-    default_host="rancher"
-  elif [[ "$is_colima_installed" = true ]]; then
-    default_host="colima"
-  fi
-
-  function dock() {
-    if [[ "$@" == "ps" ]]; then
-      command docker ps --format 'table {{.Names}}\t{{.Status}} : {{.RunningFor}}\t{{.ID}}\t{{.Image}}'
-    elif [[ "$@" == "psa" ]]; then
-      # docker ps -a includes all containers
-      command docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Size}}\n{{.ID}}\t{{.Image}}{{if .Ports}}{{with $p := split .Ports ", "}}\t{{len $p}} port(s) on {{end}}{{- .Networks}}{{else}}\tNo Ports on {{ .Networks }}{{end}}\n'
-    elif [[ "$@" == "psnet" ]]; then
-      # docker ps with network information
-      command docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Networks}}\n{{.ID}}{{if .Ports}}{{with $p := split .Ports ", "}}{{range $p}}\t\t{{println .}}{{end}}{{end}}{{else}}\t\t{{println "No Ports"}}{{end}}'
-    elif [[ "$1" == "host" ]]; then # TODO: Extract this as a separate function, at least
-      if [[ "$2" == "rancher" ]]; then
-        if [ "$is_rancher_installed" = true ]; then
-          docker_sock="$RANCHER_DIR/docker.sock"
-          if [ -e "$docker_sock" ]; then
-            export DOCKER_HOST="unix://$docker_sock"
-            echo "Docker environment updated"
-          else
-            log_error "$docker_sock not found"
-          fi
-        else
-          log_error "Rancher is not installed"
-        fi
-      elif [[ "$2" == "colima" ]]; then
-        if [ "$is_colima_installed" = true ]; then
-          docker_sock="$COLIMA_DIR/${3:-default}/docker.sock"
-          if [ -e "$docker_sock" ]; then
-            export DOCKER_HOST="unix://$docker_sock"
-            echo "Docker environment updated"
-          else
-            log_error "$docker_sock not found"
-          fi
-        else
-          log_error "Colima is not installed"
-        fi
-      elif [[ ! -z "$2" ]]; then
-        log_error "Unknown docker host: $2"
-      fi
-      echo "DOCKER_HOST: $DOCKER_HOST"
-    else
-      command docker "$@"
-    fi
-  }
-
-  if [[ "$default_host" == "rancher" ]]; then
-    log_debug "Setting rancher as Docker host"
-    dock host rancher > /dev/null
-  elif [[ "$default_host" == "colima" ]]; then
-    log_debug "Setting colima default as Docker host"
-    dock host colima > /dev/null
-  fi
-
-  if ! command -v lazydocker &> /dev/null
-  then
-    log_error "Lazydocker is not installed"
-  else
-    alias ldocker=lazydocker
-  fi
-fi
-
-
-###############################################################################
-
 if [ -f "$HOME/apps/google-cloud-sdk/path.zsh.inc" ];
 then
     . "$HOME/apps/google-cloud-sdk/path.zsh.inc";
@@ -314,13 +121,6 @@ then
   log_debug "the fuck is not installed"
 else
   eval $(thefuck --alias)
-fi
-
-if ! command -v lazygit &> /dev/null
-then
-  log_error "Lazygit is not installed"
-else
-  alias lgit=lazygit
 fi
 
 export LOGSEQ_DIR="$HOME/Logseq"
