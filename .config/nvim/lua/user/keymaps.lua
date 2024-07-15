@@ -202,3 +202,9 @@ function GetMiniSurroundMappings()
     suffix_next = 'n',             -- Suffix to search with "next" method
   }
 end
+
+function GetLazyGitKeys()
+  return {
+    { "<leader>gl", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+  }
+end
