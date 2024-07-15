@@ -9,13 +9,15 @@
 
 yabai -m space 1 --label main1
 yabai -m space 2 --label idea
+yabai -m space 3 --label tasks
 yabai -m space 6 --label terminal
 
 # default layout (can be bsp, stack or float)
 # yabai -m config layout float
 yabai -m config layout bsp
 
-yabai -m space idea --layout stack
+yabai -m space tasks --layout stack
+yabai -m space idea --layout float
 
 yabai -m config top_padding     0
 yabai -m config bottom_padding  0
@@ -120,8 +122,11 @@ do
   yabai -m rule --add app="^.*IDEA.*$" title="^$title$" manage=off
 done
 
+yabai -m rule --add app="^.*TickTick.*$" --space tasks
+yabai -m rule --add app="^.*Logseq.*$" --space tasks
 yabai -m rule --add app="^.*IDEA.*$" --space idea
 yabai -m rule --add app="^.*Alacritty.*$" --space terminal
+yabai -m rule --add app="^.*Kitty.*$" --space terminal
 
 # https://github.com/koekeishiya/yabai/issues/1317
 yabai -m signal --add event=window_created action='
