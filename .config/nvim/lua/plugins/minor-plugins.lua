@@ -110,7 +110,7 @@ local plugins = {
   number_toggle,
   todo_comments,
   -- mini_starter,
-  better_escape,
+  -- better_escape,
   -- indent_blankline,
   mini_surround,
   mini_trailspace,
