@@ -10,7 +10,7 @@ lazygit_setup() {
     return
   fi
   if [[ "$LAZYGIT_INSTALLED" = false ]]; then
-    log_error "Lazyit is not installed"
+    log_error "Lazygit is not installed"
     return
   fi
 
