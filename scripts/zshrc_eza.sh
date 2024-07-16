@@ -1,7 +1,7 @@
 if ! command -v eza &> /dev/null; then
-  export EZA_INSTALLED=true
-else
   export EZA_INSTALLED=false
+else
+  export EZA_INSTALLED=true
 fi
 
 eza_setup() {
