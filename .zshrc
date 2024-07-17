@@ -31,5 +31,3 @@ export PATH="$HOME/go/bin:$PATH"
 # Uncomment for profiling this script
 # zprof
 
-[ -s "${HOME}/.g/env" ] && \. "${HOME}/.g/env"  # g shell setup
-
