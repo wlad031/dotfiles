@@ -102,6 +102,7 @@ function GetTelescopeMapping()
   }
   return {
     find_files = common,
+    buffers = common,
     live_grep = common,
     lsp_references = common,
   }

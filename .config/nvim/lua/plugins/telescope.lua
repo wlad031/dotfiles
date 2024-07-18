@@ -31,6 +31,10 @@ return {
             mappings = mappings.find_files,
             hidden = true
           },
+          buffers = {
+            mappings = mappings.buffers,
+            hidden = true
+          },
           grep_string = {
             additional_args = { "--hidden" }
           },
