@@ -21,10 +21,12 @@ flutter_setup
 pyenv_setup
 gcloud_setup
 rvm_setup
+cargo_setup
 coursier_setup
 thefuck_setup
 fastfetch_setup
 zoxide_setup
+yazi_setup
 
 export PATH="$HOME/go/bin:$PATH"
 

@@ -42,7 +42,6 @@ export WELCOME_SCREEN_ENABLED=false
 # Exporting other env files
 read_env    "$HOME/.env"
 source_safe "$HOME/scripts/zshrc_antigen.sh"
-source_safe "$HOME/.cargo/env"
 source_safe "$HOME/.g/env"
 source_safe "$HOME/scripts/zshrc_ohmyposh.sh"
 source_safe "$HOME/scripts/zshrc_git.sh"
@@ -61,10 +60,12 @@ source_safe "$HOME/scripts/zshrc_flutter.sh"
 source_safe "$HOME/scripts/zshrc_pyenv.sh"
 source_safe "$HOME/scripts/zshrc_gcloud.sh"
 source_safe "$HOME/scripts/zshrc_rvm.sh"
+source_safe "$HOME/scripts/zshrc_cargo.sh"
 source_safe "$HOME/scripts/zshrc_coursier.sh"
 source_safe "$HOME/scripts/zshrc_thefuck.sh"
 source_safe "$HOME/scripts/zshrc_fastfetch.sh"
 source_safe "$HOME/scripts/zshrc_zoxide.sh"
+source_safe "$HOME/scripts/zshrc_yazi.sh"
 source_safe "$HOME/.sdkman/bin/sdkman-init.sh"
 ###############################################################################
 
