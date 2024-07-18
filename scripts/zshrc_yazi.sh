@@ -18,4 +18,17 @@ yazi_setup() {
     fi
     rm -f -- "$tmp"
   }
+
+  _yazi_check_flavors
+}
+
+_yazi_check_flavors() {
+  YAZI_FLAVORS_DIR="$HOME/.config/yazi/flavors"
+  if [[ ! -d "$YAZI_FLAVORS_DIR" ]]; then
+    log_error "yazi flavors directory not found"
+    echo "Please install it like that:"
+    echo ""
+    echo "    git clone git@github.com:yazi-rs/flavors.git $YAZI_FLAVORS_DIR"
+    echo ""
+  fi
 }

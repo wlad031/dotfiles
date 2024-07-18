@@ -19,13 +19,16 @@ tmux_setup() {
   alias tn='tmux new-session'
   alias tls='tmux list-sessions'
 
-  _tmux_install_tpm_if_needed
+  _tmux_check_tpm
 }
 
-_tmux_install_tpm_if_needed() {
+_tmux_check_tpm() {
   if [[ ! -d "$TMUX_TPM_DIR" ]]; then
-    git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGINS_DIR/tpm"
-    log_info "Tmux plugin manager is installed"
+    log_error "TPM - Tmux plugin manager is not found"
+    echo "Please install it like that:"
+    echo ""
+    echo "    git clone https://github.com/tmux-plugins/tpm $TMUX_PLUGINS_DIR/tpm"
+    echo ""
   fi
 }
 
