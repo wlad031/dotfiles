@@ -75,6 +75,7 @@ local lspconfig = {
     })
 
     local cmp = require("cmp")
+    local luasnip = require("luasnip")
 
     local ELLIPSIS_CHAR = '…'
     local MAX_LABEL_WIDTH = 20
@@ -98,6 +99,7 @@ local lspconfig = {
       },
       snippet = {
         expand = function(args)
+          luasnip.lsp_expand(args.body)
           vim.fn["vsnip#anonymous"](args.body)
         end,
       },
@@ -108,7 +110,7 @@ local lspconfig = {
       mapping = GetCmpMapping(),
       sources = cmp.config.sources(
         {
-          --{ name = 'copilot' },
+          { name = 'copilot' },
           { name = 'metals' },
           { name = "hledger" },
           { name = 'nvim_lsp' },

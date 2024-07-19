@@ -121,36 +121,52 @@ end
 
 function GetCmpMapping()
   local cmp = require("cmp")
+  local luasnip = require("luasnip")
+  local copilot_suggestion = require("copilot.suggestion")
 
-  local function cmp_confirm()
-    local only_explicitly_selected = false
-    cmp.mapping.confirm({ select = not only_explicitly_selected })
-  end
-
-  local function idea_like_cmp_confirm()
-    -- If no completion is selected, insert the first one in the list.
-    -- If a completion is selected, insert this one.
-    cmp.mapping(function(fallback)
-      if cmp.visible() then
-        local entry = cmp.get_selected_entry()
-        if not entry then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        end
-        cmp.confirm()
-      else
-        fallback()
-      end
-    end, { "i", "s", "c", })
+  local function has_words_before()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
 
   return {
-    ['<C-k>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end),
-    ['<C-j>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = idea_like_cmp_confirm(),
-    ['<Tab>'] = idea_like_cmp_confirm(),
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end),
+    ['<C-j>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if copilot_suggestion.is_visible() then
+        copilot_suggestion.accept()
+      elseif cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s", }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+      end
+    end, { "i", "s", }),
+    ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
+    ["<Esc>"] = cmp.mapping.abort(),
+    ["<C-Down>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
+    ["<C-Up>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
   }
 end
 

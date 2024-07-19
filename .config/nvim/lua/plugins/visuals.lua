@@ -162,7 +162,7 @@ local lualine = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', nvim_remote },
         lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { lualine_copilot(), 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
@@ -206,6 +206,9 @@ local noice = {
   },
   config = function()
     require("noice").setup({
+      messages = {
+        enabled = false
+      },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -330,9 +333,9 @@ local plugins = {
   gruvbox,
   -- tint,
   -- noice, -- it is fucking causing that cursor blinks when there is message
-  edgy
+  edgy,
   -- mini_animate
-  --copilot_lualine,
+  copilot_lualine,
 }
 
 return plugins
