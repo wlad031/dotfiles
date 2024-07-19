@@ -2,26 +2,31 @@
 # startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]
-name = "🙂 Main"
+name = "main"
 
 [[session]]
-name = "📂 Downloads"
+name = "downloads"
 path = "~/Downloads"
-startup_command = "ll"
+startup_command = "yy"
 
 [[session]]
-name = "💼 GPC"
+name = "gpc"
 path = "~/Projects/gpc"
 
 [[session]]
-name = "⊙ Dotfiles"
+name = "dotfiles"
 path = "~/dotfiles"
 startup_command = "~/dotfiles/.config/sesh/dotfiles_startup_script.sh"
 
 [[session]]
-name = "🏠 Homelab"
+name = "vim"
+path = "~/dotfiles/.config/nvim"
+startup_command = "nvim -c ':Telescope find_files'"
+
+[[session]]
+name = "homelab"
 path = "~/selfhosting"
 
 [[session]]
-name = "⌨️ Keyboard"
+name = "keyboard"
 path = "~/Projects/my-keeb"
