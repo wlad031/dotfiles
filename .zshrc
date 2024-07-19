@@ -33,3 +33,6 @@ export PATH="$HOME/go/bin:$PATH"
 # Uncomment for profiling this script
 # zprof
 
+
+# TODO: [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+
