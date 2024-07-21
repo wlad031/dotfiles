@@ -16,6 +16,7 @@ fzf_setup() {
 
   # -- Use fd instead of fzf --
   export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+  export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat -n --color=always --line-range :500 {}'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
   export FZF_CTRL_R_OPTS="--reverse"
@@ -40,6 +41,7 @@ fzf_setup() {
     export FZF_TMUX=1
     export FZF_TMUX_OPTS="-p"
   fi
+}
 
   # Advanced customization of fzf options via _fzf_comprun function
   # - The first argument to the function is the name of the command.
@@ -61,4 +63,3 @@ fzf_setup() {
   #fi
 
   #zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-}
