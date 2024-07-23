@@ -45,13 +45,12 @@ gui:
   showBottomLine: true # for hiding the bottom information line (unless it has important information to tell you)
   showPanelJumps: true # for showing the jump-to-panel keybindings as panel subtitles
   showCommandLog: true
-  showIcons: false # deprecated: use nerdFontsVersion instead
-  nerdFontsVersion: "" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
+  nerdFontsVersion: "3" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
   showFileIcons: true # for hiding file icons in the file views
   commandLogSize: 8
   splitDiff: 'auto' # one of 'auto' | 'always'
   skipRewordInEditorWarning: false # for skipping the confirmation before launching the reword editor
-  border: 'rounded' # one of 'single' | 'double' | 'rounded' | 'hidden'
+  border: 'single' # one of 'single' | 'double' | 'rounded' | 'hidden'
   animateExplosion: true # shows an explosion animation when nuking the working tree
   portraitMode: 'auto' # one of 'auto' | 'never' | 'always'
   filterMode: 'substring' # one of 'substring' | 'fuzzy'; see 'Filtering' section below
@@ -97,7 +96,7 @@ git:
   allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
   overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
   disableForcePushing: false
-  parseEmoji: false
+  parseEmoji: true
   truncateCopiedCommitHashesTo: 12 # When copying commit hashes to the clipboard, truncate them to this length. Set to 40 to disable truncation.
 os:
   copyToClipboardCmd: '' # See 'Custom Command for Copying to Clipboard' section
@@ -259,3 +258,13 @@ keybinding:
     setAuthor: 'A'
 
 
+customCommands:
+  - key: '<c-y>'
+    command: > 
+      git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')"
+    decription: 'Autocommit'
+    context: 'global'
+    prompts:
+    - type: 'confirm'
+      title: 'Autocommit'
+      body: 'Are you sure you want to create an autocommit?'

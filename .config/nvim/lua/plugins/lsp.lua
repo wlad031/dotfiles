@@ -118,6 +118,9 @@ local lspconfig = {
         },
         {
           { name = 'buffer' },
+          { name = 'emoji' },
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'nvim_lsp_document_symbol' },
         })
     })
     cmp.setup.cmdline({ '/', '?' }, {

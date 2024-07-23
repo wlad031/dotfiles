@@ -17,10 +17,10 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 require("lazy").setup("plugins", {
   change_detection = {
     enabled = true,
-    notify = false,
+    notify = true,
   },
   install = {
-    colorscheme = { "catppuccin-mocha" },
+    colorscheme = { "flow" },
   },
   ui = {
     border = "rounded",

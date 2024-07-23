@@ -58,6 +58,23 @@ local mini_move = {
   end
 }
 
+local spider = {
+  "chrisgrieser/nvim-spider",
+  lazy = true
+}
+
+local outline = {
+  "hedyhli/outline.nvim",
+  lazy = true,
+  cmd = { "Outline", "OutlineOpen" },
+  keys = { -- Example mapping to toggle outline
+    { "<leader>fo", "<cmd>Outline<CR>", desc = "Toggle outline" },
+  },
+  opts = {
+    -- Your setup opts here
+  }
+}
+
 local plugins = {
   -- flash,
   hop,
@@ -65,7 +82,9 @@ local plugins = {
   portal,
   mini_bracketed,
   mini_ai,
-  mini_move
+  mini_move,
+  spider,
+  outline
 }
 
 return plugins

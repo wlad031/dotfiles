@@ -1,4 +1,7 @@
 function SetCommonMappings()
+  local telescope_builtin = require("telescope.builtin")
+  local harpoon = require("harpoon")
+
   --vim.keymap.set('n', '<C-d><C-d>', '"_dd')
   vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = "Go down half a page and center page vertically" })
   vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
@@ -13,23 +16,22 @@ function SetCommonMappings()
 
   vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
   --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
-  vim.keymap.set("n", "<leader>cr", function() require("telescope.builtin").lsp_references() end,
+  vim.keymap.set("n", "<leader>cr", function() telescope_builtin.lsp_references() end,
     { noremap = true, silent = true, desc = "Telescope: LSP references" })
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code actions" })
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format code" })
   vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "LSP: Signature help" })
 
-  vim.keymap.set('n', '<leader>ff', require("telescope.builtin").find_files, { desc = "Telescope: Find files" })
-  vim.keymap.set('n', '<leader>fg', require("telescope.builtin").live_grep, { desc = "Telescope: Live grep" })
-  vim.keymap.set('n', '<leader>fb', require("telescope.builtin").buffers, { desc = "Telescope: Buffers" })
-  vim.keymap.set('n', '<leader>fe', require("telescope.builtin").oldfiles, { desc = "Telescope: Old files" })
-  vim.keymap.set('n', '<leader>fh', require("telescope.builtin").help_tags, { desc = "Telescope: Help tags" })
+  vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, { desc = "Telescope: Find files" })
+  vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Telescope: Live grep" })
+  vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
+  vim.keymap.set('n', '<leader>fe', telescope_builtin.oldfiles, { desc = "Telescope: Old files" })
+  vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Telescope: Help tags" })
 
-  local harpoon = require("harpoon")
-  vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)
-  vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end)
-  vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end)
-  vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end)
+  vim.keymap.set("n", "<leader>hj", function() harpoon:list():select(1) end, { desc = "Harpoon: Select 1" })
+  vim.keymap.set("n", "<leader>hk", function() harpoon:list():select(2) end, { desc = "Harpoon: Select 2" })
+  vim.keymap.set("n", "<leader>hl", function() harpoon:list():select(3) end, { desc = "Harpoon: Select 3" })
+  vim.keymap.set("n", "<leader>h;", function() harpoon:list():select(4) end, { desc = "Harpoon: Select 4" })
   -- -- Toggle previous & next buffers stored within Harpoon list
   -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
   -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
@@ -66,7 +68,6 @@ function SetCommonMappings()
   vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
   vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 
-  -- place this in one of your configuration file(s)
   local hop = require('hop')
   local directions = require('hop.hint').HintDirection
   vim.keymap.set('', 'f', function()
@@ -81,6 +82,32 @@ function SetCommonMappings()
   vim.keymap.set('', 'T', function()
     hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 })
   end, { remap = true })
+
+  vim.keymap.set(
+    { "n", "o", "x" },
+    "w",
+    "<cmd>lua require('spider').motion('w')<CR>",
+    { desc = "Spider-w" }
+  )
+  vim.keymap.set(
+    { "n", "o", "x" },
+    "e",
+    "<cmd>lua require('spider').motion('e')<CR>",
+    { desc = "Spider-e" }
+  )
+  vim.keymap.set(
+    { "n", "o", "x" },
+    "b",
+    "<cmd>lua require('spider').motion('b')<CR>",
+    { desc = "Spider-b" }
+  )
+
+  vim.keymap.set(
+    { "n", "x" },
+    "<leader>fs",
+    function() require("rip-substitute").sub() end,
+    { desc = " rip substitute" }
+  )
 end
 
 function GetTelescopeMapping()
@@ -144,6 +171,7 @@ function GetCmpMapping()
         fallback()
       end
     end),
+    ["<C-l>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if copilot_suggestion.is_visible() then
@@ -163,10 +191,13 @@ function GetCmpMapping()
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
       end
     end, { "i", "s", }),
-    ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
-    ["<Esc>"] = cmp.mapping.abort(),
+    -- ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
+    -- ["<Esc>"] = cmp.mapping.abort(),
     ["<C-Down>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
     ["<C-Up>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
+    -- ["<C-y>"] = cmp.mapping(function(fallback)
+    -- require('minuet').make_cmp_map()
+    -- end, { "i", "c" })
   }
 end
 
@@ -224,4 +255,25 @@ function GetLazyGitKeys()
   return {
     { "<leader>gl", "<cmd>LazyGit<cr>", desc = "LazyGit" }
   }
+end
+
+function SetGrugFarKeys()
+  vim.keymap.set(
+    { "n", "x" },
+    "<leader>rR",
+    "<cmd>:GrugFar<CR>",
+    { desc = "Replace: GrugFar" }
+  )
+  vim.keymap.set(
+    { "n", "x" },
+    "<leader>rr",
+    '<cmd>:lua require("grug-far").with_visual_selection()<CR>',
+    { desc = "Replace: With visual selecton: GrugFar" }
+  )
+  vim.keymap.set(
+    { "n", "x" },
+    "<leader>rb",
+    '<cmd>:lua require("grug-far").with_visual_selection({ prefills = { flags = vim.fn.expand("%") } })<CR>',
+    { desc = "Replace: With visual selection: Buffer: GrugFar" }
+  )
 end

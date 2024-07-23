@@ -2,3 +2,19 @@
 show_hidden=true
 show_symlink=true
 linemode="mtime"
+
+[opener]
+edit = [
+	{ run = 'nvim "$@"', block = true },
+]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+
+[plugin]
+prepend_previewers = [
+    { mime = "text/*", run = "bat" },
+]

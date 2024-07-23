@@ -1,8 +1,6 @@
 # Uncomment for profiling this script
 # zmodload zsh/zprof
 
-export PATH="$HOME/.jetbrains:$PATH"
-
 antigen_setup
 ohmyposh_setup
 git_setup
@@ -18,6 +16,8 @@ neovim_setup
 codium_setup
 fnm_setup
 flutter_setup
+g_setup
+sdkman_setup
 pyenv_setup
 gcloud_setup
 rvm_setup
@@ -28,11 +28,8 @@ fastfetch_setup
 zoxide_setup
 yazi_setup
 
-export PATH="$HOME/go/bin:$PATH"
-
 # Uncomment for profiling this script
 # zprof
-
 
 # TODO: [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 

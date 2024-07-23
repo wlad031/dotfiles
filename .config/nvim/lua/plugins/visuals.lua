@@ -8,7 +8,7 @@ local gruvbox = {
 
 local catppuccin = {
   "catppuccin/nvim",
-  lazy = false,
+  -- lazy = false,
   name = "catppuccin",
   priority = 1000,
   config = function()
@@ -18,7 +18,7 @@ local catppuccin = {
 
 local tokyonight = {
   "folke/tokyonight.nvim",
-  lazy = false,
+  -- lazy = false,
   priority = 1000,
   opts = {},
 }
@@ -295,6 +295,11 @@ local edgy = {
         size = { height = 0.5 },
       },
       {
+        ft = "Outline",
+        pinned = true,
+        open = "SymbolsOutlineOpen",
+      },
+      {
         title = "Neo-Tree Git",
         ft = "neo-tree",
         filter = function(buf)
@@ -312,15 +317,26 @@ local edgy = {
         pinned = true,
         open = "Neotree position=top buffers",
       },
-      -- {
-      --   ft = "Outline",
-      --   pinned = true,
-      --   open = "SymbolsOutlineOpen",
-      -- },
       -- any other neo-tree windows
       "neo-tree",
     },
   }
+}
+
+local flow = {
+  "0xstepit/flow.nvim",
+  name = "Flow",
+  lazy = false,
+  priority = 1000,
+  opts = {},
+  config = function()
+    require("flow").setup {
+      transparent = true,       -- Set transparent background.
+      fluo_color = "pink",      --  Fluo color: pink, yellow, orange, or green.
+      mode = "normal",          -- Intensity of the palette: normal, dark, or bright. Notice that dark is ugly!
+      aggressive_spell = false, -- Display colors for spell check.
+    }
+  end,
 }
 
 local plugins = {
@@ -336,6 +352,7 @@ local plugins = {
   edgy,
   -- mini_animate
   copilot_lualine,
+  flow,
 }
 
 return plugins

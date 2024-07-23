@@ -27,3 +27,5 @@
 	defaultBranch = master
 [pull]
 	rebase = true
+[diff]
+	tool = nvimdiff

@@ -13,10 +13,10 @@ local neoclip = {
 local cutlass = {
   "gbprod/cutlass.nvim",
   opts = {
-    cut_key = 'x',
+    cut_key = 'd',
     registers = {
       select = "s",
-      delete = "d",
+      delete = "x",
       change = "c",
     },
   }

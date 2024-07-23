@@ -66,14 +66,28 @@ read_env() {
     fi
 }
 
+squash_app_rc() {
+  local dir=$1
+
+  if [[ ! -d "$dir" ]]; then
+    echo "Directory $dir does not exist"
+    return 1
+  fi
+
+  # Find files matching the pattern *rc, sort them, and concatenate their contents
+  find "$dir" -type f -name '*rc_*.sh' | sort | while read -r file; do
+      cat "$file"
+  done
+}
+
 ###############################################################################
 
 ###############################################################################
 # Misc
 
 bkp() {
-    FILE=$1
-    BKP="$FILE.bkp"
+    local FILE=$1
+    local BKP="$FILE.bkp"
     echo "Copying $FILE to $BKP"
     cp $FILE $BKP
     echo "Backup file $FILE to $BKP"

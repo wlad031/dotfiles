@@ -106,6 +106,12 @@ local highlight_colors = {
   end
 }
 
+local highight_undo = {
+  'tzachar/highlight-undo.nvim',
+  opts = {
+  },
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
@@ -115,7 +121,8 @@ local plugins = {
   mini_surround,
   mini_trailspace,
   mini_pairs,
-  highlight_colors
+  highlight_colors,
+  highight_undo,
 }
 
 return plugins

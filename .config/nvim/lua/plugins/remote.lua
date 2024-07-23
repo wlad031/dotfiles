@@ -1,4 +1,4 @@
-return {
+local remote = {
   "amitds1997/remote-nvim.nvim",
   version = "*",                        -- Pin to GitHub releases
   dependencies = {
@@ -10,3 +10,9 @@ return {
     require("remote-nvim").setup()
   end
 }
+
+local plugins = {
+  -- remote,
+}
+
+return plugins
