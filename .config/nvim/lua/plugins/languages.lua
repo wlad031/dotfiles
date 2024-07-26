@@ -143,14 +143,11 @@ local lspconfig = {
   end
 }
 
-local vim_test = {
-  "vim-test/vim-test",
-  dependencies = {
-    "preservim/vimux",
-  },
+
+local actions_preview = {
+  "aznhe21/actions-preview.nvim",
   config = function()
-    vim.cmd("let test#strategy = 'vimux'")
-  end
+  end,
 }
 
 local plugins = {
@@ -158,7 +155,7 @@ local plugins = {
   mason,
   mason_lspconfig,
   lspconfig,
-  vim_test
+  actions_preview,
 }
 
 return plugins

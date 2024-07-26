@@ -5,58 +5,26 @@ function SetCommonMappings()
   --vim.keymap.set('n', '<C-d><C-d>', '"_dd')
   vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = "Go down half a page and center page vertically" })
   vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
+
   vim.keymap.set('n', '<C-x><C-x>', ':x<CR>', { desc = "Another way out" })
   vim.keymap.set('n', '<leader>//', ":nohl<CR>", { desc = "Clear search highlights" })
+
   vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = "Split vertically" })
   vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = "Split horizontally" })
 
-  vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { desc = "Test file" })
-  vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
-  vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { desc = "Test last" })
 
-  vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
-  --vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {})
-  vim.keymap.set("n", "<leader>cr", function() telescope_builtin.lsp_references() end,
-    { noremap = true, silent = true, desc = "Telescope: LSP references" })
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code actions" })
-  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format code" })
-  vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "LSP: Signature help" })
+  vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Code: Go to definition (Vim)" })
+  vim.keymap.set("n", "<leader>cr", telescope_builtin.lsp_references,
+    { desc = "Code: References (Telescope)", noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>ca", require("actions-preview").code_actions, { desc = "Code: Actions (Code actions)" })
+  vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Code: Format (Vim)" })
+  vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Code: Signature help (Vim)" })
 
   vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, { desc = "Telescope: Find files" })
   vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Telescope: Live grep" })
   vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
   vim.keymap.set('n', '<leader>fe', telescope_builtin.oldfiles, { desc = "Telescope: Old files" })
   vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Telescope: Help tags" })
-
-  vim.keymap.set("n", "<leader>hj", function() harpoon:list():select(1) end, { desc = "Harpoon: Select 1" })
-  vim.keymap.set("n", "<leader>hk", function() harpoon:list():select(2) end, { desc = "Harpoon: Select 2" })
-  vim.keymap.set("n", "<leader>hl", function() harpoon:list():select(3) end, { desc = "Harpoon: Select 3" })
-  vim.keymap.set("n", "<leader>h;", function() harpoon:list():select(4) end, { desc = "Harpoon: Select 4" })
-  -- -- Toggle previous & next buffers stored within Harpoon list
-  -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
-  -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
-  -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2
-
-  vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon: Add" })
-  vim.keymap.set("n", "<leader>hh", function()
-      local conf = require("telescope.config").values
-      local harpoon_files = harpoon:list()
-      local file_paths = {}
-      for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
-      end
-      require("telescope.pickers").new({}, {
-        prompt_title = "Harpoon",
-        finder = require("telescope.finders").new_table({
-          results = file_paths,
-        }),
-        previewer = conf.file_previewer({}),
-        sorter = conf.generic_sorter({}),
-      }):find()
-    end,
-    { desc = "Harpoon: Open window" })
-
-  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil: Open parent directory" })
 
   vim.keymap.set('n', '<leader>ce', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Diagnostics: Open float" })
 
@@ -68,39 +36,6 @@ function SetCommonMappings()
   vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
   vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 
-  local hop = require('hop')
-  local directions = require('hop.hint').HintDirection
-  vim.keymap.set('', 'f', function()
-    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
-  end, { remap = true })
-  vim.keymap.set('', 'F', function()
-    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
-  end, { remap = true })
-  vim.keymap.set('', 't', function()
-    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 })
-  end, { remap = true })
-  vim.keymap.set('', 'T', function()
-    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 })
-  end, { remap = true })
-
-  vim.keymap.set(
-    { "n", "o", "x" },
-    "w",
-    "<cmd>lua require('spider').motion('w')<CR>",
-    { desc = "Spider-w" }
-  )
-  vim.keymap.set(
-    { "n", "o", "x" },
-    "e",
-    "<cmd>lua require('spider').motion('e')<CR>",
-    { desc = "Spider-e" }
-  )
-  vim.keymap.set(
-    { "n", "o", "x" },
-    "b",
-    "<cmd>lua require('spider').motion('b')<CR>",
-    { desc = "Spider-b" }
-  )
 
   vim.keymap.set(
     { "n", "x" },
@@ -108,6 +43,14 @@ function SetCommonMappings()
     function() require("rip-substitute").sub() end,
     { desc = " rip substitute" }
   )
+
+  vim.keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy: Open" })
+end
+
+function GetOutlineKeys()
+  return {
+    { "<leader>fo", "<cmd>Outline<CR>", desc = "Toggle outline" },
+  }
 end
 
 function GetTelescopeMapping()

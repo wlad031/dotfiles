@@ -7,22 +7,6 @@ local flash = {
   keys = GetFlashKeys(),
 }
 
-local hop = {
-  'smoka7/hop.nvim',
-  version = "*",
-  opts = {
-    keys = 'etovxqpdygfblzhckisuran'
-  }
-}
-
-local harpoon = {
-  "ThePrimeagen/harpoon",
-  branch = "harpoon2",
-  dependencies = { "nvim-lua/plenary.nvim" },
-  config = function()
-    require("harpoon"):setup()
-  end
-}
 
 local portal = {
   "cbochs/portal.nvim",
@@ -58,18 +42,12 @@ local mini_move = {
   end
 }
 
-local spider = {
-  "chrisgrieser/nvim-spider",
-  lazy = true
-}
 
 local outline = {
   "hedyhli/outline.nvim",
   lazy = true,
   cmd = { "Outline", "OutlineOpen" },
-  keys = { -- Example mapping to toggle outline
-    { "<leader>fo", "<cmd>Outline<CR>", desc = "Toggle outline" },
-  },
+  keys = GetOutlineKeys(),
   opts = {
     -- Your setup opts here
   }
@@ -77,13 +55,10 @@ local outline = {
 
 local plugins = {
   -- flash,
-  hop,
-  harpoon,
   portal,
   mini_bracketed,
   mini_ai,
   mini_move,
-  spider,
   outline
 }
 

@@ -23,7 +23,7 @@ fzf_setup() {
 
   # -- Use fd instead of fzf --
   export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-  # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat -n --color=always --line-range :500 {}'"
+  export FZF_DEFAULT_OPTS="--height 80% --layout=reverse --border --preview '/Users/vgerasimov/dotfiles/scripts/fzf-preview.sh {}'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
   export FZF_CTRL_R_OPTS="--reverse"
@@ -32,12 +32,12 @@ fzf_setup() {
   # - The first argument to the function ($1) is the base path to start traversal
   # - See the source code (completion.{bash,zsh}) for the details.
   _fzf_compgen_path() {
-    fd --hidden --preview 'eza --tree --color=always {} | head -200'--exclude .git . "$1"
+    fd --hidden --exclude .git . "$1"
   }
 
   # Use fd to generate the list for directory completion
   _fzf_compgen_dir() {
-    fd --type=d --hidden --preview 'eza --tree --color=always {} | head -200' --exclude .git . "$1"
+    fd --type=d --hidden --exclude .git . "$1"
   }
 
   # TODO: Checks for bat and eza are installed.

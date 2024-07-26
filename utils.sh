@@ -19,9 +19,9 @@ echo_cl_purple() { echo_cl $CL_PURPLE $* }
 # TODO: Find some better way to do logging
 # TODO: Remove ZSH_* prefix
 
-if [ -z "$ZSHRC_LOG_INFO"  ]; then export ZSHRC_LOG_INFO=true  ; fi
-if [ -z "$ZSHRC_LOG_ERROR" ]; then export ZSHRC_LOG_ERROR=true ; fi
-if [ -z "$ZSHRC_LOG_DEBUG" ]; then export ZSHRC_LOG_DEBUG=false; fi
+if [[ -z "$ZSHRC_LOG_INFO"  ]]; then export ZSHRC_LOG_INFO=true  ; fi
+if [[ -z "$ZSHRC_LOG_ERROR" ]]; then export ZSHRC_LOG_ERROR=true ; fi
+if [[ -z "$ZSHRC_LOG_DEBUG" ]]; then export ZSHRC_LOG_DEBUG=false; fi
 
 log_info() {
     if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
@@ -47,8 +47,8 @@ log_debug() {
 # Environment loading
 
 source_safe() {
-    file=$1
-    if [ -f $file ]; then
+    local file=$1
+    if [[ -f $file ]]; then
       source $file
       log_debug "Sourced env file: $file"
     else
@@ -57,8 +57,13 @@ source_safe() {
 }
 
 read_env() {
-    file=$1
-    if [ -f $file ]; then
+    local file=$1
+    if ! command -v envsubst > /dev/null 2>&1; then
+        log_error "envsubst command is not found, cannot read key-value 'env' files"
+        return
+    fi
+
+    if [[ -f $file ]]; then
       export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
       log_debug "Loaded env file: $file"
     else

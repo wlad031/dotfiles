@@ -13,15 +13,19 @@ local gitsigns = {
   end,
 }
 
+local diffview = {
+  "sindrets/diffview.nvim",
+  config = function()
+    require("diffview").setup({})
+  end
+}
+
 local neogit = {
   "NeogitOrg/neogit",
   dependencies = {
-    "nvim-lua/plenary.nvim",  -- required
-    "sindrets/diffview.nvim", -- optional - Diff integration
-
-    -- Only one of these is needed, not both.
-    "nvim-telescope/telescope.nvim", -- optional
-    "ibhagwan/fzf-lua",              -- optional
+    "nvim-lua/plenary.nvim",
+    "sindrets/diffview.nvim",
+    "nvim-telescope/telescope.nvim",
   },
   config = true
 }
@@ -35,7 +39,6 @@ local lazygit = {
     "LazyGitFilter",
     "LazyGitFilterCurrentFile",
   },
-  -- optional for floating window border decoration
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
@@ -47,6 +50,7 @@ local lazygit = {
 local plugins = {
   --figutive,
   gitsigns,
+  diffview,
   neogit,
   lazygit
 }

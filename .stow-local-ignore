@@ -2,6 +2,7 @@
 .gitmodules
 .gitignore
 README.*
+Brewfile.*
 .*bak
 .*backups
 Mackup

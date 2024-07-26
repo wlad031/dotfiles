@@ -17,7 +17,7 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 require("lazy").setup("plugins", {
   change_detection = {
     enabled = true,
-    notify = true,
+    notify = false,
   },
   install = {
     colorscheme = { "flow" },
@@ -26,4 +26,3 @@ require("lazy").setup("plugins", {
     border = "rounded",
   },
 })
-

@@ -27,9 +27,11 @@ thefuck_setup
 fastfetch_setup
 zoxide_setup
 yazi_setup
+jetbrains_setup
 
 # Uncomment for profiling this script
 # zprof
 
 # TODO: [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+
 

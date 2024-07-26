@@ -3,6 +3,7 @@
 export ZSHRC_LOG_INFO=true
 export ZSHRC_LOG_ERROR=true
 export ZSHRC_LOG_DEBUG=false
+export WELCOME_SCREEN_ENABLED=false
 ###############################################################################
 
 ###############################################################################
@@ -20,6 +21,11 @@ export PATH="/usr/local/sbin:$PATH"
 ###############################################################################
 
 ###############################################################################
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+###############################################################################
+
+###############################################################################
 # Common aliases
 alias xx='exit'
 alias ll="ls -la"
@@ -28,7 +34,7 @@ alias ll="ls -la"
 ###############################################################################
 # Including common utilities
 local utils_file="$HOME/utils.sh"
-if [ -f "$utils_file" ]; then
+if [[ -f "$utils_file" ]]; then
   source "$utils_file"
 else
   echo "Cannot find $utils_file file"
@@ -36,10 +42,8 @@ else
 fi
 ###############################################################################
 
-export WELCOME_SCREEN_ENABLED=false
-
 ###############################################################################
-# Exporting other env files
+# Sourcing other env files
 read_env    "$HOME/.env"
 source_safe "$HOME/scripts/antigen.sh"
 source_safe "$HOME/scripts/ohmyposh.sh"
@@ -67,5 +71,6 @@ source_safe "$HOME/scripts/thefuck.sh"
 source_safe "$HOME/scripts/fastfetch.sh"
 source_safe "$HOME/scripts/zoxide.sh"
 source_safe "$HOME/scripts/yazi.sh"
+source_safe "$HOME/scripts/jetbrains.sh"
 ###############################################################################
 
