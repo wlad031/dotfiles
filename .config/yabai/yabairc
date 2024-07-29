@@ -16,7 +16,7 @@ yabai -m space 6 --label terminal
 # yabai -m config layout float
 yabai -m config layout bsp
 
-yabai -m space tasks --layout stack
+yabai -m space tasks --layout bsp
 yabai -m space idea --layout float
 
 yabai -m config top_padding     0
@@ -83,6 +83,7 @@ yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^AppCleaner$" manage=off
 yabai -m rule --add app="^Bitwarden$" manage=off
 yabai -m rule --add title="^Bitwarden$" manage=off
+yabai -m rule --add title="^Software Update$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
@@ -129,11 +130,11 @@ yabai -m rule --add app="^.*Alacritty.*$" --space terminal
 yabai -m rule --add app="^.*Kitty.*$" --space terminal
 
 # https://github.com/koekeishiya/yabai/issues/1317
-yabai -m signal --add event=window_created action='
-  yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" || \
-  yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2 || \
-  terminal-notifier -title "yabai" -subtitle "$yabai_window_id" -message "No resizable window"
-'
+# yabai -m signal --add event=window_created action='
+#   yabai -m query --windows --window $yabai_window_id | jq -er ".\"can-resize\" or .\"is-floating\"" || \
+#   yabai -m window $yabai_window_id --toggle float --layer above --grid 4:5:2:1:2:2 || \
+#   terminal-notifier -title "yabai" -subtitle "$yabai_window_id" -message "No resizable window"
+# '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
 

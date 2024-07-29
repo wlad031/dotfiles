@@ -25,7 +25,7 @@ startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]
 name = "homelab"
-path = "~/selfhosting"
+path = "~/Projects/selfhosting"
 
 [[session]]
 name = "keyboard"

@@ -17,6 +17,9 @@ alt + shift - j : yabai -m window --swap south || $(yabai -m window --display so
 alt + shift - k : yabai -m window --swap north || $(yabai -m window --display north; yabai -m display --focus north)
 alt + shift - l : yabai -m window --swap east  || $(yabai -m window --display east; yabai -m display --focus east)
 
+# alt + shift - j : yabai -m window --resize top:0:-10; yabai -m window --resize bottom:0:10
+# alt + shift - k : yabai -m window --resize top:0:10;  yabai -m window --resize bottom:0:-10
+
 alt + lctrl - left : yabai -m window --space prev --focus
 alt + lctrl - right : yabai -m window --space next --focus
 
