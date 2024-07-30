@@ -23,7 +23,7 @@ fzf_setup() {
 
   # -- Use fd instead of fzf --
   export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-  export FZF_DEFAULT_OPTS="--height 80% --layout=reverse --border --preview '/Users/vgerasimov/dotfiles/scripts/fzf-preview.sh {}'"
+  # export FZF_DEFAULT_OPTS="--height 80% --layout=reverse --border --preview '/Users/vgerasimov/dotfiles/scripts/fzf-preview.sh {}'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
   export FZF_CTRL_R_OPTS="--reverse"
