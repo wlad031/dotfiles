@@ -8,6 +8,7 @@ report.zip
 gradlew
 gradlew.bat
 gradle/wrapper/*
+*.swp
 *.env
 *.env.json
 __pycache__/
