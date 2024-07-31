@@ -1,4 +1,4 @@
-local plugins = {
+local P = {
   {
     "zbirenbaum/copilot.lua",
     opts = {},
@@ -21,4 +21,4 @@ local plugins = {
   },
 }
 
-return plugins
+return {}

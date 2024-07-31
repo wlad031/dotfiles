@@ -12,37 +12,32 @@ local P = {
       "L3MON4D3/LuaSnip",
       version = "v2.3",
       build = "make install_jsregexp"
-    }
+    },
+    "onsails/lspkind.nvim",
   },
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local copilot_suggestion = require("copilot.suggestion")
+    local lspkind = require('lspkind')
+    -- local copilot_suggestion = require("copilot.suggestion")
+    local supermaven_suggestion = require('supermaven-nvim.completion_preview')
 
     local function has_words_before()
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
     end
 
-    local ELLIPSIS_CHAR = '…'
-    local MAX_LABEL_WIDTH = 20
-    local MIN_LABEL_WIDTH = 20
-
-    local function formatWindow(entry, vim_item)
-      local label = vim_item.abbr
-      local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
-      if truncated_label ~= label then
-        vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
-      elseif string.len(label) < MIN_LABEL_WIDTH then
-        local padding = string.rep(' ', MIN_LABEL_WIDTH - string.len(label))
-        vim_item.abbr = label .. padding
-      end
-      return vim_item
-    end
-
     cmp.setup({
       formatting = {
-        format = formatWindow,
+        format = lspkind.cmp_format({
+          mode = 'symbol_text',
+          maxwidth = 50,
+          ellipsis_char = '...',
+          show_labelDetails = true,
+          before = function(entry, vim_item)
+            return vim_item
+          end
+        }),
       },
       snippet = {
         expand = function(args)
@@ -71,8 +66,10 @@ local P = {
         ["<C-l>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
         ["<C-y>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if copilot_suggestion.is_visible() then
-            copilot_suggestion.accept()
+          -- if copilot_suggestion.is_visible() then
+          --   copilot_suggestion.accept()
+          if supermaven_suggestion.has_suggestion() then
+            supermaven_suggestion.on_accept_suggestion()
           elseif cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
           elseif luasnip.expandable() then
@@ -98,7 +95,8 @@ local P = {
       },
       sources = cmp.config.sources(
         {
-          { name = 'copilot' },
+          { name = "supermaven" },
+          -- { name = 'copilot' },
           { name = 'metals' },
           { name = "hledger" },
           { name = 'nvim_lsp' },
