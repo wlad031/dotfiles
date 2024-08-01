@@ -29,7 +29,7 @@ local P = {
       pickers = {
         find_files = {
           mappings = mappings.find_files,
-          hidden = true
+          hidden = true,
         },
         buffers = {
           mappings = mappings.buffers,
@@ -44,6 +44,11 @@ local P = {
         },
         lsp_references = {
           mappings = mappings.lsp_references,
+          layout_strategy = 'vertical',
+          layout_config = {
+            prompt_position = 'top',
+            width = 0.5
+          }
         },
       },
     })
