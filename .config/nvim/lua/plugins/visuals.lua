@@ -109,80 +109,6 @@ local kanagawa = {
   end
 }
 
-local lualine = {
-  'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons', opt = false },
-  config = function()
-    local lualine = require("lualine")
-
-    local function lualine_copilot()
-      return {
-        'copilot',
-        symbols = {
-          status = {
-            hl = {
-              enabled = "#50FA7B",
-              sleep = "#AEB7D0",
-              disabled = "#6272A4",
-              warning = "#FFB86C",
-              unknown = "#FF5555"
-            }
-          },
-          spinners = require("copilot-lualine.spinners").dots,
-          spinner_color = "#6272A4"
-        },
-        show_colors = true,
-        show_loading = true
-      }
-    end
-
-    local function escape_status()
-      local ok, m = pcall(require, 'better_escape')
-      if ok and m.waiting then
-        return '✺'
-      else
-        return ''
-      end
-    end
-
-    local nvim_remote = {
-      function()
-        return vim.g.remote_neovim_host and ("Remote: %s"):format(vim.uv.os_gethostname()) or ""
-      end,
-      padding = { right = 1, left = 1 },
-      separator = { left = "", right = "" },
-    }
-
-    lualine.setup({
-      options = {
-        theme = 'auto',
-        icons_enabled = true,
-      },
-      sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch', nvim_remote },
-        lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = { 'location' },
-        lualine_y = {},
-        lualine_z = {},
-      },
-    })
-  end,
-}
-
-local copilot_lualine = {
-  'AndreM222/copilot-lualine',
-  dependencies = { 'nvim-lualine/lualine.nvim', opt = false }
-}
-
 local tint = {
   "levouh/tint.nvim",
   config = function()
@@ -343,7 +269,6 @@ local plugins = {
   zenmode,
   catppuccin,
   kanagawa,
-  lualine,
   tokyonight,
   cyberdream,
   gruvbox,
@@ -351,7 +276,6 @@ local plugins = {
   -- noice, -- it is fucking causing that cursor blinks when there is message
   edgy,
   -- mini_animate
-  copilot_lualine,
   flow,
 }
 

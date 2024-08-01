@@ -28,18 +28,6 @@ local mini_starter = {
   end
 }
 
-local better_escape = {
-  "max397574/better-escape.nvim",
-  config = function()
-    require("better_escape").setup({
-      mapping = { "jk", "jj" },  -- a table with mappings to use
-      timeout = vim.o.timeoutlen,
-      clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-      keys = "<Esc>",            -- keys used for escaping, if it is a function will use the result everytime
-    })
-  end,
-}
-
 local indent_blankline = {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
@@ -68,7 +56,9 @@ local indent_blankline = {
       vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
     end)
 
-    require("ibl").setup { indent = { highlight = highlight } }
+    require("ibl").setup { 
+      -- indent = { highlight = highlight }
+    }
   end
 }
 
@@ -116,8 +106,7 @@ local plugins = {
   number_toggle,
   todo_comments,
   -- mini_starter,
-  -- better_escape,
-  -- indent_blankline,
+  indent_blankline,
   mini_surround,
   mini_trailspace,
   mini_pairs,

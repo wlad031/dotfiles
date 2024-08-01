@@ -23,6 +23,7 @@ function SetCommonMappings()
   vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, { desc = "Telescope: Find files" })
   vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Telescope: Live grep" })
   vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
+  vim.keymap.set('n', '<C-e>', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
   vim.keymap.set('n', '<leader>fe', telescope_builtin.oldfiles, { desc = "Telescope: Old files" })
   vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Telescope: Help tags" })
 
