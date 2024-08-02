@@ -19,11 +19,11 @@ yabai -m config layout bsp
 yabai -m space tasks --layout bsp
 yabai -m space idea --layout float
 
-yabai -m config top_padding     0
-yabai -m config bottom_padding  0
-yabai -m config left_padding    0
-yabai -m config right_padding   0
-yabai -m config window_gap      0
+yabai -m config top_padding    40
+yabai -m config bottom_padding  5
+yabai -m config left_padding    5
+yabai -m config right_padding   5
+yabai -m config window_gap      5
 
 # New window spawns to the right if vertical split, or bottom if horizontal split
 yabai -m config window_placement second_child
@@ -137,4 +137,6 @@ yabai -m rule --add app="^.*Kitty.*$" --space terminal
 # '
 
 echo "yabai: Loaded $(dirname "$0")/$(basename "$0")"
+
+borders &
 
