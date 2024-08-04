@@ -23,15 +23,13 @@ alt + shift - l : yabai -m window --swap east  || $(yabai -m window --display ea
 alt + lctrl - left : yabai -m window --space prev --focus
 alt + lctrl - right : yabai -m window --space next --focus
 
-# === Resize Mode ===
-# Set resize border color 
 :: default   : borders active_color=0xffe2e2e3
+
+# === Resize Mode ===
 :: resize  @ : borders active_color=0xffff00ff
-# toggle resize mode 
-resize < alt + lctrl - r ; default
 resize < q ; default
+resize < escape ; default
 default < alt + lctrl - r ; resize
-# resize commands
 resize < left  : yabai -m window --resize left:-50:0; \
                  yabai -m window --resize right:-50:0
 resize < down  : yabai -m window --resize bottom:0:50; \
@@ -41,4 +39,22 @@ resize < up    : yabai -m window --resize top:0:-50; \
 resize < right : yabai -m window --resize right:50:0; \
                  yabai -m window --resize left:50:0
 
+# === MoveHere Mode ===
+:: movehere  @ : borders active_color=0xff0000ff
+movehere < q ; default
+movehere < escape ; default
+default < alt + lctrl - h ; movehere
 
+movehere < l : yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.app == "Logseq") | .id') --space $(yabai -m query --spaces --space | jq -r '.index') && yabai -m window --focus $(yabai -m query --windows | jq -r '.[] | select(.app == "Logseq") | .id') && skhd -k "q"
+
+# === MoveThere Mode ===
+:: movethere  @ : borders active_color=0x00ffffff
+movethere < q ; default
+movethere < escape ; default
+default < alt + lctrl - g ; movethere
+
+movethere < 1 : yabai -m window --space 1 && skhd -k "q"
+movethere < 2 : yabai -m window --space 2 && skhd -k "q"
+movethere < 3 : yabai -m window --space 3 && skhd -k "q"
+movethere < 4 : yabai -m window --space 4 && skhd -k "q"
+movethere < 5 : yabai -m window --space 5 && skhd -k "q"

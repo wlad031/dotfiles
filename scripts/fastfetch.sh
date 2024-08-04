@@ -1,7 +1,7 @@
 if ! command -v fastfetch &> /dev/null; then
-  export FASTFETCH_INSTALLED=true
+  export FASTFETCH_INSTALLED=false 
 else
-  export FASTFETCH_INSTALLED=false
+  export FASTFETCH_INSTALLED=true
 fi
 
 fastfetch_setup() {

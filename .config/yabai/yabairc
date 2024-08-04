@@ -7,10 +7,11 @@
 # - space 3 -> idea
 # paddings per displays
 
-yabai -m space 1 --label main1
-yabai -m space 2 --label idea
-yabai -m space 3 --label tasks
-yabai -m space 6 --label terminal
+yabai -m space 1 --label main
+yabai -m space 2 --label terminal
+yabai -m space 3 --label browser
+yabai -m space 4 --label tasks
+yabai -m space 5 --label idea
 
 # default layout (can be bsp, stack or float)
 # yabai -m config layout float
@@ -123,11 +124,12 @@ do
   yabai -m rule --add app="^.*IDEA.*$" title="^$title$" manage=off
 done
 
-yabai -m rule --add app="^.*TickTick.*$" --space tasks
-yabai -m rule --add app="^.*Logseq.*$" --space tasks
-yabai -m rule --add app="^.*IDEA.*$" --space idea
+yabai -m rule --add app="^.*TickTick.*$"  --space tasks
+yabai -m rule --add app="^.*Logseq.*$"    --space tasks
+yabai -m rule --add app="^.*IDEA.*$"      --space idea
 yabai -m rule --add app="^.*Alacritty.*$" --space terminal
-yabai -m rule --add app="^.*Kitty.*$" --space terminal
+yabai -m rule --add app="^.*Kitty.*$"     --space terminal
+yabai -m rule --add app="^.*Arc.*$"       --space browser
 
 # https://github.com/koekeishiya/yabai/issues/1317
 # yabai -m signal --add event=window_created action='
