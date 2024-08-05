@@ -18,7 +18,8 @@ local treesitter = {
         "json",
         "yaml",
         "markdown_inline",
-        "ledger"
+        "ledger",
+        "terraform", "hcl"
       },
       highlight = { enable = true },
       indent = { enable = true },
@@ -59,6 +60,11 @@ local mason_lspconfig = {
 local lspconfig = {
   "neovim/nvim-lspconfig",
   lazy = false,
+  opts = {
+    servers = {
+      terraformls = {},
+    },
+  },
   config = function()
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -72,6 +78,10 @@ local lspconfig = {
           },
         }
       },
+    })
+    lspconfig.terraformls.setup({
+      capabilities = capabilities,
+      filetypes = { "terraform" },
     })
   end
 }
