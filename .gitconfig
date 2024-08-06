@@ -2,7 +2,7 @@
 	email = gerasimovvs@yahoo.com
 	name = Vladislav Gerasimov
 [core]
-  editor = "vim"
+  editor = "nvim"
   pager = delta
 	excludesfile = "/Users/vgerasimov/.gitignore_global"
 	autocrlf = input
