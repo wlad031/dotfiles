@@ -21,19 +21,6 @@ export PATH="/usr/local/sbin:$PATH"
 ###############################################################################
 
 ###############################################################################
-# Homebrew
-if [[ -f "/opt/homebrew/bin/brew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f "/usr/local/bin/brew" ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
-else
-    echo "Cannot find brew installation!"
-    return
-fi
-
-###############################################################################
-
-###############################################################################
 # Common aliases
 alias xx='exit'
 alias ll="ls -la"
@@ -48,6 +35,21 @@ else
   echo "Cannot find $utils_file file"
   return
 fi
+###############################################################################
+
+###############################################################################
+# Homebrew
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  log_debug "Found Homebrew at /opt/homebrew/bin/brew"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+  log_debug "Found Homebrew at /usr/local/bin/brew"
+  eval "$(/usr/local/bin/brew shellenv)"
+else
+  log_error "Cannot find brew installation"
+  return
+fi
+
 ###############################################################################
 
 ###############################################################################

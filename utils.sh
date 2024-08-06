@@ -24,21 +24,21 @@ if [[ -z "$ZSHRC_LOG_ERROR" ]]; then export ZSHRC_LOG_ERROR=true ; fi
 if [[ -z "$ZSHRC_LOG_DEBUG" ]]; then export ZSHRC_LOG_DEBUG=false; fi
 
 log_info() {
-    if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
-        echo -e "$(echo_cl_blue "[INFO ]") $*"
-    fi
+  if "$ZSHRC_LOG_INFO" || "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
+    echo -e "$(echo_cl_blue "[INFO ]") $*"
+  fi
 }
 
 log_error() {
-    if "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
-        echo -e "$(echo_cl_red "[ERROR]") $*"
-    fi
+  if "$ZSHRC_LOG_ERROR" || "$ZSHRC_LOG_DEBUG"; then
+    echo -e "$(echo_cl_red "[ERROR]") $*"
+  fi
 }
 
 log_debug() {
-    if "$ZSHRC_LOG_DEBUG"; then
-        echo -e "$(echo_cl_purple "[DEBUG]") $*"
-    fi
+  if "$ZSHRC_LOG_DEBUG"; then
+    echo -e "$(echo_cl_purple "[DEBUG]") $*"
+  fi
 }
 
 ###############################################################################
@@ -47,28 +47,28 @@ log_debug() {
 # Environment loading
 
 source_safe() {
-    local file=$1
-    if [[ -f $file ]]; then
-      source $file
-      log_debug "Sourced env file: $file"
-    else
-      log_error "Cannot source file: doesn't exist: $file"
-    fi
+  local file=$1
+  if [[ -f $file ]]; then
+    source $file
+    log_debug "Sourced env file: $file"
+  else
+    log_error "Cannot source file: doesn't exist: $file"
+  fi
 }
 
 read_env() {
-    local file=$1
-    if ! command -v envsubst > /dev/null 2>&1; then
-        log_error "envsubst command is not found, cannot read key-value 'env' files"
-        return
-    fi
+  local file=$1
+  if ! command -v envsubst > /dev/null 2>&1; then
+      log_error "envsubst command is not found, cannot read key-value 'env' files"
+      return
+  fi
 
-    if [[ -f $file ]]; then
-      export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
-      log_debug "Loaded env file: $file"
-    else
-      log_error "Cannot read env file: doesn't exist: $file"
-    fi
+  if [[ -f $file ]]; then
+    export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
+    log_debug "Loaded env file: $file"
+  else
+    log_error "Cannot read env file: doesn't exist: $file"
+  fi
 }
 
 squash_app_rc() {
@@ -91,11 +91,11 @@ squash_app_rc() {
 # Misc
 
 bkp() {
-    local FILE=$1
-    local BKP="$FILE.bkp"
-    echo "Copying $FILE to $BKP"
-    cp $FILE $BKP
-    echo "Backup file $FILE to $BKP"
+  local FILE=$1
+  local BKP="$FILE.bkp"
+  echo "Copying $FILE to $BKP"
+  cp $FILE $BKP
+  echo "Backup file $FILE to $BKP"
 }
 
 ###############################################################################
