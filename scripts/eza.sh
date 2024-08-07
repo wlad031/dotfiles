@@ -10,7 +10,7 @@ eza_setup() {
     return
   fi
 
-  eza_default_args="-la --git --icons=auto"
+  eza_default_args="-la --git --git-repos-no-status --icons=auto --time-style=long-iso"
   alias ls="eza $eza_default_args"
   alias tree="eza $eza_default_args --tree"
 }

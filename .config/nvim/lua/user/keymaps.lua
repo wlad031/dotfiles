@@ -12,6 +12,11 @@ function SetCommonMappings()
   vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = "Split vertically" })
   vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = "Split horizontally" })
 
+  -- more convenient pane resizing
+  vim.keymap.set('n', '<leader>pl', ':vertical resize +5<CR>', { desc = "Vertical resize: +5" })
+  vim.keymap.set('n', '<leader>ph', ':vertical resize -5<CR>', { desc = "Vertical resize: -5" })
+  vim.keymap.set('n', '<leader>pj', ':resize +5<CR>', { desc = "Vertical resize: +5" })
+  vim.keymap.set('n', '<leader>pk', ':resize -5<CR>', { desc = "Vertical resize: -5" })
 
   vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Code: Go to definition (Vim)" })
   vim.keymap.set("n", "<leader>cr", telescope_builtin.lsp_references,
@@ -29,10 +34,10 @@ function SetCommonMappings()
 
   vim.keymap.set('n', '<leader>ce', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Diagnostics: Open float" })
 
-  vim.keymap.set('n', 'C-S-j', '<cmd>lua require("tmux").resize_down()<cr>')
-  vim.keymap.set('n', 'C-S-k', '<cmd>lua require("tmux").resize_up()<cr>')
-  vim.keymap.set('n', 'C-S-h', '<cmd>lua require("tmux").resize_left()<cr>')
-  vim.keymap.set('n', 'C-S-l', '<cmd>lua require("tmux").resize_right()<cr>')
+  -- vim.keymap.set('n', 'C-J', '<cmd>lua require("tmux").resize_down()<cr>')
+  -- vim.keymap.set('n', 'C-K', '<cmd>lua require("tmux").resize_up()<cr>')
+  -- vim.keymap.set('n', 'C-H', '<cmd>lua require("tmux").resize_left()<cr>')
+  -- vim.keymap.set('n', 'C-L', '<cmd>lua require("tmux").resize_right()<cr>')
 
   vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
   vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
