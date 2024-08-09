@@ -1,13 +1,12 @@
 require "user.keymaps"
 
-local ui_select = {
-  "nvim-telescope/telescope-ui-select.nvim",
-}
-
 local P = {
   "nvim-telescope/telescope.nvim",
   tag = "0.1.5",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+  },
   config = function()
     local telescope = require("telescope")
     local mappings = GetTelescopeMapping()
@@ -70,6 +69,5 @@ local all_recent = {
 
 return {
   P,
-  ui_select,
   all_recent,
 }
