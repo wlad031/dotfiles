@@ -93,12 +93,20 @@ local actions_preview = {
   end,
 }
 
-local plugins = {
+local inc_rename = {
+  "smjonas/inc-rename.nvim",
+  config = function()
+    require("inc_rename").setup()
+    vim.keymap.set("n", "<leader>vv", ":IncRename ")
+  end,
+}
+
+return {
   treesitter,
   mason,
   mason_lspconfig,
   lspconfig,
   actions_preview,
+  inc_rename
 }
 
-return plugins

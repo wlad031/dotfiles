@@ -4,9 +4,9 @@
       "if" : {
         "device" : {
           "vendorID" : "0x4c",
-          "serialNumber" : "94-f6-d6-bb-bf-be",
-          "productID" : "0x269",
           "productName" : "Magic Mouse",
+          "productID" : "0x269",
+          "serialNumber" : "94-f6-d6-bb-bf-be",
           "category" : "mouse"
         }
       },
@@ -20,13 +20,15 @@
       }
     },
     {
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productName" : "Wireless Receiver",
+          "productID" : "0xc542",
+          "category" : "mouse"
+        }
+      },
       "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
-        "acceleration" : {
-          "vertical" : 1
-        },
         "modifiers" : {
           "horizontal" : {
             "control" : {
@@ -41,18 +43,21 @@
               "type" : "alterOrientation"
             }
           }
-        }
-      },
-      "if" : {
-        "device" : {
-          "category" : "mouse",
-          "productName" : "Wireless Receiver",
-          "productID" : "0xc542",
-          "vendorID" : "0x46d"
+        },
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
         }
       }
     },
     {
+      "pointer" : {
+        "disableAcceleration" : false,
+        "speed" : 0.067,
+        "acceleration" : 0.5063
+      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
@@ -60,23 +65,30 @@
       },
       "if" : {
         "device" : {
-          "productID" : "0xb01c",
+          "serialNumber" : "CEF768E73B0A4F10",
           "category" : "mouse",
+          "productID" : "0xb01c",
           "productName" : "G603",
-          "vendorID" : "0x46d",
-          "serialNumber" : "CEF768E73B0A4F10"
+          "vendorID" : "0x46d"
         }
       },
       "buttons" : {
         "universalBackForward" : true
-      },
-      "pointer" : {
-        "acceleration" : 0.5063,
-        "disableAcceleration" : false,
-        "speed" : 0.067
       }
     },
     {
+      "pointer" : {
+        "acceleration" : 0.52,
+        "speed" : 0.1989
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "category" : "mouse",
+          "productName" : "USB Receiver",
+          "productID" : "0xc539"
+        }
+      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
@@ -93,18 +105,6 @@
               "type" : "zoom"
             }
           }
-        }
-      },
-      "pointer" : {
-        "acceleration" : 0.52,
-        "speed" : 0.1342
-      },
-      "if" : {
-        "device" : {
-          "productName" : "USB Receiver",
-          "productID" : "0xc539",
-          "vendorID" : "0x46d",
-          "category" : "mouse"
         }
       }
     }

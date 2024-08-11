@@ -83,5 +83,7 @@ source_safe "$HOME/scripts/fastfetch.sh"
 source_safe "$HOME/scripts/zoxide.sh"
 source_safe "$HOME/scripts/yazi.sh"
 source_safe "$HOME/scripts/jetbrains.sh"
+source_safe "$HOME/scripts/luaver.sh"
+source_safe "$HOME/scripts/xcmd.sh"
 ###############################################################################
 

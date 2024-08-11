@@ -28,10 +28,9 @@ fastfetch_setup
 zoxide_setup
 yazi_setup
 jetbrains_setup
+luaver_setup
+xcmd_setup
 
 # Uncomment for profiling this script
 # zprof
-
-# TODO: [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
-
 
