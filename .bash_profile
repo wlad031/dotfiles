@@ -10,3 +10,5 @@ export PATH="/Users/vgerasimov/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 [ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+
+. "$HOME/.atuin/bin/env"

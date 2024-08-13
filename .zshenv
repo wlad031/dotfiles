@@ -85,5 +85,6 @@ source_safe "$HOME/scripts/yazi.sh"
 source_safe "$HOME/scripts/jetbrains.sh"
 source_safe "$HOME/scripts/luaver.sh"
 source_safe "$HOME/scripts/xcmd.sh"
+source_safe "$HOME/scripts/atuin.sh"
 ###############################################################################
 

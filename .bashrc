@@ -11,3 +11,6 @@ export PATH="/Users/vgerasimov/.rd/bin:$PATH"
 
 
 [ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"
