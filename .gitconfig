@@ -6,6 +6,7 @@
   pager = delta
 	excludesfile = "/Users/vgerasimov/.gitignore_global"
 	autocrlf = input
+	quotepath = false
 [push]
 	default = current
 [alias]
