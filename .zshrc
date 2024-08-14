@@ -31,6 +31,7 @@ jetbrains_setup
 luaver_setup
 xcmd_setup
 atuin_setup
+sshs_setup
 
 # Uncomment for profiling this script
 # zprof

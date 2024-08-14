@@ -16,7 +16,7 @@ path = "~/Projects/gpc"
 [[session]]
 name = "dotfiles"
 path = "~/dotfiles"
-startup_command = "~/dotfiles/.config/sesh/dotfiles_startup_script.sh"
+startup_command = "~/.config/sesh/dotfiles.sh"
 
 [[session]]
 name = "vim"
@@ -26,6 +26,7 @@ startup_command = "nvim -c ':Telescope find_files'"
 [[session]]
 name = "homelab"
 path = "~/Projects/selfhosting"
+startup_command = "~/.config/sesh/homelab.sh"
 
 [[session]]
 name = "keyboard"
