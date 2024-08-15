@@ -32,6 +32,7 @@ luaver_setup
 xcmd_setup
 atuin_setup
 sshs_setup
+aerospace_setup
 
 # Uncomment for profiling this script
 # zprof

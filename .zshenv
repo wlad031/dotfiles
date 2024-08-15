@@ -87,5 +87,6 @@ source_safe "$HOME/scripts/luaver.sh"
 source_safe "$HOME/scripts/xcmd.sh"
 source_safe "$HOME/scripts/atuin.sh"
 source_safe "$HOME/scripts/sshs.sh"
+source_safe "$HOME/scripts/aerospace.sh"
 ###############################################################################
 

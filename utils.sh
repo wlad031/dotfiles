@@ -98,5 +98,22 @@ bkp() {
   echo "Backup file $FILE to $BKP"
 }
 
+replace_placeholders() {
+  local file="$1"
+  shift
+  
+  local content=$(<"$file")
+
+  while [[ $# -gt 0 ]]; do
+    placeholder="$1"
+    value="$2"
+    content="${content//\{\{$placeholder\}\}/$value}"
+    shift 2
+  done
+
+  echo "$content"
+}
+
+
 ###############################################################################
 
