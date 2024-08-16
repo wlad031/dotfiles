@@ -1,6 +1,6 @@
 [gaps]
-inner.horizontal =  15
-inner.vertical   =  15
+inner.horizontal =  10
+inner.vertical   =  10
 outer.left       = 200
 outer.bottom     =  50
 outer.top        = 200
