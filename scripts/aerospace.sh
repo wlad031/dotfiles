@@ -15,6 +15,12 @@ aerospace_setup() {
     return
   fi
 
+  dir="$DOTFILES_DIR/.config/aerospace"
+  if [[ ! -d "$dir" ]]; then
+    log_error "Cannot find aerospace config directory: $dir"
+    return
+  fi
+
   __aerospace_change_env() {
     local gaps_file="$1"
     if [[ ! -f "$gaps_file" ]]; then
@@ -24,11 +30,6 @@ aerospace_setup() {
 
     local gaps=$(cat $gaps_file)
     
-    dir="$DOTFILES_DIR/.config/aerospace"
-    if [[ ! -d "$dir" ]]; then
-      log_error "Cannot find aerospace config directory: $dir"
-      return
-    fi
     local config_file="$dir/aerospace.toml"
     local template_file="$dir/aerospace-template.toml"
     if [[ ! -f "$template_file" ]]; then
