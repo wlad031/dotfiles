@@ -14,5 +14,8 @@ fastfetch_setup() {
     return
   fi
 
-  fastfetch
+  export FASTFETCH_DIR="$DOTFILES_DIR/.config/fastfetch"
+  export FASTFETCH_CUSTOM="$FASTFETCH_DIR/custom.jsonc"
+
+  fastfetch -c "$FASTFETCH_CUSTOM"
 }
