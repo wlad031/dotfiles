@@ -6,6 +6,8 @@ ohmyposh_setup
 git_setup
 lazygit_setup
 devmoji_setup
+colima_setup
+rancher_setup
 docker_setup
 tmux_setup
 sesh_setup
@@ -24,7 +26,6 @@ rvm_setup
 cargo_setup
 coursier_setup
 thefuck_setup
-fastfetch_setup
 zoxide_setup
 yazi_setup
 jetbrains_setup
@@ -33,6 +34,7 @@ xcmd_setup
 atuin_setup
 sshs_setup
 aerospace_setup
+fastfetch_setup
 
 # Uncomment for profiling this script
 # zprof

@@ -29,13 +29,22 @@ alias ll="ls -la"
 
 ###############################################################################
 # Including common utilities
-local utils_file="$HOME/utils.sh"
-if [[ -f "$utils_file" ]]; then
-  source "$utils_file"
-else
-  echo "Cannot find $utils_file file"
+export DOTFILES_DIR="$HOME/dotfiles"
+if [[ ! -d "$DOTFILES_DIR" ]]; then
+  echo "Cannot find dotfiles: $DOTFILES_DIR"
   return
 fi
+export DOTFILES_SCRIPTS_DIR="$DOTFILES_DIR/scripts"
+if [[ ! -d "$DOTFILES_SCRIPTS_DIR" ]]; then
+  echo "Cannot find dotfiles scripts: $DOTFILES_SCRIPTS_DIR"
+  return
+fi
+export DOTFILES_SCRIPTS_COMMON_UTILITIES="$DOTFILES_SCRIPTS_DIR/common.sh"
+if [[ ! -f "$DOTFILES_SCRIPTS_COMMON_UTILITIES" ]]; then
+  echo "Cannot find common utilities: $DOTFILES_SCRIPTS_COMMON_UTILITIES"
+  return
+fi
+source "$DOTFILES_SCRIPTS_COMMON_UTILITIES"
 ###############################################################################
 
 ###############################################################################
@@ -56,37 +65,40 @@ fi
 ###############################################################################
 # Sourcing other env files
 read_env    "$HOME/.env"
-source_safe "$HOME/scripts/antigen.sh"
-source_safe "$HOME/scripts/ohmyposh.sh"
-source_safe "$HOME/scripts/git.sh"
-source_safe "$HOME/scripts/eza.sh"
-source_safe "$HOME/scripts/bat.sh"
-source_safe "$HOME/scripts/tmux.sh"
-source_safe "$HOME/scripts/docker.sh"
-source_safe "$HOME/scripts/sesh.sh"
-source_safe "$HOME/scripts/fzf.sh"
-source_safe "$HOME/scripts/lazygit.sh"
-source_safe "$HOME/scripts/devmoji.sh"
-source_safe "$HOME/scripts/neovim.sh"
-source_safe "$HOME/scripts/codium.sh"
-source_safe "$HOME/scripts/fnm.sh"
-source_safe "$HOME/scripts/flutter.sh"
-source_safe "$HOME/scripts/g.sh"
-source_safe "$HOME/scripts/sdkman.sh"
-source_safe "$HOME/scripts/pyenv.sh"
-source_safe "$HOME/scripts/gcloud.sh"
-source_safe "$HOME/scripts/rvm.sh"
-source_safe "$HOME/scripts/cargo.sh"
-source_safe "$HOME/scripts/coursier.sh"
-source_safe "$HOME/scripts/thefuck.sh"
-source_safe "$HOME/scripts/fastfetch.sh"
-source_safe "$HOME/scripts/zoxide.sh"
-source_safe "$HOME/scripts/yazi.sh"
-source_safe "$HOME/scripts/jetbrains.sh"
-source_safe "$HOME/scripts/luaver.sh"
-source_safe "$HOME/scripts/xcmd.sh"
-source_safe "$HOME/scripts/atuin.sh"
-source_safe "$HOME/scripts/sshs.sh"
-source_safe "$HOME/scripts/aerospace.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/antigen.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/ohmyposh.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/git.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/eza.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/bat.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/tmux.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/colima.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/rancher.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/docker.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/lazydocker.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/sesh.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/fzf.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/lazygit.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/devmoji.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/neovim.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/codium.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/fnm.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/flutter.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/g.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/sdkman.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/pyenv.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/gcloud.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/rvm.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/cargo.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/coursier.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/thefuck.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/fastfetch.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/zoxide.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/yazi.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/jetbrains.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/luaver.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/xcmd.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/atuin.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/sshs.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/aerospace.sh"
 ###############################################################################
 
