@@ -11,4 +11,6 @@ neovim_setup() {
   fi
 
   alias vim="nvim"
+  alias v="nvim"
+  export EDITOR="nvim"
 }
