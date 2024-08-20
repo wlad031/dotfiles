@@ -9,6 +9,7 @@ local treesitter = {
       auto_install = true,
       ensure_installed = {
         "lua",
+        "html",
         "java",
         "scala",
         "python",
@@ -19,7 +20,6 @@ local treesitter = {
         "yaml",
         "markdown_inline",
         "ledger",
-        "terraform", "hcl"
       },
       highlight = { enable = true },
       indent = { enable = true },
