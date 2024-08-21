@@ -6,13 +6,15 @@ fi
 
 cargo_setup() {
   if [[ "$CARGO_INSTALLED" = false ]]; then
-    log_error "cargo is not installed"
+    if [[ "$opt" = "required" ]]; then
+      log_error "cargo is not installed"
+    else
+      log_debug "cargo is not installed"
+    fi
     return
   fi
 
-  CARGO_DIR="$HOME/.cargo"
-  if [[ -f "$CARGO_DIR/env" ]]; then
-    source_safe "$CARGO_DIR/env"
-  fi
+  export CARGO_DIR="$HOME/.cargo"
+  source_safe "$CARGO_DIR/env"
 }
 

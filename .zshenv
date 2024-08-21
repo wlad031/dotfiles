@@ -2,7 +2,7 @@
 # Setting logging level
 export ZSHRC_LOG_INFO=true
 export ZSHRC_LOG_ERROR=true
-export ZSHRC_LOG_DEBUG=false
+export ZSHRC_LOG_DEBUG=true
 export WELCOME_SCREEN_ENABLED=true
 ###############################################################################
 
@@ -60,6 +60,9 @@ else
   return
 fi
 
+source_safe "$DOTFILES_SCRIPTS_DIR/cargo.sh"
+cargo_setup
+
 ###############################################################################
 
 ###############################################################################
@@ -88,7 +91,6 @@ source_safe "$DOTFILES_SCRIPTS_DIR/sdkman.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/pyenv.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/gcloud.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/rvm.sh"
-source_safe "$DOTFILES_SCRIPTS_DIR/cargo.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/coursier.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/thefuck.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/fastfetch.sh"

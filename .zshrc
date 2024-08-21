@@ -23,7 +23,6 @@ sdkman_setup
 pyenv_setup
 gcloud_setup
 rvm_setup
-cargo_setup
 coursier_setup
 thefuck_setup
 zoxide_setup
