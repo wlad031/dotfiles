@@ -5,9 +5,9 @@
 --vim.cmd.colorscheme "catppuccin-mocha"
 --vim.cmd.colorscheme "tokyonight-moon"
 --vim.cmd.colorscheme "cyberdream"
---vim.cmd.colorscheme "gruvbox"
+vim.cmd.colorscheme "gruvbox"
 --vim.cmd.colorscheme "kanagawa"
-vim.cmd "colorscheme flow"
+-- vim.cmd "colorscheme flow"
 
 vim.o.termguicolors = true
 
