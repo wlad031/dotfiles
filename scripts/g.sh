@@ -10,6 +10,9 @@ g_setup() {
     return
   fi
 
-  unalias g
+  export GOROOT="$HOME/.go"
+  export GOPATH="$HOME/go"
+
+  unalias g > /dev/null 2>&1
   source_safe "$HOME/.g/env"
 }

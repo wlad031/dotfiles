@@ -90,6 +90,10 @@ squash_app_rc() {
 ###############################################################################
 # Misc
 
+path() {
+    echo "$PATH" | tr ":" "\n" | nl
+}
+
 bkp() {
   local FILE=$1
   local BKP="$FILE.bkp"
@@ -101,7 +105,7 @@ bkp() {
 replace_placeholders() {
   local file="$1"
   shift
-  
+
   local content=$(<"$file")
 
   while [[ $# -gt 0 ]]; do

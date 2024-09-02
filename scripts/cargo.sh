@@ -15,6 +15,8 @@ cargo_setup() {
   fi
 
   export CARGO_DIR="$HOME/.cargo"
-  source_safe "$CARGO_DIR/env"
+  if [[ -f "$CARGO_DIR/env" ]]; then
+    source_safe "$CARGO_DIR/env"
+  fi
 }
 

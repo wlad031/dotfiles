@@ -11,4 +11,6 @@ thefuck_setup() {
   fi
 
   eval $(thefuck --alias)
+
+  alias tf='fuck'
 }

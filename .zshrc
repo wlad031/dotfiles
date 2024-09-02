@@ -29,8 +29,8 @@ zoxide_setup
 yazi_setup
 jetbrains_setup
 luaver_setup
-xcmd_setup
-atuin_setup
+# xcmd_setup
+# atuin_setup
 sshs_setup
 aerospace_setup
 fastfetch_setup

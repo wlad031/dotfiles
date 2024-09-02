@@ -12,3 +12,4 @@ gradle/wrapper/*
 *.env
 *.env.json
 __pycache__/
+.factorypath
