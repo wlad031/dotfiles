@@ -9,6 +9,7 @@ devmoji_setup
 colima_setup
 rancher_setup
 docker_setup
+lazydocker_setup
 tmux_setup
 sesh_setup
 fzf_setup
