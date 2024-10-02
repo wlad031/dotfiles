@@ -44,7 +44,7 @@ fzf_setup() {
   # TODO: Checks for bat and eza are installed.
   export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
   export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-  
+
   if [[ "$TMUX_INSTALLED" = true ]]; then
     export FZF_TMUX=1
     export FZF_TMUX_OPTS="-p"

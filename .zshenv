@@ -110,5 +110,6 @@ source_safe "$DOTFILES_SCRIPTS_DIR/xcmd.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/atuin.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/sshs.sh"
 source_safe "$DOTFILES_SCRIPTS_DIR/aerospace.sh"
+source_safe "$DOTFILES_SCRIPTS_DIR/zsh_vi.sh"
 ###############################################################################
 

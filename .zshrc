@@ -35,6 +35,7 @@ luaver_setup
 sshs_setup
 aerospace_setup
 fastfetch_setup
+zsh_vi_setup
 
 # Uncomment for profiling this script
 # zprof
