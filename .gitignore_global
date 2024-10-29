@@ -9,7 +9,7 @@ gradlew
 gradlew.bat
 gradle/wrapper/*
 *.swp
-*.env
-*.env.json
+.env
+.env.json
 __pycache__/
 .factorypath

@@ -10,10 +10,6 @@ path = "~/Downloads"
 startup_command = "yy"
 
 [[session]]
-name = "gpc"
-path = "~/Projects/gpc"
-
-[[session]]
 name = "dotfiles"
 path = "~/dotfiles"
 startup_command = "~/.config/sesh/dotfiles.sh"
@@ -25,7 +21,7 @@ startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]
 name = "homelab"
-path = "~/Projects/selfhosting"
+path = "~/Projects/homelab"
 startup_command = "~/.config/sesh/homelab.sh"
 
 [[session]]

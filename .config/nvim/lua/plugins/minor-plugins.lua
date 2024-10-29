@@ -109,7 +109,7 @@ local plugins = {
   indent_blankline,
   mini_surround,
   mini_trailspace,
-  mini_pairs,
+  -- mini_pairs,
   highlight_colors,
   highight_undo,
 }
