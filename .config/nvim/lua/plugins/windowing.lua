@@ -61,7 +61,7 @@ local tmux = {
 }
 
 local plugins = {
-  tmux
+  -- tmux
 }
 
 return plugins

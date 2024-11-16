@@ -109,4 +109,5 @@
     "redhat.telemetry.enabled": false,
     "editor.accessibilitySupport": "off",
     "workbench.colorTheme": "Gruvbox Dark Hard",
+    "debug.onTaskErrors": "showErrors",
 }

@@ -25,5 +25,10 @@ path = "~/Projects/homelab"
 startup_command = "~/.config/sesh/homelab.sh"
 
 [[session]]
+name = "notes"
+path = "~/notes"
+startup_command = "nvim -c ':Telescope find_files'"
+
+[[session]]
 name = "keyboard"
 path = "~/Projects/my-keeb"
