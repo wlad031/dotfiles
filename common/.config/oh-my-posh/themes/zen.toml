@@ -40,6 +40,13 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       commit_icon = '@'
       fetch_status = true
 
+  [[blocks.segments]]
+    type = "python"
+    style = "plain"
+    foreground = "yellow"
+    background = "transparent"
+    template = "  {{ .Venv }} ({{ .Full }}) "
+
 [[blocks]]
   type = 'rprompt'
   overflow = 'hidden'

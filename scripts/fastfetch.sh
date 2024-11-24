@@ -1,5 +1,5 @@
 if ! command -v fastfetch &> /dev/null; then
-  export FASTFETCH_INSTALLED=false 
+  export FASTFETCH_INSTALLED=false
 else
   export FASTFETCH_INSTALLED=true
 fi
@@ -14,7 +14,7 @@ fastfetch_setup() {
     return
   fi
 
-  export FASTFETCH_DIR="$DOTFILES_DIR/.config/fastfetch"
+  export FASTFETCH_DIR="$HOME/.config/fastfetch"
   export FASTFETCH_CUSTOM="$FASTFETCH_DIR/custom.jsonc"
 
   fastfetch -c "$FASTFETCH_CUSTOM"
