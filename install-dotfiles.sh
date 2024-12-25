@@ -125,7 +125,7 @@ msg "${GREEN}Starting dotfiles installation...${NOFORMAT}"
 msg "Hostname: $HOSTNAME"
 msg "Username: $USERNAME"
 
-local target_dir="$(getent passwd "$HOME" | cut -d: -f6)"
+target_dir="$(getent passwd "$USERNAME" | cut -d: -f6)"
 
 # Stow common configurations
 stow_package "common" "." "$target_dir"
