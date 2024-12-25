@@ -20,6 +20,7 @@ local treesitter = {
         "yaml",
         "markdown_inline",
         "ledger",
+        "html"
       },
       highlight = { enable = true },
       indent = { enable = true },

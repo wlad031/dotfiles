@@ -11,6 +11,9 @@ HOSTNAME=$(hostname)
 USERNAME=$(whoami)
 DRY_RUN=0
 VERBOSE=0
+ADOPT=0
+RED='' GREEN='' YELLOW=''
+NOFORMAT=''
 
 usage() {
   cat <<EOF
@@ -24,6 +27,8 @@ Available options:
 -h, --help        Print this help and exit
 -v, --verbose     Enable verbose output
 -n, --dry-run     Perform a dry run without making changes
+--adopt           (Use with care!)  Import existing files into stow package
+                  from target.  Please read stow docs before using.
 --no-color        Disable colored output
 --hostname HOST   Specify hostname (default: current hostname)
 --username USER   Specify username (default: current username)
@@ -60,12 +65,14 @@ parse_params() {
   USERNAME=$(whoami)
   DRY_RUN=0
   VERBOSE=0
+  ADOPT=0
 
   while :; do
     case "${1-}" in
     -h | --help) usage ;;
     -v | --verbose) VERBOSE=1 ;;
     -n | --dry-run) DRY_RUN=1 ;;
+    --adopt) ADOPT=1 ;;
     --no-color) NO_COLOR=1 ;;
     --hostname)
       HOSTNAME="${2-}"
@@ -93,6 +100,10 @@ stow_package() {
 
     if [[ "$DRY_RUN" == 1 ]]; then
       stow_cmd+=" --simulate"
+    fi
+
+    if [[ "$ADOPT" == 1 ]]; then
+      stow_cmd+=" --adopt"
     fi
 
     if [[ "$VERBOSE" == 1 ]]; then

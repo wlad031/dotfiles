@@ -150,3 +150,7 @@ replace_placeholders() {
 source_safe "$HOME/.zshrc_host"
 # source_safe "$HOME/.zshrc_user"
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/vgerasimov/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
