@@ -94,9 +94,10 @@ parse_params() {
 stow_package() {
   local package_dir=$1
   local package_name=$2
+  local target_dir=$3
 
   if [[ -d "$package_dir/$package_name" ]]; then
-    local stow_cmd="stow --override=.* -d \"$package_dir\" -t \"$HOME\" \"$package_name\""
+    local stow_cmd="stow --override=.* -d \"$package_dir\" -t \"$target_dir\" \"$package_name\""
 
     if [[ "$DRY_RUN" == 1 ]]; then
       stow_cmd+=" --simulate"
@@ -124,16 +125,18 @@ msg "${GREEN}Starting dotfiles installation...${NOFORMAT}"
 msg "Hostname: $HOSTNAME"
 msg "Username: $USERNAME"
 
+local target_dir="$(getent passwd "$HOME" | cut -d: -f6)"
+
 # Stow common configurations
-stow_package "common" "."
+stow_package "common" "." "$target_dir"
 
 # Stow host-specific configurations
-stow_package "hosts" "$HOSTNAME"
+stow_package "hosts" "$HOSTNAME" "$target_dir"
 
 # Stow host-specific user configurations (if they exist)
 if [ -d "hosts/$HOSTNAME/users/$USERNAME" ]; then
-  stow_package "hosts/$HOSTNAME/users" "$USERNAME"
+  stow_package "hosts/$HOSTNAME/users" "$USERNAME" "$target_dir"
 fi
 
-msg "${GREEN}Dotfiles installation completed.${NOFORMAT}"
+msg "${GREEN}Dotfiles installation completed!${NOFORMAT}"
 
