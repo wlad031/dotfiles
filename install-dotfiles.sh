@@ -125,7 +125,13 @@ msg "${GREEN}Starting dotfiles installation...${NOFORMAT}"
 msg "Hostname: $HOSTNAME"
 msg "Username: $USERNAME"
 
-target_dir="$(getent passwd "$USERNAME" | cut -d: -f6)"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  target_dir="$(dscl . -read /Users/"$USERNAME" NFSHomeDirectory | awk '{print $2}')"
+else
+  target_dir="$(getent passwd "$USERNAME" | cut -d: -f6)"
+fi
+
+msg "Target dir: $target_dir"
 
 # Stow common configurations
 stow_package "common" "." "$target_dir"
