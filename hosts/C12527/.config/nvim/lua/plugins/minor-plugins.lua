@@ -56,7 +56,7 @@ local indent_blankline = {
       vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
     end)
 
-    require("ibl").setup { 
+    require("ibl").setup {
       -- indent = { highlight = highlight }
     }
   end
@@ -102,6 +102,15 @@ local highight_undo = {
   },
 }
 
+local go_up = {
+  'nullromo/go-up.nvim',
+  opts = {},
+  config = function(_, opts)
+    local goUp = require('go-up')
+    goUp.setup(opts)
+  end,
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
@@ -112,6 +121,7 @@ local plugins = {
   -- mini_pairs,
   highlight_colors,
   highight_undo,
+  go_up,
 }
 
 return plugins

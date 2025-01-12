@@ -5,6 +5,10 @@
 name = "main"
 
 [[session]]
+name = "trading"
+path = "~/Projects/trading"
+
+[[session]]
 name = "downloads"
 path = "~/Downloads"
 startup_command = "yy"
