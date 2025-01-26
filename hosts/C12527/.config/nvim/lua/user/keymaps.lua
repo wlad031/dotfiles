@@ -25,14 +25,14 @@ function SetCommonMappings()
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Code: Format (Vim)" })
   vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Code: Signature help (Vim)" })
 
-  vim.keymap.set('n', '<leader>ff', function()
-    require("telescope").extensions.smart_open.smart_open()
-  end, { desc = "Telescope: Find files" })
-  vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Telescope: Live grep" })
-  vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
-  vim.keymap.set('n', '<C-e>', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
-  vim.keymap.set('n', '<leader>fe', telescope_builtin.oldfiles, { desc = "Telescope: Old files" })
-  vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Telescope: Help tags" })
+  -- vim.keymap.set('n', '<leader>ff', function()
+  --   require("telescope").extensions.smart_open.smart_open()
+  -- end, { desc = "Telescope: Find files" })
+  -- vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Telescope: Live grep" })
+  -- vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
+  -- vim.keymap.set('n', '<C-e>', telescope_builtin.buffers, { desc = "Telescope: Buffers" })
+  -- vim.keymap.set('n', '<leader>fe', telescope_builtin.oldfiles, { desc = "Telescope: Old files" })
+  -- vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Telescope: Help tags" })
 
   vim.keymap.set('n', '<leader>ce', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Diagnostics: Open float" })
 
@@ -54,6 +54,7 @@ function SetCommonMappings()
 
   vim.keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy: Open" })
 end
+
 
 function GetOutlineKeys()
   return {

@@ -20,7 +20,7 @@ startup_command = "~/.config/sesh/dotfiles.sh"
 
 [[session]]
 name = "vim"
-path = "~/dotfiles/.config/nvim"
+path = "~/.config/nvim"
 startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]

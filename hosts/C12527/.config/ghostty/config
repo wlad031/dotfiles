@@ -133,7 +133,7 @@ font-feature =
 # depending on your `window-inherit-font-size` setting. If that setting is
 # true, only the first window will be affected by this change since all
 # subsequent windows will inherit the font size of the previous window.
-font-size = 13
+font-size = 11
 
 # A repeatable configuration to set one or more font variations values for
 # a variable font. A variable font is a single font, usually with a filename
@@ -422,7 +422,7 @@ background-opacity = 1
 # rendering issues as well as performance issues.
 # 
 # This is only supported on macOS.
-background-blur-radius = 0
+background-blur-radius = 20
 
 # The opacity level (opposite of transparency) of an unfocused split.
 # Unfocused splits by default are slightly faded out to make it easier to see

@@ -125,7 +125,8 @@ local vim_illuminate = {
 local treesitter_context = {
   "nvim-treesitter/nvim-treesitter-context",
   config = function()
-    require("treesitter-context").setup({
+    local treesitter_context = require("treesitter-context")
+    treesitter_context.setup({
       enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
       max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
       min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
@@ -138,6 +139,11 @@ local treesitter_context = {
       separator = nil,
       zindex = 20,     -- The Z-index of the context window
       on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+    })
+    vim.keymap.set('n', '<leader>vct', treesitter_context.toggle)
+    require('which-key').register({
+      { '<leader>v', group = 'Visuals' },
+      { '<leader>vc', group = 'Context' },
     })
   end
 }

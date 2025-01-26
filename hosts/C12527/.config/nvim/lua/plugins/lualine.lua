@@ -22,11 +22,11 @@ local P = {
         lualine_a = {
           {
             'buffers',
-            show_filename_only = true, -- Shows shortened relative path when set to false.
+            show_filename_only = true,       -- Shows shortened relative path when set to false.
             hide_filename_extension = false, -- Hide filename extension when set to true.
-            show_modified_status = true, -- Shows indicator when the buffer is modified.
+            show_modified_status = true,     -- Shows indicator when the buffer is modified.
 
-            mode = 2,                  -- 0: Shows buffer name
+            mode = 2,                        -- 0: Shows buffer name
             -- 1: Shows buffer index
             -- 2: Shows buffer name + buffer index
             -- 3: Shows buffer number
@@ -87,7 +87,7 @@ local P = {
               unnamed = '[No Name]', -- Text to show for unnamed buffers.
               newfile = '[New]',     -- Text to show for newly created file before first write
             }
-          }
+          },
         },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },

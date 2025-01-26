@@ -17,6 +17,7 @@
 	co = checkout
 	cp = cherry-pick
   rbm = rebase origin/master
+	project-summary = !which onefetch && onefetch
 [delta]
 	side-by-side = true
 [filter "lfs"]
