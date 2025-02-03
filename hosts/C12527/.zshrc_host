@@ -54,4 +54,5 @@ source_safe "$DOTFILES_SCRIPTS_DIR/jetbrains.sh"  ; jetbrains_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/sshs.sh"       ; sshs_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/aerospace.sh"  ; aerospace_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/zsh_vi.sh"     ; zsh_vi_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/ansible.sh"    ; ansible_setup
 ###############################################################################

@@ -20,7 +20,7 @@ local neotree = {
         },
       }
     })
-    vim.keymap.set("n", "<leader>nn", ":Neotree filesystem reveal left<CR>", { desc = "Files: Open Neotree" })
+    vim.keymap.set("n", "<leader>nn", "<Cmd>Neotree filesystem reveal left<CR>", { desc = "Files: Open Neotree" })
   end,
 }
 

@@ -1,15 +1,9 @@
-require "user.keymaps"
-
-local figutive = {
-  "tpope/vim-fugitive"
-}
-
 local gitsigns = {
   "lewis6991/gitsigns.nvim",
   config = function()
     require("gitsigns").setup({})
-    vim.keymap.set('n', '<leader>gp', ":Gitsigns preview_hunk<CR>", {})
-    vim.keymap.set('n', '<leader>gu', ":Gitsigns reset_hunk<CR>", {})
+    vim.keymap.set('n', '<leader>gp', "<Cmd>Gitsigns preview_hunk<CR>", {})
+    vim.keymap.set('n', '<leader>gu', "<Cmd>Gitsigns reset_hunk<CR>", {})
   end,
 }
 
@@ -30,29 +24,10 @@ local neogit = {
   config = true
 }
 
-local lazygit = {
-  "kdheepak/lazygit.nvim",
-  cmd = {
-    "LazyGit",
-    "LazyGitConfig",
-    "LazyGitCurrentFile",
-    "LazyGitFilter",
-    "LazyGitFilterCurrentFile",
-  },
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
-  -- setting the keybinding for LazyGit with 'keys' is recommended in
-  -- order to load the plugin when the command is run for the first time
-  keys = GetLazyGitKeys()
-}
-
 local plugins = {
-  --figutive,
   gitsigns,
   diffview,
   neogit,
-  lazygit
 }
 
 return plugins

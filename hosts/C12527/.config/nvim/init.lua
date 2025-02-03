@@ -4,5 +4,3 @@ require "user.autocmds"
 require "user.lazy-setup"
 require "user.visuals"
 
-SetCommonMappings()
-

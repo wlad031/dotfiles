@@ -1,27 +1,25 @@
-function SetCommonMappings()
-  local telescope_builtin = require("telescope.builtin")
-  local harpoon = require("harpoon")
+
+local M = {}
+
+function M.setup()
 
   --vim.keymap.set('n', '<C-d><C-d>', '"_dd')
   vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = "Go down half a page and center page vertically" })
   vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
 
-  vim.keymap.set('n', '<C-x><C-x>', ':x<CR>', { desc = "Another way out" })
-  vim.keymap.set('n', '<leader>//', ":nohl<CR>", { desc = "Clear search highlights" })
 
-  vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = "Split vertically" })
-  vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = "Split horizontally" })
+  vim.keymap.set('n', '<leader>//', "<CMD>nohl<CR>", { desc = "Clear search highlights" })
+
+  vim.keymap.set('n', '<leader>sv', '<CMD>vsplit<CR>', { desc = "Split vertically" })
+  vim.keymap.set('n', '<leader>sh', '<CMD>split<CR>', { desc = "Split horizontally" })
 
   -- more convenient pane resizing
-  vim.keymap.set('n', '<leader>pl', ':vertical resize +5<CR>', { desc = "Vertical resize: +5" })
-  vim.keymap.set('n', '<leader>ph', ':vertical resize -5<CR>', { desc = "Vertical resize: -5" })
-  vim.keymap.set('n', '<leader>pj', ':resize +5<CR>', { desc = "Vertical resize: +5" })
-  vim.keymap.set('n', '<leader>pk', ':resize -5<CR>', { desc = "Vertical resize: -5" })
+  vim.keymap.set('n', '<leader>pl', '<CMD>vertical resize +5<CR>', { desc = "Vertical resize: +5" })
+  vim.keymap.set('n', '<leader>ph', '<CMD>vertical resize -5<CR>', { desc = "Vertical resize: -5" })
+  vim.keymap.set('n', '<leader>pj', '<CMD>resize +5<CR>', { desc = "Vertical resize: +5" })
+  vim.keymap.set('n', '<leader>pk', '<CMD>resize -5<CR>', { desc = "Vertical resize: -5" })
 
-  vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Code: Go to definition (Vim)" })
-  vim.keymap.set("n", "<leader>cr", telescope_builtin.lsp_references,
-    { desc = "Code: References (Telescope)", noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>ca", require("actions-preview").code_actions, { desc = "Code: Actions (Code actions)" })
+  -- set("n", "<leader>ca", require("actions-preview").code_actions, { desc = "Code: Actions (Code actions)" })
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Code: Format (Vim)" })
   vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Code: Signature help (Vim)" })
 
@@ -44,6 +42,8 @@ function SetCommonMappings()
   vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
   vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 
+  vim.keymap.set('n', 'gh', '<CMD>diffget //2<CR>', { noremap = true, silent = true, desc = "Git: Diffget left/local" })
+  vim.keymap.set('n', 'gl', '<CMD>diffget //3<CR>', { noremap = true, silent = true, desc = "Git: Diffget right/remote" })
 
   vim.keymap.set(
     { "n", "x" },
@@ -54,7 +54,6 @@ function SetCommonMappings()
 
   vim.keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy: Open" })
 end
-
 
 function GetOutlineKeys()
   return {
@@ -153,41 +152,6 @@ function GetCmpMapping()
   }
 end
 
-function GetTroubleMapping()
-  return {
-    {
-      "<leader>dd",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
-    },
-    {
-      "<leader>dD",
-      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
-    },
-    {
-      "<leader>ds",
-      "<cmd>Trouble symbols toggle focus=false<cr>",
-      desc = "Symbols (Trouble)",
-    },
-    {
-      "<leader>dl",
-      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / references / ... (Trouble)",
-    },
-    {
-      "<leader>dL",
-      "<cmd>Trouble loclist toggle<cr>",
-      desc = "Location List (Trouble)",
-    },
-    {
-      "<leader>dQ",
-      "<cmd>Trouble qflist toggle<cr>",
-      desc = "Quickfix List (Trouble)",
-    },
-  }
-end
-
 function GetMiniSurroundMappings()
   return {
     add = '<leader>sa',            -- Add surrounding in Normal and Visual modes
@@ -203,29 +167,26 @@ function GetMiniSurroundMappings()
   }
 end
 
-function GetLazyGitKeys()
-  return {
-    { "<leader>gl", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-  }
-end
-
 function SetGrugFarKeys()
   vim.keymap.set(
     { "n", "x" },
     "<leader>rR",
-    "<cmd>:GrugFar<CR>",
+    "<cmd>GrugFar<CR>",
     { desc = "Replace: GrugFar" }
   )
   vim.keymap.set(
     { "n", "x" },
     "<leader>rr",
-    '<cmd>:lua require("grug-far").with_visual_selection()<CR>',
+    '<cmd>lua require("grug-far").with_visual_selection()<CR>',
     { desc = "Replace: With visual selecton: GrugFar" }
   )
   vim.keymap.set(
     { "n", "x" },
     "<leader>rb",
-    '<cmd>:lua require("grug-far").with_visual_selection({ prefills = { flags = vim.fn.expand("%") } })<CR>',
+    '<cmd>lua require("grug-far").with_visual_selection({ prefills = { flags = vim.fn.expand("%") } })<CR>',
     { desc = "Replace: With visual selection: Buffer: GrugFar" }
   )
 end
+
+return M
+

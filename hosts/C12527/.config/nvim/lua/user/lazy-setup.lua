@@ -26,3 +26,5 @@ require("lazy").setup("plugins", {
     border = "rounded",
   },
 })
+
+require("user.keymaps").setup()
