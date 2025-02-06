@@ -9,9 +9,13 @@ lazygit_setup() {
     log_debug "Git is not installed"
     return
   fi
+  local opt=$1
   if [[ "$LAZYGIT_INSTALLED" = false ]]; then
-    log_error "Lazygit is not installed"
-    return
+    if [[ "$opt" = "required" ]]; then
+      log_error "lazygit is not installed"
+    else
+      log_debug "lazygit is not installed"
+    fi
   fi
 
   alias lgit=lazygit

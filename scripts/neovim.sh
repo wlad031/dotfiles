@@ -5,9 +5,13 @@ else
 fi
 
 neovim_setup() {
+  local opt=$1
   if [[ "$NEOVIM_INSTALLED" = false ]]; then
-    log_error "Neovim is not installed"
-    return
+    if [[ "$opt" = "required" ]]; then
+      log_error "Neovim is not installed"
+    else
+      log_debug "Neovim is not installed"
+    fi
   fi
 
   alias vim="nvim"
