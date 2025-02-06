@@ -1,5 +1,9 @@
 if ! command -v cargo &> /dev/null; then
-  export CARGO_INSTALLED=false
+  if [[ -f "$HOME/.cargo/env" ]]; then
+    export CARGO_INSTALLED=true
+  else
+    export CARGO_INSTALLED=false
+  fi
 else
   export CARGO_INSTALLED=true
 fi
