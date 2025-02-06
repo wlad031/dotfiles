@@ -18,7 +18,7 @@ source_safe "$DOTFILES_SCRIPTS_DIR/fzf.sh"        ; fzf_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/lazygit.sh"    ; lazygit_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/neovim.sh"     ; neovim_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/fnm.sh"        ; fnm_setup
-source_safe "$DOTFILES_SCRIPTS_DIR/fastfetch.sh"  ; fastfetch_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/neofetch.sh"   ; neofetch_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/zoxide.sh"     ; zoxide_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/yazi.sh"       ; yazi_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/occ.sh"        ; occ_setup
