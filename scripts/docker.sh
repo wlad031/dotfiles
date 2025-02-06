@@ -36,7 +36,7 @@ docker_setup() {
       log_error "Unknown docker host: $host"
     fi
   }
-  
+
   __docker_better_ps() {
     command docker ps --format 'table {{.Names}}\t{{.Status}} : {{.RunningFor}}\t{{.ID}}\t{{.Image}}' "$@"
   }

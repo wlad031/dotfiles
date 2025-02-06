@@ -14,17 +14,21 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "       -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
-require("lazy").setup("plugins", {
-  change_detection = {
-    enabled = true,
-    notify = false,
+require("lazy").setup({
+    { import = "plugins" },
+    -- { import = "plugins.ai" },
   },
-  install = {
-    colorscheme = { "flow" },
-  },
-  ui = {
-    border = "rounded",
-  },
-})
+  {
+    change_detection = {
+      enabled = true,
+      notify = false,
+    },
+    install = {
+      colorscheme = { "flow" },
+    },
+    ui = {
+      border = "rounded",
+    },
+  })
 
 require("user.keymaps").setup()

@@ -11,17 +11,17 @@ path = "~/Projects/trading"
 [[session]]
 name = "downloads"
 path = "~/Downloads"
-startup_command = "yy"
+# startup_command = "yy"
 
 [[session]]
 name = "dotfiles"
 path = "~/dotfiles"
-startup_command = "~/.config/sesh/dotfiles.sh"
+# startup_command = "~/.config/sesh/dotfiles.sh"
 
 [[session]]
 name = "vim"
 path = "~/.config/nvim"
-startup_command = "nvim -c ':Telescope find_files'"
+# startup_command = "nvim -c ':Telescope find_files'"
 
 [[session]]
 name = "homelab"

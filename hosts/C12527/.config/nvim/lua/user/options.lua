@@ -19,4 +19,4 @@ vim.opt.laststatus = 3
 vim.opt.splitkeep = "screen"
 --
 
-
+vim.api.nvim_set_option("clipboard", "unnamed")

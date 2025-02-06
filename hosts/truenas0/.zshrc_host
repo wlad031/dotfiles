@@ -22,7 +22,7 @@ source_safe "$DOTFILES_SCRIPTS_DIR/lazygit.sh"    ; lazygit_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/devmoji.sh"    ; devmoji_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/neovim.sh"     ; neovim_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/codium.sh"     ; codium_setup
-# source_safe "$DOTFILES_SCRIPTS_DIR/fnm.sh"        ; fnm_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/fnm.sh"        ; fnm_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/flutter.sh"    ; flutter_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/g.sh"          ; g_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/sdkman.sh"     ; sdkman_setup

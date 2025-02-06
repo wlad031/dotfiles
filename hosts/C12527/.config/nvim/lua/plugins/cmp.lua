@@ -93,8 +93,12 @@ local P = {
         -- require('minuet').make_cmp_map()
         -- end, { "i", "c" })
       },
+      performance = {
+        fetching_timeout = 2000,
+      },
       sources = cmp.config.sources(
         {
+          { name = 'minuet' },
           { name = "supermaven" },
           -- { name = 'copilot' },
           { name = 'metals' },

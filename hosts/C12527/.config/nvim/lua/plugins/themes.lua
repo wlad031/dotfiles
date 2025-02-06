@@ -118,6 +118,8 @@ local flow = {
   end,
 }
 
+local nightfox = { "EdenEast/nightfox.nvim" }
+
 return {
   catppuccin,
   kanagawa,
@@ -125,5 +127,5 @@ return {
   cyberdream,
   gruvbox,
   flow,
+  nightfox,
 }
-
