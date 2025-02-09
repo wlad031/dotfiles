@@ -1,13 +1,5 @@
 require "user.keymaps"
 
-local flash = {
-  "folke/flash.nvim",
-  event = "VeryLazy",
-  opts = {},
-  keys = GetFlashKeys(),
-}
-
-
 local portal = {
   "cbochs/portal.nvim",
   -- Optional dependencies
@@ -54,7 +46,6 @@ local outline = {
 }
 
 local plugins = {
-  -- flash,
   portal,
   mini_bracketed,
   mini_ai,

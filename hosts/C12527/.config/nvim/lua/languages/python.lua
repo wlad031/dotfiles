@@ -16,6 +16,15 @@ end
 
 local function init()
   setupKeyMappings()
+  vim.api.nvim_create_user_command('PyenvSelect', function(opts)
+    M.ActivatePyenv()
+  end, { nargs = '?' })
+  vim.api.nvim_create_user_command('PyenvDeactivate', function(opts)
+    M.DeactivatePyenv()
+  end, { nargs = '?' })
+  vim.api.nvim_create_user_command('PyenvPrint', function(opts)
+    M.PrintPythonPath()
+  end, { nargs = '?' })
 end
 
 init()
@@ -86,6 +95,7 @@ function M.ActivatePyenv()
     return
   end
 
+  -- TODO: Migrate to snacks pickers
   -- Use Telescope to display the list of virtualenvs
   require("telescope.pickers").new({}, {
     prompt_title = "Select Pyenv Virtualenv",
