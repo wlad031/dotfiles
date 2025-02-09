@@ -16,6 +16,7 @@
 	st = status --short --branch
 	co = checkout
 	cp = cherry-pick
+  em = commit --allow-empty
   rbm = rebase origin/master
 	project-summary = !which onefetch && onefetch
 [delta]
