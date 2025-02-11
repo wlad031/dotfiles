@@ -141,10 +141,10 @@ local treesitter_context = {
       on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
     })
     vim.keymap.set('n', '<leader>vct', treesitter_context.toggle)
-    require('which-key').register({
-      { '<leader>v', group = 'Visuals' },
-      { '<leader>vc', group = 'Context' },
-    })
+    -- require('which-key').register({
+    --   { '', group = 'Visuals' },
+    --   { '', group = 'Context' },
+    -- })
   end
 }
 

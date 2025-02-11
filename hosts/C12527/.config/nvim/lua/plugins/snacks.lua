@@ -202,9 +202,21 @@ return {
         frecency = true,
       },
       sources = {
-        -- explorer = {
-        -- }
+        explorer = {
+        }
       }
+    },
+    image = {
+      enabled = true,
+    },
+    words = {
+      enabled = true,
+    },
+    scope = {
+      enabled = true,
+    },
+    input = {
+      enabled = true,
     },
     quickfile = {
       enabled = true,
@@ -241,7 +253,10 @@ return {
         statusline = false, -- can only be shown when using the global statusline
         tabline = false,
       },
-      win = { style = "zen" },
+      win = {
+        style = "zen",
+        backdrop = { transparent = false },
+      },
       on_open = function(win) end,
       on_close = function(win) end,
       zoom = {
@@ -255,13 +270,6 @@ return {
     },
     dashboard = {
       enabled = true,
-      sections = {
-        { section = "header" },
-        { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-        { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-        { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-        { section = "startup" },
-      },
     }
   },
   keys = {
@@ -275,7 +283,7 @@ return {
     { "<leader>sg",      Pickers.grep,                  desc = "Grep" },
     { "<leader>sw",      Pickers.grep_word,             desc = "Visual selection or word", mode = { "n", "x" } },
     { "<leader>gl",      LazyGit.open,                  desc = "Lazygit: Open" },
-    -- { "<leader>nn",      Explorer.open,         desc = "Files: Snacks Explorer" },
+    -- { "<leader>nn",      Explorer.open,                 desc = "Files: Snacks Explorer" },
     { "<leader>ci",      Pickers.lsp_implementations,   desc = "LSP Implementations" },
     { "<leader>cd",      Pickers.lsp_definitions,       desc = "LSP Definitions" },
     { "<leader>ctd",     Pickers.lsp_type_definitions,  desc = "LSP Type Definitions" },
@@ -285,7 +293,8 @@ return {
     { "<leader>pp",      Pickers.commands,              desc = "Commands" },
     { "<leader>zz",      function() Snacks.zen() end,   desc = "Zen" },
   },
-  config = function()
+  config = function(plugin, opts)
+    require('snacks').setup(opts)
     vim.api.nvim_create_user_command('Colorschemes', function(opts)
       Pickers.colorschemes()
     end, { nargs = '?' })

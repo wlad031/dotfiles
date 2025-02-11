@@ -30,3 +30,7 @@ export SAVEHIST=10000
 setopt SHARE_HISTORY
 ###############################################################################
 
+if [[ -f "$HOME/.zshenv_host" ]]; then
+  source "$HOME/.zshenv_host"
+fi
+

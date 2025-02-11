@@ -26,6 +26,7 @@ local treesitter = {
       auto_install = true,
       ensure_installed = {
         "lua",
+        "regex",
         "html",
         "java",
         "scala",
@@ -38,7 +39,8 @@ local treesitter = {
         "markdown_inline",
         "ledger",
         "html",
-        "jinja2"
+        "jinja2",
+        "latex",
       },
       highlight = { enable = true, additional_vim_regex_highlighting = false },
       indent = { enable = true },

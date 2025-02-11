@@ -16,15 +16,11 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("lazy").setup({
     { import = "plugins" },
-    -- { import = "plugins.ai" },
   },
   {
     change_detection = {
       enabled = true,
       notify = false,
-    },
-    install = {
-      colorscheme = { "flow" },
     },
     ui = {
       border = "rounded",

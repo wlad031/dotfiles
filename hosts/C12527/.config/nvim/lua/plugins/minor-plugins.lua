@@ -121,7 +121,7 @@ local plugins = {
   -- mini_pairs,
   highlight_colors,
   highight_undo,
-  go_up,
+  -- go_up,
 }
 
 return plugins
