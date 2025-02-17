@@ -9,14 +9,24 @@
 --   end,
 -- })
 
--- removes trailing whitespace on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
-    local save_cursor = vim.fn.getpos(".")
-    vim.cmd([[%s/\s\+$//e]])
-    vim.fn.setpos(".", save_cursor)
-  end,
-})
+-- TODO: Make it a custom command with a keybind, but not autocmd
+--
+-- removes trailing whitespace on save (only for specific filetypes)
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = { "*.lua", "*.js", "*.jsx", "*.ts", "*.tsx", "*.css", "*.scss", "*.html", "*.json" },
+--   callback = function()
+--     -- Save the cursor and search register
+--     local save_cursor = vim.fn.getpos(".")
+--     local save_search = vim.fn.getreg('/')
+--
+--     -- Remove trailing whitespace
+--     vim.cmd([[keeppatterns %s/\s\+$//e]])
+--
+--     -- Restore the cursor and search register
+--     vim.fn.setpos(".", save_cursor)
+--     vim.fn.setreg('/', save_search)
+--   end,
+-- })
 
 -- highlights yanked text
 -- vim.api.nvim_create_autocmd("TextYankPost", {

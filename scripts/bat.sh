@@ -5,8 +5,13 @@ else
 fi
 
 bat_setup() {
+  local opt=$1
   if [[ "$BAT_INSTALLED" = false ]]; then
-    log_error "Bat is not installed"
+    if [[ "$opt" = "required" ]]; then
+      log_error "Bat is not installed"
+    else
+      log_debug "Bat is not installed"
+    fi
     return
   fi
 

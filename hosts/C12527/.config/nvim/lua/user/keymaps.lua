@@ -1,12 +1,12 @@
-
 local M = {}
 
 function M.setup()
+  vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = "Yank to system clipboard" })
+  vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = "Paste from system clipboard" })
 
   --vim.keymap.set('n', '<C-d><C-d>', '"_dd')
   vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = "Go down half a page and center page vertically" })
   vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Go up half a page and center page vertically" })
-
 
   vim.keymap.set('n', '<leader>//', "<CMD>nohl<CR>", { desc = "Clear search highlights" })
 
@@ -178,4 +178,3 @@ function SetGrugFarKeys()
 end
 
 return M
-

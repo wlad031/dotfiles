@@ -9,6 +9,7 @@ else
 fi
 
 cargo_setup() {
+  local opt=$1
   if [[ "$CARGO_INSTALLED" = false ]]; then
     if [[ "$opt" = "required" ]]; then
       log_error "cargo is not installed"

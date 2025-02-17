@@ -73,7 +73,7 @@ local yazi = {
 }
 
 local plugins = {
-  -- neotree,
+  neotree,
   oil,
   yazi
 }

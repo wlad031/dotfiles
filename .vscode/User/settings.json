@@ -34,7 +34,7 @@
     "workbench.colorCustomizations": {
       "tree.indentGuidesStroke": "#00ff00"
     },
-    
+
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
     "editor.lineHeight": 1.3,
@@ -66,7 +66,7 @@
     "window.restoreWindows": "none",
     "security.workspace.trust.untrustedFiles": "open",
     "diffEditor.ignoreTrimWhitespace": false,
-   
+
     "gitlens.mode.active": "zen",
     "git.allowForcePush": true,
     "workbench.iconTheme": "catppuccin-mocha",
@@ -110,4 +110,5 @@
     "editor.accessibilitySupport": "off",
     "workbench.colorTheme": "Gruvbox Dark Hard",
     "debug.onTaskErrors": "showErrors",
+    "terminal.integrated.defaultProfile.osx": "zsh"
 }

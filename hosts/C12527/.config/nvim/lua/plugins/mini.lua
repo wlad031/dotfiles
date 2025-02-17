@@ -4,7 +4,7 @@ return {
     version = '*',
     config = function()
       require('mini.files').setup()
-      vim.keymap.set('n', '<leader>nn', function() MiniFiles.open() end, { desc = "Files: Open mini.files" })
+      -- vim.keymap.set('n', '<leader>nn', function() MiniFiles.open() end, { desc = "Files: Open mini.files" })
     end
   },
 
