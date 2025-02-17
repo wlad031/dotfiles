@@ -5,12 +5,25 @@ else
 fi
 
 fzf_setup() {
+  local opt=$1
   if [[ "$FZF_INSTALLED" = false ]]; then
-    log_error "fzf is not installed"
+    if [[ "$opt" = "required" ]]; then
+      log_error "fzf is not installed"
+    else
+      log_debug "fzf is not installed"
+    fi
     return
   fi
 
-  eval "$(fzf --zsh)"
+  v=$(fzf --version)
+  current_version=$(echo "$v" | sed 's/ (.*)//g' | sed 's/\.//g')
+  required_version=$(echo "0.59.0" | sed 's/\.//g')
+
+  if [[ "$current_version" -ge "$required_version" ]]; then
+    eval "$(fzf --zsh)"
+    return
+  fi
+  log_debug "fzf version is $v, fzf shell integration cannot be installed"
 }
 
 # TODO: Write my own preview function.
