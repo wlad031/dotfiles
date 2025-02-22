@@ -3,10 +3,15 @@ if ! command -v bat &> /dev/null; then
 else
   export BAT_INSTALLED=true
 fi
+if ! command -v batcat &> /dev/null; then
+  export BATCAT_INSTALLED=false
+else
+  export BATCAT_INSTALLED=true
+fi
 
 bat_setup() {
   local opt=$1
-  if [[ "$BAT_INSTALLED" = false ]]; then
+  if [[ "$BAT_INSTALLED" = false && "$BATCAT_INSTALLED" = false ]]; then
     if [[ "$opt" = "required" ]]; then
       log_error "Bat is not installed"
     else
@@ -15,5 +20,10 @@ bat_setup() {
     return
   fi
 
-  alias cat="bat"
+  if [[ "$BAT_INSTALLED" = true ]]; then
+    alias cat="bat"
+  fi
+  if [[ "$BATCAT_INSTALLED" = true ]]; then
+    alias cat="batcat"
+  fi
 }
