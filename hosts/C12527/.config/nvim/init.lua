@@ -8,3 +8,5 @@ if not ok then
   print("user.dynamic not found")
 end
 
+-- TODO: Make my config Neovide friendly
+

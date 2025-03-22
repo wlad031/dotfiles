@@ -21,9 +21,11 @@ bat_setup() {
   fi
 
   if [[ "$BAT_INSTALLED" = true ]]; then
-    alias cat="bat"
+    alias cat="bat --paging=never"
+    alias less="bat --paging=always"
   fi
   if [[ "$BATCAT_INSTALLED" = true ]]; then
-    alias cat="batcat"
+    alias cat="batcat --paging=never"
+    alias less="batcat --paging=always"
   fi
 }
