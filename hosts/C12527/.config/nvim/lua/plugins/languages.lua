@@ -48,6 +48,11 @@ local treesitter = {
   end
 }
 
+local treesitter_textobjects = {
+  "nvim-treesitter/nvim-treesitter-textobjects"
+}
+
+-- TODO: Remove mason because anyway I install things manually
 local mason = {
   "williamboman/mason.nvim",
   lazy = false,
@@ -142,6 +147,7 @@ local inc_rename = {
 
 return {
   treesitter,
+  treesitter_textobjects,
   mason,
   mason_lspconfig,
   lspconfig,

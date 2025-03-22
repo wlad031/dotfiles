@@ -1,15 +1,4 @@
--- https://github.com/AckslD/nvim-neoclip.lua
-local neoclip = {
-  "AckslD/nvim-neoclip.lua",
-  requires = {
-    {'nvim-telescope/telescope.nvim'},
-  },
-  config = function()
-    -- TODO: Setup telescope mappings for neoclip
-    require('neoclip').setup()
-  end,
-}
-
+-- Plugin that adds a 'cut' operation separate from 'delete'
 local cutlass = {
   "gbprod/cutlass.nvim",
   opts = {
@@ -22,9 +11,7 @@ local cutlass = {
   }
 }
 
-local plugins = {
-  neoclip,
+return {
   cutlass
 }
 
-return plugins

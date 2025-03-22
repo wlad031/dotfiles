@@ -2,6 +2,7 @@ return {
   {
     'echasnovski/mini.files',
     version = '*',
+    enabled = false,
     config = function()
       require('mini.files').setup()
       -- vim.keymap.set('n', '<leader>nn', function() MiniFiles.open() end, { desc = "Files: Open mini.files" })

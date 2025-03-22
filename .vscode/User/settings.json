@@ -10,7 +10,7 @@
       "**/.trunk/*out": true
     },
 
-    "editor.fontFamily": "Hack Nerd Font, Inconsolata, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "Hurmit Nerd Font Mono, Hack Nerd Font, Inconsolata, Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
 
     "[Log]": {
@@ -108,7 +108,12 @@
     "workbench.editor.showTabs": "single",
     "redhat.telemetry.enabled": false,
     "editor.accessibilitySupport": "off",
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "workbench.colorTheme": "Solarized Light",
     "debug.onTaskErrors": "showErrors",
-    "terminal.integrated.defaultProfile.osx": "zsh"
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "errorLens.codeLensEnabled": true,
+    "errorLens.gutterIconsEnabled": true,
+    "supermaven.enable": {
+      "*": false
+    }
 }

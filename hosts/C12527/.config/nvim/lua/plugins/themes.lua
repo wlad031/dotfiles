@@ -120,6 +120,17 @@ local flow = {
 
 local nightfox = { "EdenEast/nightfox.nvim" }
 
+local oldschool = {
+    "L-Colombo/oldschool.nvim"
+}
+
+local jb = {
+    "nickkadutskyi/jb.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+}
+
 return {
   catppuccin,
   kanagawa,
@@ -128,4 +139,6 @@ return {
   gruvbox,
   flow,
   nightfox,
+  oldschool,
+  jb,
 }

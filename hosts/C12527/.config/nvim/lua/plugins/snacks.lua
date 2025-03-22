@@ -206,14 +206,14 @@ return {
         }
       }
     },
-    image = {
-      enabled = true,
-    },
     words = {
       enabled = true,
     },
     scope = {
       enabled = true,
+    },
+    image = {
+      enabled = false,
     },
     input = {
       enabled = true,
@@ -269,7 +269,7 @@ return {
       },
     },
     dashboard = {
-      enabled = true,
+      enabled = false,
     }
   },
   keys = {

@@ -11,6 +11,9 @@ else
   return
 fi
 
+# TODO: Find a better place for this
+export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+
 source_safe "$DOTFILES_SCRIPTS_DIR/cargo.sh"
 cargo_setup
 

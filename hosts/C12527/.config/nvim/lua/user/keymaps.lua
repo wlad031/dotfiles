@@ -14,10 +14,10 @@ function M.setup()
   vim.keymap.set('n', '<leader>sh', '<CMD>split<CR>', { desc = "Split horizontally" })
 
   -- more convenient pane resizing
-  vim.keymap.set('n', '<leader>pl', '<CMD>vertical resize +5<CR>', { desc = "Vertical resize: +5" })
-  vim.keymap.set('n', '<leader>ph', '<CMD>vertical resize -5<CR>', { desc = "Vertical resize: -5" })
-  vim.keymap.set('n', '<leader>pj', '<CMD>resize +5<CR>', { desc = "Vertical resize: +5" })
-  vim.keymap.set('n', '<leader>pk', '<CMD>resize -5<CR>', { desc = "Vertical resize: -5" })
+  -- vim.keymap.set('n', '<leader>pl', '<CMD>vertical resize +5<CR>', { desc = "Vertical resize: +5" })
+  -- vim.keymap.set('n', '<leader>ph', '<CMD>vertical resize -5<CR>', { desc = "Vertical resize: -5" })
+  -- vim.keymap.set('n', '<leader>pj', '<CMD>resize +5<CR>', { desc = "Vertical resize: +5" })
+  -- vim.keymap.set('n', '<leader>pk', '<CMD>resize -5<CR>', { desc = "Vertical resize: -5" })
 
   -- set("n", "<leader>ca", require("actions-preview").code_actions, { desc = "Code: Actions (Code actions)" })
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Code: Format (Vim)" })
@@ -51,8 +51,6 @@ function M.setup()
     function() require("rip-substitute").sub() end,
     { desc = " rip substitute" }
   )
-
-  vim.keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy: Open" })
 end
 
 function GetOutlineKeys()
