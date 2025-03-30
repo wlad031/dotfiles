@@ -21,6 +21,8 @@ function M.setup()
 
   -- set("n", "<leader>ca", require("actions-preview").code_actions, { desc = "Code: Actions (Code actions)" })
   vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format { async = true } end, { desc = "Code: Format (Vim)" })
+  -- vim.keymap.set('n', '<leader>cf', function() require("lint").try_lint() end, { desc = "Code: Format (Lint)" })
+
   vim.keymap.set('n', '<leader>cp', vim.lsp.buf.signature_help, { desc = "Code: Signature help (Vim)" })
 
   -- vim.keymap.set('n', '<leader>ff', function()

@@ -38,7 +38,8 @@ docker_setup() {
   }
 
   __docker_better_ps() {
-    command docker ps --format 'table {{.Names}}\t{{.Status}} : {{.RunningFor}}\t{{.ID}}\t{{.Image}}' "$@"
+    command docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}' "$@"  | \
+      { sort -k 4; }
   }
 
   __docker_better_psa() {

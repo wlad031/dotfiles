@@ -108,7 +108,7 @@
     "workbench.editor.showTabs": "single",
     "redhat.telemetry.enabled": false,
     "editor.accessibilitySupport": "off",
-    "workbench.colorTheme": "Solarized Light",
+    "workbench.colorTheme": "Gruvbox Dark Hard",
     "debug.onTaskErrors": "showErrors",
     "terminal.integrated.defaultProfile.osx": "zsh",
     "errorLens.codeLensEnabled": true,
