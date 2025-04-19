@@ -1,0 +1,6 @@
+- name: Install tools via apt
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ apt.packages }}"
+  when: apt is defined and apt.packages is defined

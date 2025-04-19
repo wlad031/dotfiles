@@ -1,0 +1,17 @@
+- name: Generate Gitea SSH key
+  hosts: localhost
+  connection: local
+  vars_files:
+    - "../vars/vault.yml"
+  vars:
+    ssh_key_path: "{{ ansible_env.HOME }}/.ssh/homelab_gitea_rsa"
+    ssh_key_title: "homelab_gitea_rsa_foo"
+  tasks:
+    - ansible.builtin.include_role:
+        name: generate-ssh-key
+    - name: Read SSH public key
+      ansible.builtin.slurp:
+        src: "{{ ssh_key_path }}"
+      register: ssh_key_content
+    - ansible.builtin.include_role:
+        name: gitea-add-user-key

@@ -1,0 +1,8 @@
+- name: Install tools
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - "../../hosts/{{ tag }}/main.yml"
+  roles:
+    - install-tools-apt

@@ -1,0 +1,6 @@
+- name: Generate an OpenSSH keypair
+  community.crypto.openssh_keypair:
+    path: "{{ ssh_key_path }}"
+    type: rsa
+    size: 4096
+
