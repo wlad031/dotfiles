@@ -1,9 +1,5 @@
 # dotfiles
 
-## To-do
-- [ ] Remove serial number from `.config/istat_menus/vger.ismp`
-- [ ] Remove oauth token from `.config/github-copilot/hosts.json`
-
 ## Checklist for initial setup
 - [ ] install `uv` for Python
 - [ ] install Ansible
