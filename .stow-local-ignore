@@ -10,5 +10,6 @@ Mackup
 .*alacritty/themes/.*
 .DS_Store
 scripts/
+bash/
 hosts/*/.config/fastfetch/
 hosts/*/tools.yml
