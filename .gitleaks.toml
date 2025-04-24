@@ -1,0 +1,6 @@
+[allowlist]
+  description = "ignore User/keybindings.json file"
+  paths = [
+    "User/keybindings.json"
+  ]
+
