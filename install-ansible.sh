@@ -2,7 +2,7 @@
 
 set -e
 
-source "$(dirname "${BASH_SOURCE[0]}")/scripts/common.sh"
+f="$HOME/.cache/dotfiles/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/logging.sh); source "$f"
 
 if ! command -v uv &> /dev/null; then
   log_error "uv not found"

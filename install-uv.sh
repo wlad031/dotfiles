@@ -2,7 +2,7 @@
 
 set -e
 
-f="$HOME/.cache/remote-scripts/logging.sh"; source "$f" || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/logging.sh && source "$f")
+f="$HOME/.cache/dotfiles/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/logging.sh); source "$f"
 
 if command -v uv &> /dev/null; then
   log_info "uv is already installed"
