@@ -16,3 +16,4 @@ g_setup() {
   unalias g > /dev/null 2>&1
   source_safe "$HOME/.g/env"
 }
+
