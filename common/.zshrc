@@ -1,4 +1,4 @@
-f="$HOME/.cache/dotfiles/common.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/common.sh); source "$f"
+x="common.sh"; f="$HOME/dotfiles/bash/lib/$x"; [ -f $f ] || f="$HOME/.cache/dotfiles/$x" && [ -f $f ] || (mkdir -p ${f%/*} && wget -qO $f "https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/bash/lib/$x"); source $f
 
 ###############################################################################
 # Common aliases
