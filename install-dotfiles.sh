@@ -9,6 +9,7 @@ USERNAME=$(whoami)
 DRY_RUN=0
 VERBOSE=0
 ADOPT=0
+RESTOW=0
 NO_COLOR=''
 TAGS=()
 
@@ -27,6 +28,8 @@ Available options:
 -v, --verbose     Enable verbose output
 -n, --dry-run     Perform a dry run without making changes
 --adopt           (Use with care!)  Import existing files into stow package
+                  from target.  Please read docs before using.
+--restow          Restow (like stow -D followed by stow -S)
 --no-color        Disable colored output
 --username USER   Specify username (default: current username)
 --tags TAGS...    Specify one or more tags to apply (order matters)
@@ -62,6 +65,7 @@ parse_params() {
       -v|--verbose) VERBOSE=1 ;;
       -n|--dry-run) DRY_RUN=1 ;;
       --adopt) ADOPT=1 ;;
+      --restow) RESTOW=1 ;;
       --no-color) NO_COLOR=1 ;;
       --username) USERNAME="$2"; shift ;;
       --tags)
@@ -89,6 +93,7 @@ stow_package() {
 
     [[ "$DRY_RUN" == 1 ]] && stow_cmd+=("--simulate")
     [[ "$ADOPT" == 1 ]] && stow_cmd+=("--adopt")
+    [[ "$RESTOW" == 1 ]] && stow_cmd+=("--restow")
     [[ "$VERBOSE" == 1 ]] && msg "${GREEN}Executing: ${stow_cmd[*]}${NOFORMAT}"
 
     "${stow_cmd[@]}"
