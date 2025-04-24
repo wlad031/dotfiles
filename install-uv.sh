@@ -2,7 +2,8 @@
 
 set -e
 
-f="$HOME/.cache/dotfiles/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/logging.sh); source "$f"
+# TODO: Use shortened version of a url
+f="$HOME/.cache/bash/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/bash/lib/logging.sh); source "$f"
 
 if command -v uv &> /dev/null; then
   log_info "uv is already installed"

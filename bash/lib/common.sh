@@ -1,4 +1,4 @@
-f="$HOME/.cache/dotfiles/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/logging.sh); source "$f"
+f="$HOME/.cache/bash/logging.sh"; [ -f "$f" ] || (mkdir -p "${f%/*}" && wget -qO "$f" https://gitea.local.vgerasimov.dev/wlad031/dotfiles/raw/branch/master/bash/lib/logging.sh); source "$f"
 
 ###############################################################################
 # Environment loading
