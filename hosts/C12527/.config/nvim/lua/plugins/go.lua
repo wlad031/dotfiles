@@ -1,4 +1,4 @@
-local M = {
+return {
   "ray-x/go.nvim",
   dependencies = { -- optional packages
     "ray-x/guihua.lua",
@@ -13,4 +13,3 @@ local M = {
   build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
 }
 
-return M

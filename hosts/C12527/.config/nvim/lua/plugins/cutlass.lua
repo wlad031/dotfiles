@@ -1,5 +1,5 @@
--- Plugin that adds a 'cut' operation separate from 'delete'
-local cutlass = {
+return {
+  -- Plugin that adds a 'cut' operation separate from 'delete'
   "gbprod/cutlass.nvim",
   opts = {
     cut_key = 'd',
@@ -10,8 +10,3 @@ local cutlass = {
     },
   }
 }
-
-return {
-  cutlass
-}
-

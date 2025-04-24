@@ -1,4 +1,4 @@
-local P = {
+return {
   'smoka7/hop.nvim',
   version = "*",
   opts = {
@@ -23,6 +23,3 @@ local P = {
   end
 }
 
-return {
-  P,
-}

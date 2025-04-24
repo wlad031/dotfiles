@@ -1,6 +1,7 @@
-local P = {
+return {
   {
     "zbirenbaum/copilot.lua",
+    enabled = false,
     opts = {},
     event = "VimEnter",
     config = function()
@@ -11,6 +12,7 @@ local P = {
   },
   {
     "zbirenbaum/copilot-cmp",
+    enabled = false,
     dependencies = {
       "zbirenbaum/copilot.lua",
       "hrsh7th/nvim-cmp"
@@ -21,4 +23,3 @@ local P = {
   },
 }
 
-return {}

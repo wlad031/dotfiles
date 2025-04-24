@@ -1,4 +1,4 @@
-local P = {
+return {
   "supermaven-inc/supermaven-nvim",
   config = function()
     require("supermaven-nvim").setup({
@@ -8,6 +8,3 @@ local P = {
   end,
 }
 
-return {
-  P
-}

@@ -1,4 +1,4 @@
-local P = {
+return {
   "vim-test/vim-test",
   dependencies = {
     "preservim/vimux",
@@ -12,6 +12,3 @@ local P = {
   end
 }
 
-return {
-  P,
-}

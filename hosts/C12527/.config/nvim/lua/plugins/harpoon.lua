@@ -1,4 +1,4 @@
-local P = {
+return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
   dependencies = { "nvim-lua/plenary.nvim" },
@@ -33,6 +33,3 @@ local P = {
   end
 }
 
-return {
-  P,
-}

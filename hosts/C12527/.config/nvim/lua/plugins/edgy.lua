@@ -1,4 +1,4 @@
-local P = {
+return {
   "folke/edgy.nvim",
   event = "VeryLazy",
   opts = {
@@ -75,6 +75,3 @@ local P = {
   }
 }
 
-return {
-  P,
-}

@@ -1,4 +1,4 @@
-local P = {
+return {
   "zbirenbaum/neodim",
   event = "LspAttach",
   config = function()
@@ -21,7 +21,4 @@ local P = {
   end
 }
 
-return {
-  P,
-}
 

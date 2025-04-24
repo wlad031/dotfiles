@@ -1,4 +1,4 @@
-local P = {
+return {
   "zk-org/zk-nvim",
   config = function()
     require("zk").setup({
@@ -7,6 +7,3 @@ local P = {
   end
 }
 
-return {
-  P,
-}

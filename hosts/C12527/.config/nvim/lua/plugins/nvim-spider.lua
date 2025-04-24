@@ -1,4 +1,4 @@
-local P = {
+return {
   "chrisgrieser/nvim-spider",
   lazy = true,
   config = function()
@@ -8,6 +8,3 @@ local P = {
   end
 }
 
-return {
-  P,
-}

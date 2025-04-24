@@ -12,20 +12,16 @@ return {
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     -- local capabilities = require('blink.cmp').get_lsp_capabilities()
     local lspconfig = require('lspconfig')
-
-    lspconfig['lua_ls'].setup({
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-        }
-      },
-    })
-
-    require("languages.python").SetupLspConfig(lspconfig, capabilities)
-    require("languages.jinja").SetupLspConfig(lspconfig, capabilities)
-    require("languages.harper").SetupLspConfig(lspconfig, capabilities)
+    local languages = {
+      require("languages.harper"),
+      require("languages.java"),
+      require("languages.jinja"),
+      require("languages.lua"),
+      require("languages.markdown"),
+      require("languages.python"),
+    }
+    for _, lang in ipairs(languages) do
+      lang.SetupLspConfig(lspconfig, capabilities)
+    end
   end,
 }
