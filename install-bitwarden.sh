@@ -4,7 +4,7 @@ set -e
 
 x="bash/lib/logging.sh"; f="$HOME/dotfiles/$x"; [ -f $f ] || f="/tmp/dotfiles/$x" && [ -f $f ] || (mkdir -p ${f%/*} && wget -qO $f "https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/$x"); source $f
 
-GIT_REPO_URL="https://github.com/wlad031/dotfles/archive/refs/heads/master.zip"
+GIT_REPO_URL="https://codeload.github.com/wlad031/dotfiles/zip/refs/heads/master"
 DOWNLOAD_DIR="/tmp/dotfiles/ansible"
 
 main() {
