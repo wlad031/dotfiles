@@ -10,6 +10,7 @@ DOWNLOAD_DIR="/tmp/dotfiles/ansible"
 main() {
     log_info "Preparing environment..."
     rm -rf "$DOWNLOAD_DIR"
+    mkdir -p "/tmp/downloads"
     mkdir -p "$DOWNLOAD_DIR"
 
     log_info "Downloading Ansible project from GitHub..."
