@@ -1,0 +1,6 @@
+- name: Install Bitwarden
+  hosts: localhost
+  become: true
+  roles:
+    - install-bitwarden
+

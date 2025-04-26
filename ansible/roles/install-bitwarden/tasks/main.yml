@@ -1,0 +1,26 @@
+- name: Check if system is Debian-based
+  ansible.builtin.stat:
+    path: /etc/debian_version
+  register: debian_check
+
+- name: Fail if not Debian
+  ansible.builtin.fail:
+    msg: "Supports only Debian-based systems"
+  when: not debian_check.stat.exists
+
+- name: Download Bitwarden .deb package
+  ansible.builtin.get_url:
+    url: "{{ bitwarden_url_deb }}"
+    dest: "{{ bitwarden_tmp_file_deb }}"
+    mode: '0644'
+
+- name: Install Bitwarden
+  ansible.builtin.apt:
+    deb: "{{ bitwarden_tmp_file_deb }}"
+    state: present
+
+- name: Remove temporary Bitwarden package
+  ansible.builtin.file:
+    path: "{{ bitwarden_tmp_file_deb }}"
+    state: absent
+

@@ -3,11 +3,11 @@
 ## Checklist for initial setup
 - [ ] install `uv` for Python
   ```bash
-    wget -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-uv.sh | bash
+    wget -q -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-uv.sh | bash
   ```
 - [ ] install Ansible
   ```bash
-    wget -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-ansible.sh | bash
+    wget -q -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-ansible.sh | bash
   ```
 - [ ] install Bitwarden
   - [ ] setup Bitwarden as SSH agent
