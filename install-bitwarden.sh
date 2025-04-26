@@ -5,28 +5,38 @@ set -e
 x="bash/lib/logging.sh"; f="$HOME/dotfiles/$x"; [ -f $f ] || f="/tmp/dotfiles/$x" && [ -f $f ] || (mkdir -p ${f%/*} && wget -qO $f "https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/$x"); source $f
 
 GIT_REPO_URL="https://codeload.github.com/wlad031/dotfiles/zip/refs/heads/master"
-DOWNLOAD_DIR="/tmp/dotfiles/ansible"
+
+dir="/tmp/dotfiles"
+downloads_dir="/tmp/downloads/dotfiles"
+zip_file="$downloads_dir/dotfiles.zip"
 
 main() {
     log_info "Preparing environment..."
-    rm -rf "$DOWNLOAD_DIR"
-    mkdir -p "/tmp/downloads"
-    mkdir -p "$DOWNLOAD_DIR"
+    if [[ ! -d "$downloads_dir" ]]; then
+      mkdir -p "$downloads_dir"
+    fi
+    if [[ -f "$zip_file" ]]; then
+      rm -rf "$zip_file"
+    fi
+    if [[ -d "$dir" ]]; then
+      rm -rf "$dir/ansible"
+    fi
+    mkdir -p "$dir/ansible"
 
     log_info "Downloading Ansible project from GitHub..."
-    wget -q "$GIT_REPO_URL" -O /tmp/downloads/dotfiles.zip
-    unzip -q /tmp/downloads/dotfiles.zip -d /tmp/dotfiles
+    wget -q "$GIT_REPO_URL" -O "$zip_file"
+    unzip -q "$zip_file" -d "$downloads_dir"
 
-    if [[ -d "/tmp/dotfiles/ansible" ]]; then
-        mv "/tmp/dotfiles/ansible/*" "$DOWNLOAD_DIR/"
+    if [[ -d "$dir" ]]; then
+        mv "$downloads_dir/dotfiles-master/ansible/*" "$dir/ansible"
     else
-        log_error "Ansible folder not found in the downloaded repo"
+        log_error "Ansible folder not found"
         exit 1
     fi
 
     log_info "Running Ansible playbook to install Bitwarden..."
-    cd "$DOWNLOAD_DIR"
-    ansible-playbook playbook.yml
+    cd "$dir/ansible"
+    ansible-playbook playbooks/playbook.yml
 
     log_info "Playbook executed successfully"
 }
