@@ -13,8 +13,8 @@ function M.SetupLspConfig(lspconfig, capabilities)
   -- Write Markdown with code assist and intelligence in the comfort of your 
   -- favourite editor.
   -- https://github.com/artempyanykh/marksman
-  lspconfig.marksman.setup({
-  })
+  -- lspconfig.marksman.setup({
+  -- })
 end
 
 return M

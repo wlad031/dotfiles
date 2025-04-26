@@ -26,7 +26,7 @@ local markview = {
 
 local plugins = {
   -- markdown_nvim
-  markview
+  -- markview
 }
 
 return plugins
