@@ -28,7 +28,7 @@ main() {
     unzip -q "$zip_file" -d "$downloads_dir"
 
     if [[ -d "$dir" ]]; then
-        mv "$downloads_dir/dotfiles-master/ansible/*" "$dir/ansible"
+        mv "$downloads_dir/dotfiles-master/ansible"/* "$dir/ansible"
     else
         log_error "Ansible folder not found"
         exit 1
