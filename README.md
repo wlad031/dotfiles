@@ -15,7 +15,7 @@
 - [ ] install homebrew
 - [ ] install essential packages
 - [ ] install sdkman
-- [ ] install Go
+- [ ] install Go with `g`
 - [ ] install dotfiles
   ```bash
   bash install-dotfiles.sh --tags <comma-separated-tags>

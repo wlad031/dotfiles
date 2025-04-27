@@ -88,7 +88,7 @@ end
 Pickers.files = function()
   Snacks.picker.files({
     hidden = true,
-    ignored = true,
+    ignored = false,
     layout = {
       preset = "telescope",
     },
@@ -98,7 +98,7 @@ end
 Pickers.grep = function()
   Snacks.picker.grep({
     hidden = true,
-    ignored = true,
+    ignored = false,
     layout = {
       preset = "telescope",
     },
@@ -108,7 +108,7 @@ end
 Pickers.grep_word = function()
   Snacks.picker.grep_word({
     hidden = true,
-    ignored = true,
+    ignored = false,
     layout = {
       preset = "telescope",
     },
@@ -119,7 +119,7 @@ Pickers.smart = function()
   Snacks.picker.smart({
     multi = { "buffers", "recent", "files" },
     hidden = true,
-    ignored = true,
+    ignored = false,
     format = "file",     -- use `file` format for all sources
     matcher = {
       cwd_bonus = true,  -- boost cwd matches
