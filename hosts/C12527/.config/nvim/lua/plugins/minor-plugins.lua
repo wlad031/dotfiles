@@ -11,23 +11,6 @@ local todo_comments = {
   }
 }
 
-local mini_starter = {
-  'echasnovski/mini.starter',
-  version = '*',
-  config = function()
-    local starter = require("mini.starter")
-    starter.setup({
-      items = {
-        { name = "- Oil buffer", action = "Oil", section = "Builtin actions" },
-        starter.sections.builtin_actions(),
-        starter.sections.recent_files(5, true), -- Only from current directory
-        -- Use this if you set up 'mini.sessions'
-        --       starter.sections.sessions(5, true)
-      }
-    })
-  end
-}
-
 local indent_blankline = {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",

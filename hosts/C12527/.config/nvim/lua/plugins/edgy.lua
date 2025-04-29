@@ -35,6 +35,28 @@ return {
         end,
       },
       { ft = "spectre_panel", size = { height = 0.4 } },
+      -- {
+      --   title = "Backlinks",
+      --   size = { height = 0.3 },
+      --   ft = "markdown",
+      --   filter = function(buf)
+      --     local current_folder = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+      --     local notes_folders = {
+      --       "notes",
+      --       "Logseq",
+      --       "Obsidian",
+      --     }
+      --     return vim.tbl_contains(notes_folders, current_folder)
+      --   end,
+        -- open = function()
+          -- local obsidian_client = require("obsidian.client")
+          -- local buf = vim.api.nvim_get_current_buf()
+          -- print(buf)
+          -- local current_note = obsidian_client.current_note(buf)
+          -- return obsidian_client.find_backlinks(current_note)
+          -- return "ObsidianBacklinks"
+        -- end
+      -- }
     },
     left = {
       -- Neo-tree filesystem always takes half the screen height

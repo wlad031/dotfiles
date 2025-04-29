@@ -19,7 +19,7 @@ vim.opt.laststatus = 3
 vim.opt.splitkeep = "screen"
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
   -- Use the default configuration
   virtual_lines = true
 
