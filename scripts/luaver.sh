@@ -15,5 +15,5 @@ luaver_setup() {
     return
   fi
 
-  source_safe "$HOME/.luaver/luaver"
+  source_safe "$HOME/.luaver/luaver" > /dev/null
 }

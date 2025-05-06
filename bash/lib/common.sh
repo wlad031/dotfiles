@@ -21,7 +21,12 @@ read_env() {
   fi
 
   if [[ -f $file ]]; then
-    export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
+    # export $(echo $(cat "$file" | sed 's/#.*//g'| xargs) | envsubst)
+    while IFS='=' read -r key val; do
+      [[ "$key" =~ ^#.*$ || -z "$key" ]] && continue
+      val=$(echo "$val" | envsubst)
+      export "$key=$val"
+    done < <(grep -v '^\s*#' "$file" | grep '=')
     log_debug "Loaded env file: $file"
   else
     log_error "Cannot read env file: doesn't exist: $file"

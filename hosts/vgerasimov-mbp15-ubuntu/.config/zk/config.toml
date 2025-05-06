@@ -1,0 +1,45 @@
+[notebook]
+dir = "~/notes"
+
+[note]
+language = "en"
+default-title = "Untitled"
+filename = "{{id}}-{{slug title}}"
+extension = "md"
+template = "default.md"
+id-charset = "alphanum"
+id-length = 4
+id-case = "lower"
+
+[extra]
+author = "Vlad Gerasimov"
+
+[group.journal]
+paths = ["**/journals/**"]
+
+[group.journal.note]
+filename = "{{format-date now '%Y_%m_%d'}}"
+
+[format.markdown]
+hashtags = true
+colon-tags = false
+
+[tool]
+editor = "nvim"
+shell = "/bin/zsh"
+pager = "diff-so-fancy | less --tabs=4 -RFX"
+fzf-preview = "bat -p --color always {-1}"
+
+[filter]
+recents = "--sort created- --created-after 'last two weeks'"
+
+[alias]
+edlast = "zk edit --limit 1 --sort modified- $@"
+recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"
+lucky = "zk list --quiet --format full --sort random --limit 1"
+
+[lsp]
+[lsp.diagnostics]
+wiki-title = "hint"
+dead-link = "error"
+

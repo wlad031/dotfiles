@@ -20,6 +20,12 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
+
+  config = function(plugin, opts)
+    require("obsidian").setup(opts)
+    vim.keymap.set("n", "<leader>jj", "<cmd>:ObsidianToday<cr>")
+  end,
+
   opts = {
     workspaces = {
       {
@@ -52,12 +58,6 @@ return {
           return require("obsidian").util.gf_passthrough()
         end,
         opts = { noremap = false, expr = true, buffer = true },
-      },
-      ["<leader>jj"] = {
-        action = function()
-          return require("obsidian").util.today()
-        end,
-        opts = { buffer = true },
       },
       ["<leader>ch"] = {
         action = function()

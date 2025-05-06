@@ -1,1 +1,2 @@
+export DOTFILES_SCRIPTS_DIR=$HOME/dotfiles/scripts
 

@@ -30,6 +30,8 @@ docker_setup() {
     local host=$1
     if [[ "$host" = "rancher" ]]; then
       __docker_change_host_rancher
+    elif [[ "$host" = "lima" ]]; then
+      __docker_change_host_lima "$2"
     elif [[ "$host" = "colima" ]]; then
       __docker_change_host_colima "$2"
     else
@@ -74,6 +76,8 @@ docker_setup() {
   __docker_get_default_host() {
     if [[ $RANCHER_INSTALLED = true ]]; then
       echo "rancher"
+    elif [[ $LIMA_INSTALLED = true ]]; then
+      echo "lima"
     elif [[ $COLIMA_INSTALLED = true ]]; then
       echo "colima"
     fi
@@ -87,7 +91,9 @@ docker_setup() {
     fi
 
     log_debug "Setting docker host to $default_host"
-    __docker host "$default_host"
+    __docker host "$default_host" docker
+    # TODO: This is for lima/colima. I should not use explicit "docker" here.
+    #   Instead, script should find appropriate lima/colima VM by itself.
   }
 
   __docker_set_default_host
