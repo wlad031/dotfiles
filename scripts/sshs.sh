@@ -5,6 +5,7 @@ else
 fi
 
 sshs_setup() {
+  local opt="$1"
   if [[ "$SSHS_INSTALLED" = false ]]; then
     if [[ "$opt" = "required" ]]; then
       log_error "sshs is not installed"

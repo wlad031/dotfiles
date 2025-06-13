@@ -19,10 +19,10 @@ source_safe "$DOTFILES_SCRIPTS_DIR/docker.sh"     ; docker_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/lazydocker.sh" ; lazydocker_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/fzf.sh"        ; fzf_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/lazygit.sh"    ; lazygit_setup
-source_safe "$DOTFILES_SCRIPTS_DIR/devmoji.sh"    ; devmoji_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/neovim.sh"     ; neovim_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/codium.sh"     ; codium_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/fnm.sh"        ; fnm_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/devmoji.sh"    ; devmoji_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/flutter.sh"    ; flutter_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/g.sh"          ; g_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/sesh.sh"       ; sesh_setup
@@ -41,7 +41,8 @@ source_safe "$DOTFILES_SCRIPTS_DIR/luaver.sh"     ; luaver_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/atuin.sh"      ; atuin_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/sshs.sh"       ; sshs_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/aerospace.sh"  ; aerospace_setup
-source_safe "$DOTFILES_SCRIPTS_DIR/zsh_vi.sh"     ; zsh_vi_setup
+# source_safe "$DOTFILES_SCRIPTS_DIR/zsh_vi.sh"     ; zsh_vi_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/ansible.sh"    ; ansible_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/tldr.sh"       ; tldr_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/notes.sh"      ; notes_setup
 ###############################################################################

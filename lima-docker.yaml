@@ -1,0 +1,39 @@
+arch: "x86_64"
+images:
+  - location: "https://cloud-images.ubuntu.com/minimal/releases/focal/release/ubuntu-20.04-minimal-cloudimg-amd64.img"
+    arch: "x86_64"
+
+firmware:
+  legacyBIOS: true
+
+cpus: 2
+memory: "4GiB"
+disk: "20GiB"
+
+mounts:
+  - location: "~"
+    writable: false
+
+containerd:
+  system: false
+  user: false
+
+host:
+  qemu:
+    args:
+      - "-m"
+      - "4096"
+      - "-cpu"
+      - "host"
+      - "-smp"
+      - "2"
+      - "-machine"
+      - "q35,accel=kvm"
+      - "-boot"
+      - "order=c"
+      - "-display"
+      - "none"
+      # no -device virtio-vga!
+      - "-device"
+      - "virtio-rng-pci"
+

@@ -1,8 +1,8 @@
 ###############################################################################
 # Setting logging level
-export ZSHRC_LOG_INFO=true
-export ZSHRC_LOG_ERROR=true
-export ZSHRC_LOG_DEBUG=false
+export LOG_INFO_ENABLED=true
+export LOG_ERROR_ENABLED=true
+export LOG_DEBUG_ENABLED=false
 export WELCOME_SCREEN_ENABLED=true
 ###############################################################################
 

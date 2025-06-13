@@ -10,10 +10,12 @@ coursier_setup() {
     return
   fi
 
-  COURSIER_DIR="$HOME/Library/Application Support/Coursier"
-  if [[ -d "$COURSIER_DIR" ]]; then
-    export PATH="$PATH:$COURSIER_DIR/bin"
-  else
-    log_error "Coursier installed in an unknown directory, not found: $COURSIER_DIR"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    COURSIER_DIR="$HOME/Library/Application Support/Coursier"
+    if [[ -d "$COURSIER_DIR" ]]; then
+      export PATH="$PATH:$COURSIER_DIR/bin"
+    else
+      log_error "Coursier installed in an unknown directory, not found: $COURSIER_DIR"
+    fi
   fi
 }

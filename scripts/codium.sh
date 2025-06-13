@@ -5,8 +5,13 @@ else
 fi
 
 codium_setup() {
+  local opt=$1
   if [[ "$CODIUM_INSTALLED" = false ]]; then
-    log_error "codium is not installed"
+    if [[ "$opt" = "required" ]]; then
+      log_error "codium is not installed"
+    else
+      log_debug "codium is not installed"
+    fi
     return
   fi
 

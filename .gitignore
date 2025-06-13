@@ -2,3 +2,4 @@
 *.log
 */lazygit/state.yml
 Library/Application Support/lazygit/state.yml
+.link_state

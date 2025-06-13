@@ -1,0 +1,15 @@
+.DS_Store
+.localized
+report.zip
+.idea/
+*IGNORED*
+*ignored*
+.gradle/
+gradlew
+gradlew.bat
+gradle/wrapper/*
+*.swp
+.env
+.env.json
+__pycache__/
+.factorypath

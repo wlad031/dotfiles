@@ -1,16 +1,13 @@
-if ! command -v sesh &> /dev/null; then
-  export SESH_INSTALLED=false
-else
-  export SESH_INSTALLED=true
-fi
+command -v sesh &>/dev/null && export SESH_INSTALLED=true || export SESH_INSTALLED=false
 
 sesh_setup() {
+  local opt="${1:-optional}"
   if [[ "$TMUX_INSTALLED" = false ]]; then
-    log_debug "sesh: tmux is not installed"
+    log_debug_or_error $opt "sesh: tmux is not installed"
     return
   fi
   if [[ "$SESH_INSTALLED" = false ]]; then
-    log_error "sesh is not installed"
+    log_debug_or_error $opt "sesh is not installed"
     return
   fi
 

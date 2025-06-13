@@ -1,0 +1,12 @@
+configuration {
+  modes: [ combi ];
+  combi-modes: [ clipboard, ccalc, emojis, drun, run ];
+}
+
+@theme "gruvbox-dark"
+
+element {
+  orientation: horizontal;
+  children: [ element-icon, element-text ];
+  spacing: 5px;
+}

@@ -36,6 +36,10 @@ fzf_setup() {
 
   # -- Use fd instead of fzf --
   export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+
+  # morhetz/gruvbox
+  export FZF_DEFAULT_OPTS='--color=bg+:#3c3836,bg:#32302f,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,info:#8ec07c,pointer:#fb4934,marker:#fb4934,fg+:#ebdbb2,prompt:#fb4934,hl+:#fb4934'
+
   # export FZF_DEFAULT_OPTS="--height 80% --layout=reverse --border --preview '/Users/vgerasimov/dotfiles/scripts/fzf-preview.sh {}'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
