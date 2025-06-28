@@ -1,4 +1,4 @@
-NEXTCLOUD_CONTAINER=nextcloud-app-1
+NEXTCLOUD_CONTAINER=nextcloud
 
 if [[ "$DOCKER_INSTALLED" = false ]]; then
   if docker inspect $NEXTCLOUD_CONTAINER &>/dev/null; then
