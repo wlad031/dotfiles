@@ -135,7 +135,7 @@ return {
   catppuccin,
   kanagawa,
   tokyonight,
-  cyberdream,
+  -- cyberdream,
   gruvbox,
   flow,
   nightfox,
