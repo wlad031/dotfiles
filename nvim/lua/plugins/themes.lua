@@ -1,5 +1,5 @@
 local gruvbox = {
-  "ellisonleao/gruvbox.nvim"
+  "ellisonleao/gruvbox.nvim",
 }
 
 local catppuccin = {
@@ -9,7 +9,7 @@ local catppuccin = {
   priority = 1000,
   config = function()
     require("catppuccin").setup()
-  end
+  end,
 }
 
 local tokyonight = {
@@ -21,6 +21,7 @@ local tokyonight = {
 
 local cyberdream = {
   "scottmckendry/cyberdream.nvim",
+  enabled = false,
   lazy = false,
   priority = 1000,
   config = function()
@@ -38,18 +39,18 @@ local cyberdream = {
 local kanagawa = {
   "rebelot/kanagawa.nvim",
   config = function()
-    require('kanagawa').setup({
-      compile = false,  -- enable compiling the colorscheme
+    require("kanagawa").setup({
+      compile = false, -- enable compiling the colorscheme
       undercurl = true, -- enable undercurls
       commentStyle = { italic = true },
       functionStyle = {},
       keywordStyle = { italic = true },
       statementStyle = { bold = true },
       typeStyle = {},
-      transparent = false,   -- do not set background color
-      dimInactive = true,    -- dim inactive window `:h hl-NormalNC`
+      transparent = false, -- do not set background color
+      dimInactive = true, -- dim inactive window `:h hl-NormalNC`
       terminalColors = true, -- define vim.g.terminal_color_{0,17}
-      colors = {             -- add/modify theme and palette colors
+      colors = { -- add/modify theme and palette colors
         palette = {},
         theme = {
           wave = {},
@@ -57,9 +58,9 @@ local kanagawa = {
           dragon = {},
           all = {
             ui = {
-              bg_gutter = "none"
-            }
-          }
+              bg_gutter = "none",
+            },
+          },
         },
       },
       overrides = function(colors) -- add/modify highlights
@@ -93,13 +94,13 @@ local kanagawa = {
           PmenuThumb = { bg = theme.ui.bg_p2 },
         }
       end,
-      theme = "wave",  -- Load "wave" theme when 'background' option is not set
-      background = {   -- map the value of 'background' option to a theme
+      theme = "wave", -- Load "wave" theme when 'background' option is not set
+      background = { -- map the value of 'background' option to a theme
         dark = "wave", -- try "dragon" !
-        light = "lotus"
+        light = "lotus",
       },
     })
-  end
+  end,
 }
 
 local flow = {
@@ -109,26 +110,26 @@ local flow = {
   priority = 1000,
   opts = {},
   config = function()
-    require("flow").setup {
-      transparent = true,       -- Set transparent background.
-      fluo_color = "pink",      --  Fluo color: pink, yellow, orange, or green.
-      mode = "normal",          -- Intensity of the palette: normal, dark, or bright. Notice that dark is ugly!
+    require("flow").setup({
+      transparent = true, -- Set transparent background.
+      fluo_color = "pink", --  Fluo color: pink, yellow, orange, or green.
+      mode = "normal", -- Intensity of the palette: normal, dark, or bright. Notice that dark is ugly!
       aggressive_spell = false, -- Display colors for spell check.
-    }
+    })
   end,
 }
 
 local nightfox = { "EdenEast/nightfox.nvim" }
 
 local oldschool = {
-    "L-Colombo/oldschool.nvim"
+  "L-Colombo/oldschool.nvim",
 }
 
 local jb = {
-    "nickkadutskyi/jb.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
+  "nickkadutskyi/jb.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {},
 }
 
 return {

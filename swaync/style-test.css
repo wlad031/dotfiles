@@ -1,4 +1,4 @@
-@import url('../../.cache/wal/colors-waybar.css');
+/* @import url('../../.cache/wal/colors-waybar.css'); */
 @define-color mpris-album-art-overlay alpha(@background, 0.55);
 @define-color mpris-button-hover alpha(@background, 0.50);
 @define-color text @color15;
@@ -273,7 +273,7 @@
     padding-bottom: 8px;
     margin: 10px;
     border-radius: 12px;
-    background:transparent;
+    /* background:transparent; */
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button label {
@@ -287,7 +287,7 @@
     transition: all .7s ease;
 }
 .widget-buttons-grid > flowbox > flowboxchild > button {
-    background: transparent;
+    /* background: transparent; */
     border-radius: 12px;
     text-shadow:none;
     box-shadow: 0px 0px 8px rgba(255,255,255, .02);
@@ -297,61 +297,60 @@
     background: @color4;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, .2);
     transition: all .5s ease;
-
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked {
-    background: @mycolor;
+    /* background: @mycolor; */
 }
 .widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked label {
-    color: @background;
+    /* color: @background; */
 }
 
 .widget-menubar > box > .menu-button-bar > button {
     border: none;
-    background: transparent;
+    /* background: transparent; */
 }
 
 .topbar-buttons > button {
     border: none;
-    background: transparent;
+    /* background: transparent; */
 }
 
 trough {
     border-radius: 20px;
-    background: transparent;
+    /* background: transparent; */
 }
 
 trough highlight {
     padding: 5px;
-    background: @mycolor;
+    /* background: @mycolor; */
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
     transition: all .7s ease;
 }
 trough highlight:hover {
     padding: 5px;
-    background: @mycolor;
+    /* background: @mycolor; */
     border-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
     transition: all .7s ease;
 }
 
 trough slider {
-    background: transparent;
+    /* background: transparent; */
 }
 trough slider:hover {
-    background: transparent;
+    /* background: transparent; */
 }
 
 .widget-volume {
-    background-color: transparent;
+    /* background-color: transparent; */
     padding: 8px;
     margin: 8px;
     border-radius: 12px;
 }
 .widget-backlight {
-    background-color: transparent;
+    /* background-color: transparent; */
     padding: 8px;
     margin: 8px;
     border-radius: 12px;

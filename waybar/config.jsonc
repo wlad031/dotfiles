@@ -163,11 +163,15 @@
     },
 
     "network": {
-      "format-wifi": "  {ipaddr}",
+      "format-wifi": "  {signalStrength}% ",
       "format-ethernet": "󰖈 {ipaddr}",
       "format-disconnected": "󰌙",
       "interval": 5,
       "tooltip": true,
+      "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+      "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+      "tooltip-format-ethernet": "{ifname} ",
+      "tooltip-format-disconnected": "Disconnected",
     },
 
     "wlr/taskbar": {
