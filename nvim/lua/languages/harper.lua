@@ -1,7 +1,7 @@
 local M = {}
 
-M.SetupLspConfig = function(lspconfig, capabilities)
-	lspconfig.harper_ls.setup({
+M.SetupLsp = function(capabilities)
+  vim.lsp.config("harper_ls", {
 		capabilities = capabilities,
 		settings = {
 			["harper-ls"] = {
@@ -31,6 +31,7 @@ M.SetupLspConfig = function(lspconfig, capabilities)
 			},
 		},
 	})
+  vim.lsp.enable("harper_ls")
 end
 
 return M

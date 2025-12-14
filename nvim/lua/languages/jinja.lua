@@ -1,19 +1,18 @@
 local M = {}
 
-local function init()
-end
+local function init() end
 
 init()
 
-function M.SetupLspConfig(lspconfig, capabilities)
-  local configs = require('lspconfig.configs')
+M.SetupLsp = function(capabilities)
+  local configs = require("lspconfig.configs")
 
   if not configs.jinja_lsp then
     configs.jinja_lsp = {
       default_config = {
         name = "jinja-lsp",
-        cmd = {"/Users/vgerasimov/.cargo/bin/jinja-lsp"}, -- TODO: get rid of full path
-        filetypes = { 'jinja', 'yaml' },
+        cmd = { "/Users/vgerasimov/.cargo/bin/jinja-lsp" }, -- TODO: get rid of full path
+        filetypes = { "jinja", "yaml" },
         root_dir = function(fname)
           return "."
           --return nvim_lsp.util.find_git_ancestor(fname)
@@ -21,7 +20,7 @@ function M.SetupLspConfig(lspconfig, capabilities)
       },
     }
   end
-  lspconfig.jinja_lsp.setup({
+  vim.lsp.config("jinja_lsp", {
     capabilities = capabilities,
     -- on_attach = function(_, bufnr)
     --   local function activate_virtualenv()
@@ -42,6 +41,7 @@ function M.SetupLspConfig(lspconfig, capabilities)
     --   })
     -- end,
   })
+  vim.lsp.enable("jinja_lsp")
 end
 
 return M

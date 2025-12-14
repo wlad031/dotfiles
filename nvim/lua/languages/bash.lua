@@ -1,7 +1,6 @@
 local M = {}
 
-local setupKeyMappings = function()
-end
+local setupKeyMappings = function() end
 
 local init = function()
   setupKeyMappings()
@@ -9,10 +8,11 @@ end
 
 init()
 
-M.SetupLspConfig = function(lspconfig, capabilities)
-  lspconfig.bashls.setup {
+M.SetupLsp = function(capabilities)
+  vim.lsp.config("bashls", {
     capabilities = capabilities,
-  }
+  })
+  vim.lsp.enable("bashls")
 end
 
 M.linters = function()

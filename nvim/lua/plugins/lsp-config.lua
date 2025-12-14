@@ -11,23 +11,12 @@ return {
   config = function()
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     -- local capabilities = require('blink.cmp').get_lsp_capabilities()
-    local lspconfig = require("lspconfig")
 
-    lspconfig["lua_ls"].setup({
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim", "Snacks" },
-          },
-        },
-      },
-    })
-
-    require("languages.bash").SetupLspConfig(lspconfig, capabilities)
-    require("languages.python").SetupLspConfig(lspconfig, capabilities)
-    require("languages.jinja").SetupLspConfig(lspconfig, capabilities)
-    require("languages.harper").SetupLspConfig(lspconfig, capabilities)
-    require("languages.clojure").lsp_config(lspconfig, capabilities)
+    require("languages.lua").SetupLsp(capabilities)
+    require("languages.bash").SetupLsp(capabilities)
+    require("languages.python").SetupLsp(capabilities)
+    require("languages.jinja").SetupLsp(capabilities)
+    require("languages.harper").SetupLsp(capabilities)
+    require("languages.clojure").SetupLsp(capabilities)
   end,
 }

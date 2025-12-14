@@ -51,12 +51,16 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
       provider = "openai",
-      openai = {
-        endpoint = "https://openrouter.ai/api/v1",
-        model = "openai/o1-mini",
-        api_key_name = "OPENROUTER_API_KEY",
-        temperature = 0.6,
-        max_tokens = 12000,
+      providers = {
+        openai = {
+          endpoint = "https://openrouter.ai/api/v1",
+          model = "openai/o1-mini",
+          api_key_name = "OPENROUTER_API_KEY",
+          extra_request_body = {
+            temperature = 0.6,
+          },
+          max_tokens = 12000,
+        },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -98,35 +102,24 @@ return {
       require("parrot").setup({
         -- Providers must be explicitly added to make them available.
         providers = {
-          -- anthropic = {
-          --   api_key = os.getenv "ANTHROPIC_API_KEY",
-          -- },
-          -- gemini = {
-          --   api_key = os.getenv "GEMINI_API_KEY",
-          -- },
-          -- groq = {
-          --   api_key = os.getenv "GROQ_API_KEY",
-          -- },
-          -- mistral = {
-          --   api_key = os.getenv "MISTRAL_API_KEY",
-          -- },
-          -- pplx = {
-          --   api_key = os.getenv "PERPLEXITY_API_KEY",
-          -- },
-          -- provide an empty list to make provider available (no API key required)
-          -- ollama = {},
           openai = {
+            name = "openai",
             api_key = os.getenv("OPENAI_API_KEY"),
+            endpoint = "https://api.openai.com/v1/chat/completions",
+            params = {
+              chat = { temperature = 1.1, top_p = 1 },
+              command = { temperature = 1.1, top_p = 1 },
+            },
+            topic = {
+              model = "gpt-4.1-nano",
+              params = { max_completion_tokens = 64 },
+            },
+            models = {
+              "gpt-4o",
+              "o4-mini",
+              "gpt-4.1-nano",
+            },
           },
-          -- github = {
-          --   api_key = os.getenv "GITHUB_TOKEN",
-          -- },
-          -- nvidia = {
-          --   api_key = os.getenv "NVIDIA_API_KEY",
-          -- },
-          -- xai = {
-          --   api_key = os.getenv "XAI_API_KEY",
-          -- },
         },
       })
     end,
