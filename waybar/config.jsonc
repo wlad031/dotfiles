@@ -166,6 +166,7 @@
       "format-wifi": "  {signalStrength}% ",
       "format-ethernet": "󰖈 {ipaddr}",
       "format-disconnected": "󰌙",
+      "on-click": "nmrs",
       "interval": 5,
       "tooltip": true,
       "tooltip-format": "{ifname} via {gwaddr} 󰊗",
