@@ -44,5 +44,6 @@ source_safe "$DOTFILES_SCRIPTS_DIR/aerospace.sh"  ; aerospace_setup
 # source_safe "$DOTFILES_SCRIPTS_DIR/zsh_vi.sh"     ; zsh_vi_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/ansible.sh"    ; ansible_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/tldr.sh"       ; tldr_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/tenv.sh"       ; tenv_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/notes.sh"      ; notes_setup
 ###############################################################################
