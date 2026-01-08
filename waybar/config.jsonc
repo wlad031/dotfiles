@@ -119,11 +119,11 @@
     "hyprland/language": {
       "format": "{short}",
       // "format-en": "US",
-      "keyboard-name": "foostan-corne-keyboard",
-      "on-click": "hyprctl switchxkblayout foostan-corne-keyboard next",
+      "on-click": "hyprctl switchxkblayout all next",
     },
 
     "bluetooth": {
+      "on-click": "blueman-manager",
       "format": " {status}",
       "format-connected": " {device_alias}",
       "format-connected-battery": " {device_alias} {device_battery_percentage}%",
@@ -140,7 +140,8 @@
     },
 
     "clock": {
-      "format": "{:%A %B %d %H:%M %p}",
+      "format": "{:L%A %H:%M}",
+      "format-alt": "{:L%d %B W%V %Y}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
@@ -187,11 +188,11 @@
       "format": "{icon}  {volume}% {format_source}",
       "format-bluetooth": " {icon} {volume}% {format_source}",
       "format-bluetooth-muted": "  {icon} {format_source}",
-      "format-muted": "  {format_source}",
       "format-source": " {volume}%",
       "format-source-muted": "",
+      "format-muted": "",
       "format-icons": {
-        "default": ["", "", ""],
+        "default": ["", "", ""]
       },
       "on-click": "pavucontrol",
       "on-click-right": "foot -a pw-top pw-top",

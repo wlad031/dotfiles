@@ -5,6 +5,8 @@ antigen bundles <<EOBUNDLES
   Aloxaf/fzf-tab
   zsh-users/zsh-syntax-highlighting
   jeffreytse/zsh-vi-mode
+  kubectl
+  uv
 EOBUNDLES
 
 antigen theme clean

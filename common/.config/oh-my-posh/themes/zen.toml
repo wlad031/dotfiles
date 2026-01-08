@@ -52,6 +52,16 @@ final_space = true
       fetch_status = true
 
   [[blocks.segments]]
+    template = "󱃾 {{.Context}} :: {{if .Namespace}}{{.Namespace}}{{else}}default{{end}}"
+    foreground = 'p:grey'
+    background = 'transparent'
+    type = "kubectl"
+    style = "plain"
+
+    [blocks.segments.properties]
+      display_mode = "always"
+
+  [[blocks.segments]]
     template = '  {{ .Venv }} ({{ .Full }}) '
     foreground = 'yellow'
     background = 'transparent'
@@ -90,3 +100,10 @@ final_space = true
 
     [blocks.segments.properties]
       cache_duration = 'none'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+

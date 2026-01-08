@@ -335,7 +335,7 @@ freetype-load-flags = hinting,force-autohint,monochrome,autohint
 #
 #   - macOS: titlebar tabs style is not updated when switching themes.
 #
-theme = GruvboxDark
+theme = carbonfox
 
 
 # Enables the ability to move the cursor at prompts by using `alt+click` on

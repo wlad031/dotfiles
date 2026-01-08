@@ -46,4 +46,5 @@ source_safe "$DOTFILES_SCRIPTS_DIR/ansible.sh"    ; ansible_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/tldr.sh"       ; tldr_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/tenv.sh"       ; tenv_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/notes.sh"      ; notes_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/kubeconfig.sh" ;
 ###############################################################################

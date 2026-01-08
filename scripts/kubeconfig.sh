@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+KCFG_DIR="$HOME/.kube/clusters"
+
+kubeconfig() {
+  case "$1" in
+    ls)
+      ls -1 "$KCFG_DIR" | sed 's/\.yaml$//'
+      ;;
+    set)
+      if [ -z "$2" ]; then
+        echo "usage: kubeconfig set <name>"
+        exit 1
+      fi
+
+      FILE="$KCFG_DIR/$2.yaml"
+
+      if [ ! -f "$FILE" ]; then
+        echo "kubeconfig '$2' not found"
+        exit 1
+      fi
+
+      export KUBECONFIG="$FILE"
+      echo "KUBECONFIG set to $FILE"
+      ;;
+    *)
+      echo "usage:"
+      echo "  kubeconfig ls"
+      echo "  kubeconfig set <name>"
+      ;;
+  esac
+}
