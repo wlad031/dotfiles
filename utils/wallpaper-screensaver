@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers/nextcloud-fpcntnt-femboy-futa-house/"
+INTERVAL=10
+
+while true; do
+  IMG=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
+  awww img "$IMG" \
+    --transition-type any \
+    --transition-duration 2 \
+    --transition-fps 60
+  sleep "$INTERVAL"
+done
+
