@@ -34,3 +34,6 @@ if [[ -f "$HOME/.zshenv_host" ]]; then
   source "$HOME/.zshenv_host"
 fi
 
+###############################################################################
+export PATH="$HOME/dotfiles/utils:$PATH"
+export PATH="$HOME/dotfiles/utils/wallpick:$PATH"

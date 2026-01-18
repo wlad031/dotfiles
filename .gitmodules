@@ -1,0 +1,3 @@
+[submodule "utils/wallpick"]
+	path = utils/wallpick
+	url = git@gitea.local.vgerasimov.dev:wlad031/wallpick.git

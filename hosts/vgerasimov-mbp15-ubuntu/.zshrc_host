@@ -48,5 +48,4 @@ source_safe "$DOTFILES_SCRIPTS_DIR/tenv.sh"       ; tenv_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/notes.sh"      ; notes_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/kubeconfig.sh" ;
 source_safe "$DOTFILES_SCRIPTS_DIR/occ.sh"        ; occ_setup
->>>>>>> 5e39993 ([autocommit] 2026-01-18T11:20:16+0100)
 ###############################################################################
