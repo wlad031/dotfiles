@@ -24,8 +24,7 @@
 
     "modules-right": [
       "tray",
-      "cpu",
-      "memory",
+      "group/hw",
       "network",
       "bluetooth",
       "custom/hyprsunset",
@@ -146,11 +145,23 @@
     },
 
     "cpu": {
-      "format": "  {usage}%",
+      "format": " {usage:>2}%",
+      "justify": "center",
+      "interval": 2,
+      "on-click": "ghostty --title='htop-floating' --window-height=80 --window-width=150 -e htop"
     },
 
     "memory": {
-      "format": " {}%",
+      "format": " {percentage:>2}%",
+      "justify": "center",
+      "interval": 2,
+      "on-click": "ghostty --title='htop-floating' --window-height=30 --window-width=120 -e htop"
+    },
+
+    "group/hw": {
+      "orientation": "horizontal",
+      "justify": "center",
+      "modules": ["cpu", "memory"]
     },
 
     "battery": {

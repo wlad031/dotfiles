@@ -51,5 +51,5 @@ background-blur = 0
 # window-decorations), then this will work as expected.
 #
 # Windows smaller than 10 wide by 4 high are not allowed.
-window-height = 0
-window-width = 0
+# window-height = 0
+# window-width = 0

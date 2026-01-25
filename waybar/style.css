@@ -18,12 +18,6 @@ tooltip {
     /* border: 2px solid #7c6f64; */
 }
 
-#cpu,
-#memory,
-#network {
-  min-width: 30px;
-}
-
 #bluetooth,
 #language {
   min-width: 20px;
@@ -45,8 +39,7 @@ tooltip {
 
 #clock,
 #tray,
-#cpu,
-#memory,
+#hw,
 #battery,
 #network,
 #workspaces,
@@ -64,6 +57,10 @@ tooltip {
     padding: 2px 8px;
     border: 2px solid #303536;
     border-radius: 5px;
+}
+
+#hw {
+  min-width: 70px;
 }
 
 #custom-notification {
