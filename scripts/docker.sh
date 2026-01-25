@@ -80,13 +80,15 @@ docker_setup() {
       echo "lima"
     elif [[ $COLIMA_INSTALLED = true ]]; then
       echo "colima"
+    elif [[ -f "/var/run/docker.sock" ]]; then
+      echo "docker"
     fi
   }
 
   __docker_set_default_host() {
     local default_host=$(__docker_get_default_host)
     if [[ -z "$default_host" ]]; then
-      log_error "Could not find default docker host"
+      log_debug "Could not find default docker host"
       return
     fi
 

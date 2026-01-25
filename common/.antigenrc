@@ -6,7 +6,6 @@ antigen bundles <<EOBUNDLES
   zsh-users/zsh-syntax-highlighting
   jeffreytse/zsh-vi-mode
   kubectl
-  uv
 EOBUNDLES
 
 antigen theme clean

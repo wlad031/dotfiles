@@ -3,7 +3,7 @@
 export LOG_INFO_ENABLED=true
 export LOG_ERROR_ENABLED=true
 export LOG_DEBUG_ENABLED=false
-export WELCOME_SCREEN_ENABLED=true
+export WELCOME_SCREEN_ENABLED=false
 ###############################################################################
 
 ###############################################################################
@@ -16,10 +16,17 @@ export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 ###############################################################################
 
+add_to_path() {
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) PATH="$PATH:$1" ;;
+  esac
+}
+
 ###############################################################################
 # Common PATH changes
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
+add_to_path "$HOME/.local/bin"
+add_to_path "/usr/local/sbin"
 ###############################################################################
 
 ###############################################################################
@@ -35,5 +42,11 @@ if [[ -f "$HOME/.zshenv_host" ]]; then
 fi
 
 ###############################################################################
-export PATH="$HOME/dotfiles/utils:$PATH"
-export PATH="$HOME/dotfiles/utils/wallpick:$PATH"
+add_to_path "$HOME/dotfiles/utils"
+for d in $HOME/dotfiles/utils/*; do
+  if [[ -d $d ]]; then
+    add_to_path "$d"
+  fi
+done
+
+export PATH
