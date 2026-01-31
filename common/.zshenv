@@ -50,3 +50,5 @@ for d in $HOME/dotfiles/utils/*; do
 done
 
 export PATH
+
+alias kubeconfig="source $HOME/dotfiles/utils/kubeconfig"
