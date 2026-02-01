@@ -1,12 +1,39 @@
 configuration {
-  modes: [ combi ];
-  combi-modes: [ clipboard, ccalc, emojis, drun, run ];
+  modi: "combi,drun,run,emoji,calc,copyq,wallpapers";
+  modes: [ combi,calc,emoji,copyq ];
+  combi-modes: [ drun, run ];
+
+  show-icons: true;
+  sidebar-mode: true;
+
+  // kb-mode-next: "Tab";
+  // kb-mode-previous: "Shift+Tab";
 }
 
 @theme "gruvbox-dark"
 
-element {
-  orientation: horizontal;
-  children: [ element-icon, element-text ];
-  spacing: 5px;
+// element {
+//   orientation: horizontal;
+//   children: [ element-icon, element-text ];
+//   spacing: 5px;
+// }
+
+
+#wallpapers window { width: 90%; }
+
+#wallpapers listview {
+  columns: 4;
+  lines: 3;
+  fixed-columns: true;
+  fixed-height: true;
+  dynamic: false;
+  flow: horizontal;
+  layout: vertical;
 }
+
+#wallpapers element {
+  orientation: vertical;
+  children: [ element-icon, element-text ];
+}
+
+#wallpapers element-icon { size: 96px; }

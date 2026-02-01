@@ -205,8 +205,10 @@
       "format-icons": {
         "default": ["", "", ""]
       },
-      "on-click": "pavucontrol",
-      "on-click-right": "foot -a pw-top pw-top",
+      // "on-click": "pavucontrol",
+      "on-click": "ghostty --title='htop-floating' --window-height=80 --window-width=150 -e pulsemixer",
+      // "on-click-right": "foot -a pw-top pw-top",
+      "on-click-right": "pavucontrol --tab 3",
     },
   },
 ]
