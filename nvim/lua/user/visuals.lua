@@ -1,5 +1,18 @@
---vim.o.termguicolors = true
+function SetTransparent()
+  local groups = {
+    "Normal",
+    "NormalNC",
+    "NormalFloat",
+    "FloatBorder",
+    "EndOfBuffer",
+    "SignColumn",
+    "LineNr",
+    "CursorLineNr",
+    "StatusLine",
+    "StatusLineNC",
+  }
 
--- Enables Alacritty's transparency. However, it works very bad with Telescope.
--- vim.cmd("hi Normal ctermbg=NONE guibg=NONE")
-
+  for _, group in ipairs(groups) do
+    vim.cmd("highlight " .. group .. " guibg=NONE ctermbg=NONE")
+  end
+end
