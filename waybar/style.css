@@ -1,101 +1,100 @@
+@define-color bg rgba(48, 53, 54, 0.92);
+@define-color fg #c7ab7a;
+@define-color fg_dim #6e6e6e;
+@define-color accent #ddc7a1;
+@define-color red #c14a4a;
+@define-color green #6c782e;
+
 * {
-    border: none;
-    border-radius: 0;
-    min-height: 0;
-    /* font-family: " nerd font"; */
-    font-weight: 500;
-    font-size: 12px;
-    padding: 0;
+  border: none;
+  min-height: 0;
+  padding: 0;
+  font-family: "Hermit";
+  font-weight: 500;
+  font-size: 12px;
 }
 
 window#waybar {
-    background: #1d2021;
-    /* border: 2px solid #3c3836; */
+  background: transparent;
 }
 
 tooltip {
-    background-color: #1d2021;
-    /* border: 2px solid #7c6f64; */
+  background: rgba(29, 32, 33, 0.95);
+  color: @fg;
+  border-radius: 10px;
+  padding: 8px 10px;
 }
 
-#bluetooth,
-#language {
-  min-width: 20px;
+/* One nice pill per section */
+.modules-left,
+.modules-center,
+.modules-right {
+  background: @bg;
+  color: @fg;
+  border-radius: 10px;
+  padding: 4px 8px;
 }
 
-#pulseaudio {
-  min-width: 50px;
-}
-
-#taskbar,
-#taskbar.button,
-#taskbar button.active,
-#taskbar button.empty,
-#taskbar button.minimized,
-#taskbar button.maximized,
-#taskbar button.fullscreen {
-    color: #c7ab7a;
-}
-
-#clock,
-#tray,
-#hw,
-#battery,
-#network,
+/* Make inner modules tight */
 #workspaces,
-#language,
-#bluetooth,
-#mpris,
-#cava,
 #taskbar,
-#custom-notification,
+#tray,
+#mpris,
+#cpu,
+#memory,
 #custom-hyprsunset,
-#pulseaudio {
-    color: #c7ab7a;
-    background-color: #303536;
-    margin: 4px 4px 4px 4px;
-    padding: 2px 8px;
-    border: 2px solid #303536;
-    border-radius: 5px;
-}
-
-#hw {
-  min-width: 70px;
-}
-
+#network,
+#bluetooth,
+#pulseaudio,
+#clock,
+#language,
 #custom-notification {
-  font-family: "NotoSansMono Nerd Font";
+  margin: 0 6px;
 }
 
-#custom-hyprsunset {
-  /* font-family: "NotoSansMono Nerd Font"; */
-}
-
+/* Workspaces */
 #workspaces button {
-    all: initial;
-    min-width: 0;
-    box-shadow: inset 0 -3px transparent;
-    padding: 2px 4px;
-    color: #c7ab7a;
+  all: initial;
+  color: @fg_dim;
+  padding: 2px 6px;
+  margin: 0 2px;
+  border-radius: 8px;
 }
 
 #workspaces button.focused {
-    color: #ddc7a1;
+  color: @accent;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 #workspaces button.urgent {
-    background-color: #e78a4e;
+  color: @red;
 }
 
-#battery {
-    color: #6c782e;
+/* Taskbar */
+#taskbar button {
+  color: @fg_dim;
+  padding: 2px 6px;
+  margin: 0 2px;
+  border-radius: 8px;
 }
+
+#taskbar button.active {
+  color: @fg;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#taskbar button.minimized {
+  color: rgba(199, 171, 122, 0.55);
+}
+
+/* Status colors */
+#battery { color: @green; }
 
 #cpu.critical,
 #memory.critical,
 #battery.warning,
 #battery.critical,
 #battery.urgent {
-    color: #c14a4a;
+  color: @red;
 }
 
