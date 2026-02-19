@@ -31,6 +31,10 @@ max_height = 1000
 #     # { mime = "text/*", run  = 'piper -- echo "$1"'}
 # ]
 
+[[plugin.prepend_previewers]]
+mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+run  = "ouch"
+
 # FIXME: This shit doesn't work
 [[plugin.prepend_previewers]]
 url = "*"

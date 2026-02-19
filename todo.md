@@ -4,6 +4,6 @@
     - [ ] services
     - [ ] mounts
 - [ ] create a list of tools I use
-    - ouch
+    - ouch (ouch yazi)
 
 
