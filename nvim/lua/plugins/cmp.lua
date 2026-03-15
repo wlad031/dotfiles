@@ -11,32 +11,34 @@ local P = {
     {
       "L3MON4D3/LuaSnip",
       version = "v2.3",
-      build = "make install_jsregexp"
+      build = "make install_jsregexp",
     },
     "onsails/lspkind.nvim",
   },
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local lspkind = require('lspkind')
+    local lspkind = require("lspkind")
     -- local copilot_suggestion = require("copilot.suggestion")
-    local supermaven_suggestion = require('supermaven-nvim.completion_preview')
+    local supermaven_suggestion = require("supermaven-nvim.completion_preview")
 
     local function has_words_before()
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      return col ~= 0
+        and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s")
+          == nil
     end
 
     cmp.setup({
       formatting = {
         format = lspkind.cmp_format({
-          mode = 'symbol_text',
+          mode = "symbol_text",
           maxwidth = 50,
-          ellipsis_char = '...',
+          ellipsis_char = "...",
           show_labelDetails = true,
           before = function(entry, vim_item)
             return vim_item
-          end
+          end,
         }),
       },
       snippet = {
@@ -49,14 +51,14 @@ local P = {
         documentation = cmp.config.window.bordered(),
       },
       mapping = {
-        ['<C-k>'] = cmp.mapping(function(fallback)
+        ["<C-k>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           else
             fallback()
           end
         end),
-        ['<C-j>'] = cmp.mapping(function(fallback)
+        ["<C-j>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
@@ -79,12 +81,12 @@ local P = {
           else
             fallback()
           end
-        end, { "i", "s", }),
+        end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
           end
-        end, { "i", "s", }),
+        end, { "i", "s" }),
         -- ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
         -- ["<Esc>"] = cmp.mapping.abort(),
         ["<C-Down>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
@@ -96,41 +98,37 @@ local P = {
       performance = {
         fetching_timeout = 2000,
       },
-      sources = cmp.config.sources(
-        {
-          { name = 'minuet' },
-          { name = "supermaven" },
-          -- { name = 'copilot' },
-          { name = 'metals' },
-          { name = "hledger" },
-          { name = 'nvim_lsp' },
-          { name = 'vsnip' },
-        },
-        {
-          { name = 'buffer' },
-          { name = 'emoji' },
-          { name = 'nvim_lsp_signature_help' },
-          { name = 'nvim_lsp_document_symbol' },
-        })
+      sources = cmp.config.sources({
+        { name = "minuet" },
+        { name = "supermaven" },
+        -- { name = 'copilot' },
+        { name = "metals" },
+        { name = "hledger" },
+        { name = "nvim_lsp" },
+        { name = "vsnip" },
+      }, {
+        { name = "buffer" },
+        { name = "emoji" },
+        { name = "nvim_lsp_signature_help" },
+        { name = "nvim_lsp_document_symbol" },
+      }),
     })
-    cmp.setup.cmdline({ '/', '?' }, {
+    cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = 'buffer' }
-      }
+        { name = "buffer" },
+      },
     })
-    cmp.setup.cmdline(':', {
+    cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources(
-        {
-          { name = 'path' }
-        },
-        {
-          { name = 'cmdline' }
-        }),
-      matching = { disallow_symbol_nonprefix_matching = false }
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        { name = "cmdline" },
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false },
     })
-  end
+  end,
 }
 
 return {

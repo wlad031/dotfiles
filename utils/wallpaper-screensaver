@@ -1,14 +1,35 @@
 #!/usr/bin/env bash
 
-WALLPAPER_DIR="$HOME/Pictures/wallpapers/nextcloud-fpcntnt-femboy-futa-house/"
+WALLPAPER_DIR="$HOME/Pictures/wallpapers/games/"
 INTERVAL=10
 
+WALLPAPERS=()
+
+while IFS= read -r -d '' file; do
+  if read -r w h < <(identify -format '%w %h\n' "$file" 2>/dev/null); then
+    echo "found $file: $w x $h"
+    if (( w * 3 >= h * 4 )); then
+      WALLPAPERS+=("$file")
+    fi
+  fi
+done < <(
+  find "$WALLPAPER_DIR" -type f \( \
+    -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \
+  \) -print0
+)
+
+printf 'found %d wallpapers\n' "${#WALLPAPERS[@]}"
+
+(( ${#WALLPAPERS[@]} == 0 )) && exit 1
+
 while true; do
-  IMG=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
+  IMG=${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}
+
   awww img "$IMG" \
+    --resize fit \
     --transition-type any \
-    --transition-duration 2 \
+    --transition-duration 1 \
     --transition-fps 60
+
   sleep "$INTERVAL"
 done
-

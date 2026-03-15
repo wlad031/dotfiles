@@ -47,4 +47,5 @@ source_safe "$DOTFILES_SCRIPTS_DIR/tldr.sh"       ; tldr_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/tenv.sh"       ; tenv_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/notes.sh"      ; notes_setup
 source_safe "$DOTFILES_SCRIPTS_DIR/occ.sh"        ; occ_setup
+source_safe "$DOTFILES_SCRIPTS_DIR/ask.sh"        ; ask_sh_setup
 ###############################################################################

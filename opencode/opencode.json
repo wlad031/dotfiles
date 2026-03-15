@@ -1,0 +1,31 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "plan",
+  "share": "disabled",
+  "permission": {
+    "edit": "deny",
+    "bash": "deny",
+    "read": "deny",
+    "network": "deny"
+  },
+  "command": {
+    "review-folder": {
+      "description": "Professional Unix engineering review of the current repository",
+      "agent": "unix-systems-engineer",
+      "template": "Perform a professional engineering review of the current repository or folder.\n\nFocus on:\n\n• Bash and shell scripting correctness\n• Python code quality and safety\n• Unix best practices\n• portability across Linux and macOS\n• security issues\n• unsafe shell patterns\n• maintainability and structure\n• unnecessary complexity\n• reliability and idempotency\n\nSpecifically check for:\n\n• unsafe globbing or unquoted variables\n• fragile pipelines or parsing\n• incorrect error handling\n• PATH and environment issues\n• login vs interactive shell behavior\n• destructive commands without safeguards\n• GNU vs BSD incompatibilities\n• subprocess usage in Python\n\nProvide:\n\n1. High-level architecture assessment\n2. List of concrete issues\n3. Suggested improvements\n4. Example fixes where appropriate\n\nPrefer minimal changes and practical improvements."
+    },
+    "security-audit": {
+      "description": "Security audit and vulnerability assessment of the current repository",
+      "agent": "security-engineer",
+      "template": "Perform a comprehensive security audit of the current repository or folder.\n\nFocus on:\n\n• Authentication and authorization vulnerabilities\n• Input validation and injection risks\n• Cryptography usage and key management\n• Dependency security and supply chain risks\n• Configuration security and hardening\n• Information disclosure and error handling\n• Session management vulnerabilities\n• Data protection and privacy issues\n• Bash/shell security issues\n• Python security vulnerabilities\n\nProvide:\n\n1. Executive summary with risk assessment\n2. Specific findings organized by severity (Critical, High, Medium, Low)\n3. For each finding: description, impact, exploitability, and remediation\n4. Prioritized recommendations\n5. Additional security hardening suggestions\n\nAssess both theoretical vulnerabilities and practical risks in the context of the codebase."
+    },
+    "neovim-config": {
+      "description": "Configure Neovim with Lua, including plugins, LSP, and performance optimization",
+      "agent": "neovim-configurer",
+      "requires": {
+        "read": true
+      },
+      "template": "Configure Neovim with Lua for the user's specific needs.\n\nFirst, ask clarifying questions about:\n- Current Neovim setup (if any)\n- Preferred plugin manager (lazy.nvim, packer, paq)\n- Desired features (LSP, fuzzy finder, tree-sitter, etc.)\n- Performance requirements\n- Existing configuration files\n\nThen provide specific, actionable Lua configuration."
+    }
+  }
+}

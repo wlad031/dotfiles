@@ -17,23 +17,20 @@ return {
     },
     config = function()
       require("minuet").setup({
-        provider = "codestral",
+        notify = "debug",
+        provider = "openai_compatible",
         provider_options = {
-          codestral = {
-            -- max_tokens = 512,
-            -- model = 'claude-3-5-haiku-20241022',
-            -- system = "see [Prompt] section for the default value",
-            -- few_shots = "see [Prompt] section for the default value",
-            -- chat_input = "See [Prompt Section for default value]",
-            -- stream = true,
-            api_key = "OPENROUTER_API_KEY",
-
-            optional = {
-              -- stop_sequences = nil,
-            },
-          },
           openai_compatible = {
-            api_key = "OPENROUTER_API_KEY",
+            model = "mistralai/devstral-small",
+            stream = true,
+            end_point = "https://openrouter.ai/api/v1/chat/completions",
+            api_key = "NVIM_MINUET_OPENAI_API_KEY",
+            name = "Openrouter",
+            optional = {
+              stop = nil,
+              max_tokens = nil,
+            },
+            transform = {},
           },
         },
       })
@@ -55,7 +52,7 @@ return {
         openai = {
           endpoint = "https://openrouter.ai/api/v1",
           model = "openai/o1-mini",
-          api_key_name = "OPENROUTER_API_KEY",
+          api_key_name = "NVIM_AVANTE_OPENAI_API_KEY",
           extra_request_body = {
             temperature = 0.6,
           },
@@ -122,28 +119,6 @@ return {
           },
         },
       })
-    end,
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    enabled = false,
-    opts = {},
-    event = "VimEnter",
-    config = function()
-      vim.defer_fn(function()
-        require("copilot").setup()
-      end, 100)
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    enabled = false,
-    dependencies = {
-      "zbirenbaum/copilot.lua",
-      "hrsh7th/nvim-cmp",
-    },
-    config = function()
-      require("copilot_cmp").setup()
     end,
   },
 }
