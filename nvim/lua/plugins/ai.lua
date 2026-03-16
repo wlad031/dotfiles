@@ -17,7 +17,7 @@ return {
     },
     config = function()
       require("minuet").setup({
-        notify = "debug",
+        notify = "warn",
         provider = "openai_compatible",
         provider_options = {
           openai_compatible = {
