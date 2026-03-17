@@ -27,6 +27,7 @@ add_to_path() {
 # Common PATH changes
 add_to_path "$HOME/.local/bin"
 add_to_path "/usr/local/sbin"
+add_to_path "$HOME/.opencode/bin" # TODO: I don't like that
 ###############################################################################
 
 ###############################################################################

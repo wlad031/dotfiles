@@ -4,6 +4,7 @@ else
   export OPENCODE_INSTALLED=true
 fi
 
+
 opencode_setup() {
   local opt=$1
   if [[ "$OPENCODE_INSTALLED" = false ]]; then
