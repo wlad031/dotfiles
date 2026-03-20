@@ -2,11 +2,10 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "plan",
   "share": "disabled",
-  "permission": {
-    "edit": "deny",
-    "bash": "deny",
-    "read": "deny",
-    "network": "deny"
+  "agent": {
+    "build": {
+      "permission": "allow"
+    }
   },
   "command": {
     "review-folder": {
