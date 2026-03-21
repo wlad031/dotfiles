@@ -1,0 +1,15 @@
+[project]
+name = "linkman"
+version = "0.1.0"
+description = "Symlink manager for dotfiles"
+requires-python = ">=3.8"
+
+[project.scripts]
+linkman = "linkman:main"
+
+
+[tool.setuptools]
+packages = ["linkman"]
+
+[tool.setuptools.package-dir]
+"" = "."
