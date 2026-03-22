@@ -28,6 +28,7 @@
       "network",
       "bluetooth",
       "pulseaudio",
+      "custom/screenshot",
       "clock",
       "hyprland/language",
       "custom/notification"
@@ -96,6 +97,16 @@
       "on-scroll-up": "hyprctl hyprsunset temperature +500",
       "on-scroll-down": "hyprctl hyprsunset temperature -500",
       "escape": true
+    },
+
+    "custom/screenshot": {
+      "exec-if": "test -x /sbin/hyprshot",
+      "exec": "echo",
+      "interval": "once",
+      "tooltip": true,
+      "tooltip-format": "Screenshot (full screen)",
+      "format": "\uf030",
+      "on-click": "/sbin/hyprshot -m output"
     },
 
     "custom/notification": {
@@ -173,4 +184,3 @@
     }
   }
 ]
-

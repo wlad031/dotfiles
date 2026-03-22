@@ -57,3 +57,13 @@ tools:
     checks:
       - type: command
         value: nslookup
+
+  k9s:
+    checks:
+      - type: command
+        value: k9s
+
+  flux9s:
+    checks:
+      - type: command
+        value: k9s

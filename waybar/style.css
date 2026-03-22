@@ -43,6 +43,7 @@ tooltip {
 #cpu,
 #memory,
 #custom-hyprsunset,
+#custom-screenshot,
 #network,
 #bluetooth,
 #pulseaudio,
@@ -50,6 +51,16 @@ tooltip {
 #language,
 #custom-notification {
   margin: 0 6px;
+}
+
+#custom-screenshot {
+  color: @accent;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+#custom-screenshot:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Workspaces */
@@ -91,4 +102,3 @@ tooltip {
 #battery.urgent {
   color: @red;
 }
-
