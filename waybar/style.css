@@ -55,15 +55,9 @@ tooltip {
 /* Workspaces */
 #workspaces button {
   all: initial;
-  color: @fg_dim;
   padding: 2px 6px;
   margin: 0 2px;
   border-radius: 8px;
-}
-
-#workspaces button.focused {
-  color: @accent;
-  background: rgba(255, 255, 255, 0.06);
 }
 
 #workspaces button.urgent {
