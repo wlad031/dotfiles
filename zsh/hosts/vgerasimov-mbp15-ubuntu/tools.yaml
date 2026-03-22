@@ -1,0 +1,330 @@
+tools:
+  zsh:
+    checks:
+      - type: command
+        value: zsh
+      - type: env
+        value: SHELL
+        pattern: ".*zsh$"
+      - type: file
+        value: ~/.zshrc
+      - type: file
+        value: ~/.zshenv
+      - type: file
+        value: ~/.zlogin
+      - type: file
+        value: ~/.zprofile
+      - type: file
+        value: ~/.antigenrc
+      - type: dir
+        value: ~/.config/oh-my-posh
+      - type: file
+        value: ~/.zshrc_host
+
+  bash:
+    checks:
+      - type: command
+        value: bash
+      - type: file
+        value: ~/.bashrc
+
+  antigen:
+    load: true
+    checks:
+      - type: file
+        value: ~/.antigenrc
+
+  ohmyposh:
+    load: true
+    checks:
+      - type: command
+        value: oh-my-posh
+      - type: dir
+        value: ~/.config/oh-my-posh
+
+  git:
+    load: true
+    checks:
+      - type: command
+        value: git
+      - type: file
+        value: ~/.gitconfig
+
+  eza:
+    load: true
+    checks:
+      - type: command
+        value: eza
+
+  bat:
+    load: true
+    checks:
+      - type: command
+        value: bat
+      - type: dir
+        value: ~/.config/bat
+
+  tmux:
+    load: true
+    checks:
+      - type: command
+        value: tmux
+      - type: file
+        value: ~/.tmux.conf
+
+  limactl:
+    load:
+      setup: lima_setup
+    checks:
+      - type: command
+        value: limactl
+
+  colima:
+    load: true
+    checks:
+      - type: command
+        value: colima
+
+  rancher:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.rd
+
+  docker:
+    load: true
+    checks:
+      - type: command
+        value: docker
+
+  lazydocker:
+    load: true
+    checks:
+      - type: command
+        value: lazydocker
+
+  fzf:
+    load: true
+    optional: true
+    checks:
+      - type: command
+        value: fzf
+
+  lazygit:
+    load: true
+    checks:
+      - type: command
+        value: lazygit
+      - type: dir
+        value: ~/.config/lazygit
+
+  devmoji:
+    load: true
+    checks:
+      - type: command
+        value: devmoji
+
+  neovim:
+    load: true
+    checks:
+      - type: command
+        value: nvim
+      - type: dir
+        value: ~/.config/nvim
+
+  codium:
+    load: true
+    checks:
+      - type: command
+        value: codium
+
+  fnm:
+    load: true
+    checks:
+      - type: command
+        value: fnm
+
+  flutter:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.flutter
+
+  g:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.g
+
+  sesh:
+    load: true
+    checks:
+      - type: command
+        value: sesh
+      - type: dir
+        value: ~/.config/sesh
+
+  sdkman:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.sdkman
+
+  gcloud:
+    load: true
+    checks:
+      - type: dir
+        value: ~/apps/google-cloud-sdk
+
+  coursier:
+    load: true
+    checks:
+      - type: command
+        value: cs
+
+  fastfetch:
+    load: true
+    checks:
+      - type: command
+        value: fastfetch
+      - type: dir
+        value: ~/.config/fastfetch
+
+  zoxide:
+    load: true
+    checks:
+      - type: command
+        value: zoxide
+
+  yazi:
+    load: true
+    checks:
+      - type: command
+        value: yazi
+      - type: file
+        value: ~/.config/yazi/yazi.toml
+      - type: file
+        value: ~/.config/yazi/theme.toml
+      - type: file
+        value: ~/.config/yazi/keymap.toml
+
+  jetbrains:
+    load: true
+    optional: true
+    checks:
+      - type: command
+        value: jetbrains-toolbox
+
+  luaver:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.luaver
+
+  aerospace:
+    load: true
+    optional: true
+    checks:
+      - type: command
+        value: aerospace
+
+  ansible:
+    load: true
+    checks:
+      - type: command
+        value: ansible
+
+  tldr:
+    load: true
+    checks:
+      - type: command
+        value: tldr
+      - type: dir
+        value: ~/.config/tealdeer
+
+  tenv:
+    load: true
+    checks:
+      - type: command
+        value: tenv
+
+  notes:
+    load: true
+    checks:
+      - type: dir
+        value: ~/notes
+
+  occ:
+    load: true
+    optional: true
+    checks:
+      - type: command
+        value: docker
+
+  opencode:
+    load: true
+    checks:
+      - type: command
+        value: opencode
+      - type: file
+        value: ~/.config/opencode/opencode.json
+
+  ask:
+    load:
+      setup: ask_sh_setup
+    checks:
+      - type: command
+        value: ask-sh
+
+  ghostty:
+    checks:
+      - type: command
+        value: ghostty
+      - type: dir
+        value: ~/.config/ghostty
+
+  hypr:
+    checks:
+      - type: dir
+        value: ~/.config/hypr
+
+  swaync:
+    checks:
+      - type: file
+        value: ~/.config/swaync/config.json
+      - type: file
+        value: ~/.config/swaync/style.css
+
+  waybar:
+    checks:
+      - type: dir
+        value: ~/.config/waybar
+
+  rofi:
+    checks:
+      - type: dir
+        value: ~/.config/rofi
+
+  keyd:
+    checks:
+      - type: dir
+        value: /etc/keyd
+
+  ly:
+    checks:
+      - type: file
+        value: /etc/ly/config.ini
+
+  cava:
+    checks:
+      - type: command
+        value: cava
+      - type: file
+        value: ~/.config/cava/config
+
+  snap bin on path:
+    optional: true
+    checks:
+      - type: env
+        value: PATH
+        pattern: ".*(/|:)snap/bin.*"

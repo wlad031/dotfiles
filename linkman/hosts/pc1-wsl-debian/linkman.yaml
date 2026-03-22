@@ -1,0 +1,2 @@
+ghostty:
+  ~/dotfiles/ghostty/pc1-wsl-debian: ~/.config/ghostty

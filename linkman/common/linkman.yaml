@@ -1,0 +1,62 @@
+ly:
+  ~/dotfiles/ly/config.ini: /etc/ly/config.ini
+
+opencode:
+  ~/dotfiles/opencode/opencode.json: ~/.config/opencode/opencode.json
+
+hypr:
+  ~/dotfiles/hypr: ~/.config/hypr
+
+swaync:
+  ~/dotfiles/swaync/config.json: ~/.config/swaync/config.json
+  ~/dotfiles/swaync/style.css: ~/.config/swaync/style.css
+
+waybar:
+  ~/dotfiles/waybar: ~/.config/waybar
+
+rofi:
+  ~/dotfiles/rofi: ~/.config/rofi
+
+git:
+  ~/dotfiles/git/.gitconfig: ~/.gitconfig
+
+lazygit:
+  ~/dotfiles/lazygit: ~/.config/lazygit
+
+yazi:
+  ~/dotfiles/yazi/yazi.toml: ~/.config/yazi/yazi.toml
+  ~/dotfiles/yazi/theme.toml: ~/.config/yazi/theme.toml
+  ~/dotfiles/yazi/keymap.toml: ~/.config/yazi/keymap.toml
+
+tmux:
+  ~/dotfiles/tmux/.tmux.conf: ~/.tmux.conf
+  ~/dotfiles/sesh: ~/.config/sesh
+
+bash:
+  ~/dotfiles/bash/.bashrc: ~/.bashrc
+
+zsh:
+  ~/dotfiles/zsh/common/.zshrc: ~/.zshrc
+  ~/dotfiles/zsh/common/.zshenv: ~/.zshenv
+  ~/dotfiles/zsh/common/.zlogin: ~/.zlogin
+  ~/dotfiles/zsh/common/.zprofile: ~/.zprofile
+  ~/dotfiles/zsh/common/.antigenrc: ~/.antigenrc
+  ~/dotfiles/zsh/common/tools.yaml: ~/tools.yaml
+
+ohmyposh:
+  ~/dotfiles/oh-my-posh/common: ~/.config/oh-my-posh
+
+neovim:
+  ~/dotfiles/nvim: ~/.config/nvim
+
+keyd:
+  /home/vgerasimov/dotfiles/keyd: /etc/keyd
+
+bat:
+  ~/dotfiles/bat: ~/.config/bat
+
+tealdeer:
+  ~/dotfiles/tealdeer: ~/.config/tealdeer
+
+cava:
+  ~/dotfiles/cava/config: ~/.config/cava/config

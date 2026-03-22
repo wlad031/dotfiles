@@ -4,19 +4,18 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: sysready.sh <config.yaml> [--format json]
+Usage: sysready.sh [config.yaml override.yaml ...] [--format json]
 
 Checks tools defined in a YAML file.
 
 Schema:
 tools:
-  zsh:
+  - name: zsh
     command: zsh
     optional: true
     checks:
       - type: command
         value: zsh
-        fix: "Install zsh"
       - type: dir
         value: ~/.config/zsh
       - type: apt
@@ -70,6 +69,42 @@ require_cmd() {
     echo "error: missing required command '$cmd'" >&2
     exit 2
   fi
+}
+
+detect_yq_flavor() {
+  local version
+  if ! version=$(yq --version 2>/dev/null); then
+    echo "error: failed to run yq" >&2
+    exit 2
+  fi
+  if [[ "$version" == *"mikefarah"* || "$version" == "yq version "* ]]; then
+    printf '%s' "mikefarah"
+    return 0
+  fi
+  if [[ "$version" == "yq "* ]]; then
+    printf '%s' "python"
+    return 0
+  fi
+  printf '%s' "unknown"
+}
+
+merge_configs() {
+  local output="$1"
+  shift
+  local flavor="$1"
+  shift
+  case "$flavor" in
+    mikefarah)
+      yq eval-all 'reduce .[] as $item ({}; . * $item)' "$@" >"$output"
+      ;;
+    python)
+      yq -y -s 'reduce .[] as $item ({}; . * $item)' "$@" >"$output"
+      ;;
+    *)
+      echo "error: unsupported yq implementation" >&2
+      return 1
+      ;;
+  esac
 }
 
 expand_path() {
@@ -695,7 +730,7 @@ run_check() {
 }
 
 format="text"
-config=""
+configs=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -713,25 +748,14 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     *)
-      if [[ -z "$config" ]]; then
-        config="$1"
-        shift
-      else
-        usage
-        exit 2
-      fi
+      configs+=("$1")
+      shift
       ;;
   esac
 done
 
-if [[ -z "$config" ]]; then
-  usage
-  exit 2
-fi
-
-if [[ ! -f "$config" ]]; then
-  echo "error: config not found: $config" >&2
-  exit 2
+if [[ ${#configs[@]} -eq 0 ]]; then
+  configs=("$HOME/tools.yaml" "$HOME/tools.host.yaml")
 fi
 
 require_cmd yq
@@ -740,86 +764,55 @@ if [[ "$format" == "json" ]]; then
   require_cmd jq
 fi
 
-tool_keys=()
-while IFS= read -r key; do
-  [[ -z "$key" ]] && continue
-  tool_keys+=("$key")
-done < <(yq -r '.tools // {} | to_entries | .[].key' "$config")
+for config in "${configs[@]}"; do
+  if [[ ! -f "$config" ]]; then
+    echo "error: config not found: $config" >&2
+    exit 2
+  fi
+done
 
-tool_count=${#tool_keys[@]}
-if [[ "$tool_count" -eq 0 ]]; then
-  echo "error: no tools found in config" >&2
+merged_config=$(mktemp)
+cleanup() {
+  rm -f "$merged_config"
+}
+trap cleanup EXIT
+
+yq_flavor=$(detect_yq_flavor)
+if ! merge_configs "$merged_config" "$yq_flavor" "${configs[@]}"; then
+  if [[ "$yq_flavor" == "python" ]]; then
+    echo "error: failed to merge config files (python yq)" >&2
+  elif [[ "$yq_flavor" == "mikefarah" ]]; then
+    echo "error: failed to merge config files (mikefarah yq)" >&2
+  else
+    echo "error: failed to merge config files" >&2
+  fi
   exit 2
 fi
 
+tool_count=0
 installed_count=0
 missing_required=0
 missing_optional=0
 
 tools_json=()
 
-for name in "${tool_keys[@]}"; do
-  command=$(yq -r ".tools[\"$name\"].command // \"$name\"" "$config")
-  optional=$(yq -r ".tools[\"$name\"].optional // false" "$config")
+current_name=""
+current_command=""
+current_optional=""
+missing_checks=()
+tool_ok=true
+command_path=""
 
-  checks_count=$(yq -r ".tools[\"$name\"].checks // [] | length" "$config")
-  tool_fix=$(yq -r ".tools[\"$name\"].fix // \"\"" "$config")
-  if [[ "$checks_count" -eq 0 ]]; then
-    checks_count=1
+finalize_tool() {
+  if [[ -z "$current_name" ]]; then
+    return
   fi
-
-  missing_checks=()
-  tool_ok=true
-  command_path=""
-
-  for ((j = 0; j < checks_count; j++)); do
-    if [[ "$checks_count" -eq 1 && "$(yq -r ".tools[\"$name\"].checks // [] | length" "$config")" -eq 0 ]]; then
-      check_type="command"
-      check_value="$command"
-      check_pattern=""
-      check_venv=""
-      check_sha256=""
-    else
-      check_type=$(yq -r ".tools[\"$name\"].checks[$j].type" "$config")
-      check_value=$(yq -r ".tools[\"$name\"].checks[$j].value" "$config")
-      check_pattern=$(yq -r ".tools[\"$name\"].checks[$j].pattern // \"\"" "$config")
-      check_venv=$(yq -r ".tools[\"$name\"].checks[$j].venv // \"\"" "$config")
-      check_sha256=$(yq -r ".tools[\"$name\"].checks[$j].sha256 // \"\"" "$config")
-      check_fix=$(yq -r ".tools[\"$name\"].checks[$j].fix // \"\"" "$config")
-    fi
-
-    if [[ -z "$check_type" || -z "$check_value" ]]; then
-      echo "error: invalid check in tool '$name'" >&2
-      exit 2
-    fi
-
-    result=$(run_check "$check_type" "$check_value" "$check_pattern" "$check_venv" "$check_sha256")
-    if [[ "$result" == ok:* ]]; then
-      if [[ "$check_type" == "command" && -z "$command_path" ]]; then
-        command_path="${result#ok:}"
-      fi
-    else
-      tool_ok=false
-      if [[ -z "$check_fix" ]]; then
-        check_fix="$tool_fix"
-      fi
-      if [[ "$check_type" == "env" && -n "$check_pattern" ]]; then
-        item="$check_type $check_value~$check_pattern"
-      else
-        item="$check_type $check_value"
-      fi
-      if [[ -n "$check_fix" ]]; then
-        item="$item (fix: $check_fix)"
-      fi
-      missing_checks+=("$item")
-    fi
-  done
 
   if [[ "$tool_ok" == true ]]; then
     installed_count=$((installed_count + 1))
     status="OK"
   else
-    if [[ "$optional" == "true" ]]; then
+    if [[ "$current_optional" == "true" ]]; then
       missing_optional=$((missing_optional + 1))
       status="FAIL"
     else
@@ -834,12 +827,12 @@ for name in "${tool_keys[@]}"; do
       missing_join=$(printf '%s\n' "${missing_checks[@]}")
     fi
     required_json=true
-    if [[ "$optional" == "true" ]]; then
+    if [[ "$current_optional" == "true" ]]; then
       required_json=false
     fi
     tool_json=$(jq -n \
-      --arg name "$name" \
-      --arg command "$command" \
+      --arg name "$current_name" \
+      --arg command "$current_command" \
       --argjson required "$required_json" \
       --argjson installed "$tool_ok" \
       --arg missing "$missing_join" \
@@ -853,15 +846,79 @@ for name in "${tool_keys[@]}"; do
       details=""
     fi
 
-    if [[ "$optional" == "true" ]]; then
+    if [[ "$current_optional" == "true" ]]; then
       required_label="optional"
     else
       required_label="required"
     fi
 
-    printf '%-30s %s\t%s\t%s\n' "$name" "$status" "$required_label" "$details"
+    printf '%-30s %s\t%s\t%s\n' "$current_name" "$status" "$required_label" "$details"
   fi
-done
+}
+
+while IFS=$'\t' read -r name command optional tool_fix check_type check_value check_pattern check_venv check_sha256 check_fix; do
+  [[ -z "$name" ]] && continue
+
+  if [[ -z "$current_name" ]]; then
+    current_name="$name"
+    current_command="$command"
+    current_optional="$optional"
+    tool_ok=true
+    missing_checks=()
+    command_path=""
+    tool_count=$((tool_count + 1))
+  elif [[ "$name" != "$current_name" ]]; then
+    finalize_tool
+    current_name="$name"
+    current_command="$command"
+    current_optional="$optional"
+    tool_ok=true
+    missing_checks=()
+    command_path=""
+    tool_count=$((tool_count + 1))
+  fi
+
+  for var in tool_fix check_pattern check_venv check_sha256 check_fix; do
+    if [[ "${!var}" == "__NULL__" ]]; then
+      printf -v "$var" ''
+    fi
+  done
+
+  if [[ -z "$check_type" || -z "$check_value" ]]; then
+    echo "error: invalid check in tool '$current_name'" >&2
+    exit 2
+  fi
+
+  result=$(run_check "$check_type" "$check_value" "$check_pattern" "$check_venv" "$check_sha256")
+  if [[ "$result" == ok:* ]]; then
+    if [[ "$check_type" == "command" && -z "$command_path" ]]; then
+      command_path="${result#ok:}"
+    fi
+  else
+    tool_ok=false
+    if [[ -z "$check_fix" ]]; then
+      check_fix="$tool_fix"
+    fi
+    if [[ "$check_type" == "env" && -n "$check_pattern" ]]; then
+      item="$check_type $check_value~$check_pattern"
+    else
+      item="$check_type $check_value"
+    fi
+    if [[ -n "$check_fix" ]]; then
+      item="$item (fix: $check_fix)"
+    fi
+    missing_checks+=("$item")
+  fi
+done < <(
+  yq -r '.tools // {} | to_entries[] | .key as $name | .value as $tool | ($tool.command // $name) as $cmd | ($tool.optional // false) as $opt | ($tool.fix // "__NULL__") as $tool_fix | ($tool.checks // []) as $checks | if ($checks|length)==0 then [$name,$cmd,$opt,$tool_fix,"command",$cmd,"__NULL__","__NULL__","__NULL__","__NULL__"] else $checks[] | [$name,$cmd,$opt,$tool_fix,.type,.value,(.pattern // "__NULL__"),(.venv // "__NULL__"),(.sha256 // "__NULL__"),(.fix // "__NULL__")] end | @tsv' "$merged_config"
+)
+
+finalize_tool
+
+if [[ "$tool_count" -eq 0 ]]; then
+  echo "error: no tools found in config" >&2
+  exit 2
+fi
 
 total="$tool_count"
 

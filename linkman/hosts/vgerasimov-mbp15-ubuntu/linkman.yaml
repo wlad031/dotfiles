@@ -1,0 +1,9 @@
+ghostty:
+  ~/dotfiles/ghostty/mbp15-ubuntu: ~/.config/ghostty
+
+zsh:
+  ~/dotfiles/zsh/hosts/vgerasimov-mbp15-ubuntu/.zshrc_host: ~/.zshrc_host
+  ~/dotfiles/zsh/hosts/vgerasimov-mbp15-ubuntu/tools.yaml: ~/tools.host.yaml
+
+fastfetch:
+  ~/dotfiles/hosts/vgerasimov-mbp15-ubuntu/.config/fastfetch: ~/.config/fastfetch

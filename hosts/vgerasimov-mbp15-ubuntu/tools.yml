@@ -1,5 +1,0 @@
-apt:
-  packages:
-    - curl
-    - git
-

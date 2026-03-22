@@ -1,0 +1,6 @@
+ghostty:
+  ~/dotfiles/ghostty/pc1-arch: ~/.config/ghostty
+
+zsh:
+  ~/dotfiles/zsh/hosts/pc1-arch/.zshrc: ~/.zshrc_host
+  ~/dotfiles/zsh/hosts/pc1-arch/tools.yaml: ~/tools.host.yaml

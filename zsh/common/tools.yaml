@@ -1,0 +1,59 @@
+tools:
+  git:
+    load: true
+
+  eza:
+    load: true
+
+  bat:
+    load: true
+    checks:
+      - type: command
+        value: bat
+
+  tmux:
+    load: true
+    checks:
+      - type: command
+        value: tmux
+
+  cargo:
+    load: true
+
+  fzf:
+    load: true
+    optional: true
+    checks:
+      - type: command
+        value: fzf
+
+  neovim:
+    load: true
+    checks:
+      - type: command
+        value: nvim
+
+  zsh:
+    checks:
+      - type: command
+        value: zsh
+      - type: env
+        value: SHELL
+        pattern: ".*zsh$"
+
+  serpl:
+    checks:
+      - type: command
+        value: serpl
+
+  dig:
+    fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
+    checks:
+      - type: command
+        value: dig
+
+  nslookup:
+    fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
+    checks:
+      - type: command
+        value: nslookup
