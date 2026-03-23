@@ -27,4 +27,5 @@ require("lazy").setup({
     },
   })
 
+require("languages.clojure_repl").setup()
 require("user.keymaps").setup()

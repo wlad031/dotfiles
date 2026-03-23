@@ -32,6 +32,7 @@ return {
           "html",
           "java",
           "scala",
+          "clojure",
           "python",
           "bash",
           "markdown",

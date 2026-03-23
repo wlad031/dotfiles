@@ -8,6 +8,7 @@ local P = {
     "hrsh7th/cmp-emoji",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
+    "PaterJason/cmp-conjure",
     {
       "L3MON4D3/LuaSnip",
       version = "v2.3",
@@ -105,6 +106,7 @@ local P = {
         { name = "metals" },
         { name = "hledger" },
         { name = "nvim_lsp" },
+        { name = "conjure" },
         { name = "vsnip" },
       }, {
         { name = "buffer" },
