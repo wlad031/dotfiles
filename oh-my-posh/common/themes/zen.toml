@@ -52,7 +52,7 @@ final_space = true
       fetch_status = true
 
   [[blocks.segments]]
-    template = "󱃾 {{.Context}} :: {{if .Namespace}}{{.Namespace}}{{else}}default{{end}}"
+    template = " 󱃾 {{.Context}} :: {{if .Namespace}}{{.Namespace}}{{else}}default{{end}}"
     foreground = 'p:grey'
     background = 'transparent'
     type = "kubectl"

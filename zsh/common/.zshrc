@@ -1090,35 +1090,37 @@ opencode_setup() {
   fi
   __set_tool_var "opencode" "$installed"
 
+  __opencode_agents_repo="git@gitea.local.vgerasimov.dev:wlad031/ai-agents.git"
+  __opencode_agents_dir="$HOME/.config/opencode/agents"
+
   if [[ "$installed" = true ]]; then
-    local repo="git@gitea.local.vgerasimov.dev:wlad031/ai-agents.git"
-    local dir="$HOME/.config/opencode/agents"
 
     __opencode_agents_init() {
-      if [[ ! -d "$dir" ]]; then
-        git clone "$repo" "$dir"
+      if [[ ! -d "$__opencode_agents_dir" ]]; then
+        git clone "$__opencode_agents_repo" "$__opencode_agents_dir"
       else
-        log_warn "Agents directory already exists: $dir"
+        log_warn "Agents directory already exists: $__opencode_agents_dir"
       fi
     }
 
     __opencode_agents_pull() {
-      if [[ ! -d "$dir" ]]; then
+      if [[ ! -d "$__opencode_agents_dir" ]]; then
         __opencode_agents_init
       else
-        cd "$dir"
+        cd "$__opencode_agents_dir"
         git pull
         cd -
       fi
     }
 
     __opencode_agents_push() {
-      if [[ ! -d "$dir" ]]; then
-        log_error "Agents directory does not exist: $dir"
+      if [[ ! -d "$__opencode_agents_dir" ]]; then
+        log_error "Agents directory does not exist: $__opencode_agents_dir"
         return 1
       else
-        cd "$dir"
+        cd "$__opencode_agents_dir"
         gitacp
+        cd -
       fi
     }
 
