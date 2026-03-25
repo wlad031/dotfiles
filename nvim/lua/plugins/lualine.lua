@@ -69,7 +69,16 @@ return {
           "filetype",
         },
         lualine_y = { "progress" },
-        lualine_z = { "location" },
+        lualine_z = {
+          function()
+            local ok, opencode = pcall(require, "opencode")
+            if ok and type(opencode.statusline) == "function" then
+              return opencode.statusline()
+            end
+            return ""
+          end,
+          "location",
+        },
       }
 
       if require("lazy.core.config").plugins["overseer.nvim"] then

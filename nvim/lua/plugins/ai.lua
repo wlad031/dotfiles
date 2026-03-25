@@ -85,6 +85,64 @@ return {
     },
   },
   {
+    "nickjvandyke/opencode.nvim",
+    version = "*",
+    dependencies = {
+      {
+        "folke/snacks.nvim",
+        optional = true,
+        opts = {
+          input = {},
+          picker = {
+            actions = {
+              opencode_send = function(...)
+                require("opencode").snacks_picker_send(...)
+              end,
+            },
+            win = {
+              input = {
+                keys = {
+                  ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    config = function()
+      vim.g.opencode_opts = {}
+      vim.o.autoread = true
+
+      vim.keymap.set({ "n", "x" }, "<leader>oa", function()
+        require("opencode").ask("@this: ", { submit = true })
+      end, { desc = "Opencode: Ask" })
+      vim.keymap.set({ "n", "x" }, "<leader>os", function()
+        require("opencode").select()
+      end, { desc = "Opencode: Select" })
+      vim.keymap.set({ "n", "t" }, "<leader>ot", function()
+        require("opencode").toggle()
+      end, { desc = "Opencode: Toggle" })
+      vim.keymap.set("x", "<leader>or", function()
+        require("opencode").ask("Replace this with answer: @this", { submit = true })
+      end, { desc = "Opencode: Replace selection" })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "OpencodeEvent:*",
+        callback = function(args)
+          if args.data and args.data.event and args.data.event.type == "session.idle" then
+            vim.cmd("silent! checktime")
+
+            local ok, neotree = pcall(require, "neo-tree.command")
+            if ok then
+              neotree.execute({ action = "refresh", source = "filesystem" })
+            end
+          end
+        end,
+      })
+    end,
+  },
+  {
     -- parrot.nvim offers a seamless out-of-the-box experience, providing tight
     -- integration of current LLM APIs into your Neovim workflows, with a focus
     -- solely on text generation. The selected core features include on-demand
