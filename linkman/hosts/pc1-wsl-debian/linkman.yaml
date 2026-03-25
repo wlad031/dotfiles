@@ -1,2 +1,6 @@
 ghostty:
   ~/dotfiles/ghostty/pc1-wsl-debian: ~/.config/ghostty
+
+zsh:
+  ~/dotfiles/zsh/hosts/pc1-wsl-debian/.zshrc: ~/.zshrc_host
+  ~/dotfiles/zsh/hosts/pc1-wsl-debian/tools.yaml: ~/tools.host.yaml

@@ -1,0 +1,214 @@
+tools:
+  zsh:
+    checks:
+      - type: command
+        value: zsh
+      - type: env
+        value: SHELL
+        pattern: ".*zsh$"
+      - type: file
+        value: ~/.zshrc
+      - type: file
+        value: ~/.zshenv
+      - type: file
+        value: ~/.antigenrc
+      - type: dir
+        value: ~/.config/oh-my-posh
+      - type: file
+        value: ~/.zshrc_host
+
+  antigen:
+    load: true
+    checks:
+      - type: file
+        value: ~/.antigenrc
+
+  ohmyposh:
+    load: true
+    checks:
+      - type: command
+        value: oh-my-posh
+      - type: dir
+        value: ~/.config/oh-my-posh
+
+  git:
+    load: true
+    checks:
+      - type: command
+        value: git
+      - type: file
+        value: ~/.gitconfig
+
+  eza:
+    load: true
+    checks:
+      - type: command
+        value: eza
+
+  bat:
+    load: true
+    checks:
+      - type: command
+        value: bat
+      - type: dir
+        value: ~/.config/bat
+
+  tmux:
+    load: true
+    checks:
+      - type: command
+        value: tmux
+      - type: file
+        value: ~/.tmux.conf
+
+  docker:
+    load: true
+    checks:
+      - type: command
+        value: docker
+
+  lazydocker:
+    load: true
+    checks:
+      - type: command
+        value: lazydocker
+
+  lazygit:
+    load: true
+    checks:
+      - type: command
+        value: lazygit
+      - type: dir
+        value: ~/.config/lazygit
+
+  devmoji:
+    load: true
+    checks:
+      - type: command
+        value: devmoji
+
+  neovim:
+    load: true
+    checks:
+      - type: command
+        value: nvim
+      - type: dir
+        value: ~/.config/nvim
+
+  fnm:
+    load: true
+    checks:
+      - type: command
+        value: fnm
+
+  g:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.g
+
+  sesh:
+    load: true
+    checks:
+      - type: command
+        value: sesh
+      - type: dir
+        value: ~/.config/sesh
+
+  sdkman:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.sdkman
+
+  gcloud:
+    load: true
+    checks:
+      - type: dir
+        value: ~/apps/google-cloud-sdk
+
+  coursier:
+    load: true
+    checks:
+      - type: command
+        value: cs
+
+  fastfetch:
+    load: true
+    checks:
+      - type: command
+        value: fastfetch
+      - type: dir
+        value: ~/.config/fastfetch
+
+  zoxide:
+    load: true
+    checks:
+      - type: command
+        value: zoxide
+
+  yazi:
+    load: true
+    checks:
+      - type: command
+        value: yazi
+
+  luaver:
+    load: true
+    checks:
+      - type: dir
+        value: ~/.luaver
+
+  ansible:
+    load: true
+    checks:
+      - type: command
+        value: ansible
+
+  tldr:
+    load: true
+    checks:
+      - type: command
+        value: tldr
+      - type: dir
+        value: ~/.config/tealdeer
+
+  tenv:
+    load: true
+    checks:
+      - type: command
+        value: tenv
+
+  notes:
+    load: true
+    checks:
+      - type: dir
+        value: ~/notes
+
+  opencode:
+    load: true
+    checks:
+      - type: command
+        value: opencode
+      - type: file
+        value: ~/.config/opencode/opencode.json
+
+  ask:
+    load:
+      setup: ask_sh_setup
+    checks:
+      - type: command
+        value: ask-sh
+
+  ghostty:
+    checks:
+      - type: command
+        value: ghostty
+      - type: dir
+        value: ~/.config/ghostty
+
+  dig:
+    fix: "yay -S --noconfirm bind"
+
+  nslookup:
+    fix: "yay -S --noconfirm bind"
