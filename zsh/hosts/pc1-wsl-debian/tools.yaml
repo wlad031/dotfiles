@@ -67,12 +67,6 @@ tools:
       - type: command
         value: docker
 
-  lazydocker:
-    load: true
-    checks:
-      - type: command
-        value: lazydocker
-
   lazygit:
     load: true
     checks:
