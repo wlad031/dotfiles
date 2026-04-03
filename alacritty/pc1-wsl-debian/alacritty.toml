@@ -1,0 +1,72 @@
+[terminal.shell]
+program = "wsl"
+args = ["-d", "Ubuntu"]
+
+[font]
+size = 12
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[font.bold_italic]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[window]
+opacity = 1.0
+decorations = "Full"
+
+[window.dimensions]
+columns = 200
+lines = 70
+
+[window.padding]
+x = 2
+y = 2
+
+[scrolling]
+history = 100000
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [
+  { key = "V", mods = "Control", action = "Paste" },
+  { key = "Space", mods = "Control", chars = "\u0000" },
+  { key = "A", mods = "Control", chars = "\u0001" },
+  { key = "B", mods = "Control", chars = "\u0002" },
+]
+
+[colors.primary]
+background = "#161616"
+foreground = "#f2f4f8"
+
+[colors.normal]
+black = "#282828"
+red = "#ee5396"
+green = "#25be6a"
+yellow = "#08bdba"
+blue = "#78a9ff"
+magenta = "#be95ff"
+cyan = "#33b1ff"
+white = "#dfdfe0"
+
+[colors.bright]
+black = "#484848"
+red = "#f16da6"
+green = "#46c880"
+yellow = "#2dc7c4"
+blue = "#8cb6ff"
+magenta = "#c8a5ff"
+cyan = "#52bdff"
+white = "#e4e4e5"

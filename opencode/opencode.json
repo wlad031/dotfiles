@@ -2,6 +2,10 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "plan",
   "share": "disabled",
+  "permission": {
+    "edit": "ask",
+    "bash": "ask"
+  },
   "agent": {
     "build": {
       "permission": "allow"

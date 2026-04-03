@@ -143,6 +143,23 @@ return {
     end,
   },
   {
+    "Cannon07/claude-preview.nvim",
+    config = function()
+      require("claude-preview").setup({
+        neo_tree = {
+          enabled = true,
+          position = "right",
+        },
+      })
+
+      local group = vim.api.nvim_create_augroup("ClaudePreviewAutoread", { clear = true })
+      vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+        group = group,
+        command = "checktime",
+      })
+    end,
+  },
+  {
     -- parrot.nvim offers a seamless out-of-the-box experience, providing tight
     -- integration of current LLM APIs into your Neovim workflows, with a focus
     -- solely on text generation. The selected core features include on-demand
