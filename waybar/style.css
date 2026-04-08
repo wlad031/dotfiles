@@ -27,7 +27,6 @@ tooltip {
 
 /* One nice pill per section */
 .modules-left,
-.modules-center,
 .modules-right {
   background: @bg;
   color: @fg;
@@ -35,11 +34,16 @@ tooltip {
   padding: 4px 8px;
 }
 
+/* Center: show pill only when mpris has content */
+.modules-center {
+  background: transparent;
+  padding: 0;
+}
+
 /* Make inner modules tight */
 #workspaces,
 #taskbar,
 #tray,
-#mpris,
 #cpu,
 #memory,
 #custom-hyprsunset,
@@ -51,6 +55,22 @@ tooltip {
 #language,
 #custom-notification {
   margin: 0 6px;
+}
+
+/* MPRIS: only render "pill" when active */
+#mpris {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+#mpris.playing,
+#mpris.paused {
+  background: @bg;
+  color: @fg;
+  border-radius: 10px;
+  padding: 4px 8px;
 }
 
 #custom-screenshot {

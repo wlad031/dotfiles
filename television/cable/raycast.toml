@@ -1,0 +1,32 @@
+[metadata]
+name = "raycast"
+description = "Launcher"
+requirements = ["python", "gtk-launch", "qalc", "wl-paste", "wl-copy", "notify-send", "hyprctl", "tmux", "copyq"]
+
+[source]
+command = "python -S ~/.config/television/scripts/raycast_source.py"
+display = "{split:\\t:1|pad:46: :right}  {split:\\t:2}"
+output = "{}"
+
+[keybindings]
+enter = "actions:default"
+
+[actions.default]
+description = "Run"
+command = "python ~/.config/television/scripts/raycast_dispatch.py default {}"
+mode = "execute"
+
+[actions.hsplit]
+description = "Open command in tmux hsplit"
+command = "python ~/.config/television/scripts/raycast_dispatch.py hsplit {}"
+mode = "execute"
+
+[actions.vsplit]
+description = "Open command in tmux vsplit"
+command = "python ~/.config/television/scripts/raycast_dispatch.py vsplit {}"
+mode = "execute"
+
+[actions.window]
+description = "Open command in new tmux window"
+command = "python ~/.config/television/scripts/raycast_dispatch.py window {}"
+mode = "execute"

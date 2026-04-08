@@ -1,21 +1,5 @@
-ly:
-  ~/dotfiles/ly/config.ini: /etc/ly/config.ini
-
 opencode:
   ~/dotfiles/opencode/opencode.json: ~/.config/opencode/opencode.json
-
-hypr:
-  ~/dotfiles/hypr: ~/.config/hypr
-
-swaync:
-  ~/dotfiles/swaync/config.json: ~/.config/swaync/config.json
-  ~/dotfiles/swaync/style.css: ~/.config/swaync/style.css
-
-waybar:
-  ~/dotfiles/waybar: ~/.config/waybar
-
-rofi:
-  ~/dotfiles/rofi: ~/.config/rofi
 
 git:
   ~/dotfiles/git/.gitconfig: ~/.gitconfig
@@ -49,14 +33,11 @@ ohmyposh:
 neovim:
   ~/dotfiles/nvim: ~/.config/nvim
 
-keyd:
-  /home/vgerasimov/dotfiles/keyd: /etc/keyd
-
 bat:
   ~/dotfiles/bat: ~/.config/bat
 
 tealdeer:
   ~/dotfiles/tealdeer: ~/.config/tealdeer
 
-cava:
-  ~/dotfiles/cava/config: ~/.config/cava/config
+television:
+  ~/dotfiles/television: ~/.config/television

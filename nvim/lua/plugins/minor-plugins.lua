@@ -111,6 +111,13 @@ local go_up = {
   end,
 }
 
+local preview = {
+  'barrettruth/preview.nvim',
+  init = function()
+    vim.g.preview = { typst = true, latex = true }
+  end,
+}
+
 local plugins = {
   number_toggle,
   todo_comments,
@@ -122,6 +129,7 @@ local plugins = {
   highlight_colors,
   highight_undo,
   -- go_up,
+  preview,
 }
 
 return plugins

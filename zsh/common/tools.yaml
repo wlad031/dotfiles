@@ -1,6 +1,12 @@
 tools:
+
   git:
     load: true
+
+  dredge:
+    checks:
+      - type: command
+        value: dredge
 
   eza:
     load: true

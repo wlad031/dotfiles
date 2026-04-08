@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Lazygit may pass the current diff pane width via {{columnWidth}}.
+# If it's not substituted (i.e. we receive a non-numeric literal), fall back to
+# LAZYGIT_COLUMNS (set by lazygit) and then COLUMNS.
+raw_width_arg="${1:-}"
+if [[ "$raw_width_arg" =~ ^[0-9]+$ ]]; then
+  width="$raw_width_arg"
+else
+  width="${LAZYGIT_COLUMNS:-${COLUMNS:-0}}"
+fi
+if [[ ! "$width" =~ ^[0-9]+$ ]]; then
+  width=0
+fi
+
+# Minimum pane width at which we enable side-by-side.
+threshold="${LAZYGIT_DELTA_SBS_THRESHOLD:-140}"
+if [[ ! "$threshold" =~ ^[0-9]+$ ]]; then
+  threshold=140
+fi
+
+args=(
+  # Important: your global gitconfig may have `delta.side-by-side=true`, which
+  # would otherwise force side-by-side regardless of our width logic.
+  --no-gitconfig
+  --paging=never
+  --dark
+)
+
+if (( width > 0 )); then
+  args+=(--width="$width")
+fi
+
+force_mode="${LAZYGIT_DELTA_FORCE_MODE:-}"
+case "$force_mode" in
+  "")
+    if (( threshold <= 0 )); then
+      args+=(--side-by-side)
+    elif (( width >= threshold )); then
+      args+=(--side-by-side)
+    fi
+    ;;
+  sbs|side-by-side|side_by_side)
+    args+=(--side-by-side)
+    ;;
+  inline|unified)
+    # delta default is inline/unified: no extra flags
+    ;;
+  *)
+    # Unknown override: ignore
+    ;;
+esac
+
+if [[ -n "${LAZYGIT_DELTA_PAGER_LOG:-}" ]]; then
+  # Best-effort logging for debugging (do not fail if unwritable).
+  {
+    sbs=0
+    for a in "${args[@]}"; do
+      if [[ "$a" == "--side-by-side" ]]; then
+        sbs=1
+        break
+      fi
+    done
+    printf '%(%Y-%m-%dT%H:%M:%S%z)T raw_arg=%q LAZYGIT_COLUMNS=%q COLUMNS=%q width=%s threshold=%s force_mode=%q sbs=%s\n' \
+      -1 "$raw_width_arg" "${LAZYGIT_COLUMNS:-}" "${COLUMNS:-}" "$width" "$threshold" "$force_mode" "$sbs"
+  } >>"$LAZYGIT_DELTA_PAGER_LOG" 2>/dev/null || true
+fi
+
+exec delta "${args[@]}"

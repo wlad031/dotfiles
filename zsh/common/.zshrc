@@ -1,16 +1,5 @@
 x="bash/lib/common.sh"; f="$HOME/dotfiles/$x"; [ -f $f ] || f="$HOME/.cache/dotfiles/$x" && [ -f $f ] || (mkdir -p ${f%/*} && wget -qO $f "https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/$x"); source $f
 
-###############################################################################
-# Common aliases
-alias xx='exit'
-alias zz='exit'
-alias ll="ls -la"
-# be paranoid
-alias cp='cp -ip'
-alias mv='mv -i'
-alias rm='rm -i'
-###############################################################################
-
 __tool_key() {
   local name="$1"
   local key
@@ -1302,3 +1291,34 @@ sysready_status() {
 source_safe "$HOME/.zshrc_host"
 # source_safe "$HOME/.zshrc_user"
 dotfiles_module_load_all
+
+###############################################################################
+# Common aliases
+alias xx='exit'
+alias zz='exit'
+alias ll="ls -la"
+# be paranoid
+alias cp='cp -ip'
+alias mv='mv -i'
+alias rm='rm -i'
+###############################################################################
+
+# sysready (failures only)
+dotfiles_sysready_failures() {
+  local sysready="$HOME/dotfiles/utils/sysready"
+  [[ -x "$sysready" ]] || return 0
+
+  local output line
+  output="$("$sysready" 2>&1)" || true
+
+  while IFS= read -r line; do
+    # sysready text format: <name> <OK|FAIL>\t<required|optional>\t<details>
+    if [[ "$line" == error:* || "$line" == *$'\t'FAIL$'\t'optional$'\t'* ]]; then
+      print -r -- "$line"
+    fi
+  done <<<"$output"
+}
+
+if [[ -o interactive ]]; then
+  dotfiles_sysready_failures
+fi

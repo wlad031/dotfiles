@@ -1,0 +1,18 @@
+[metadata]
+name = "hypr-windows"
+description = "Switch Hyprland windows"
+requirements = ["hyprctl", "jq"]
+
+[source]
+command = '''hyprctl clients -j | jq -r '.[] | select(.mapped == true) | "\(.address)\t\(.workspace.name)\t\(.class)\t\(.title | gsub("\\t"; " ") | gsub("\\n"; " "))"' '''
+display = "[{split:\t:1}] {split:\t:2}  {split:\t:3}"
+output = "{split:\t:0}"
+no_sort = true
+
+[keybindings]
+enter = "actions:focus"
+
+[actions.focus]
+description = "Focus selected window"
+command = "hyprctl dispatch focuswindow 'address:{split:\t:0}'"
+mode = "execute"

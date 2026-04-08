@@ -59,6 +59,7 @@
     "mpris": {
       "format": "{player_icon} {artist} {title}",
       "format-paused": "⏸ {artist} {title}",
+      "format-stopped": "",
       "max-length": 60,
       "enable-tooltip-len-limits": true,
       "player-icons": {
@@ -76,9 +77,10 @@
     },
 
     "clock": {
-      "format": "{:%H:%M}",
-      "format-alt": "{:%a, %d %b  %H:%M}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+      "locale": "en_GB.utf8",
+      "format": "{:%Y-%m-%d %H:%M:%S}",
+      "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<span font='monospace 14'>{calendar}</span>"
     },
 
     "hyprland/language": {

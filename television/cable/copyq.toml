@@ -1,0 +1,33 @@
+[metadata]
+name = "copyq"
+description = "Clipboard history (CopyQ)"
+requirements = ["copyq"]
+
+[source]
+command = "python -S ~/.config/television/scripts/copyq_source.py"
+display = "{split:\\t:0|pad:4: :left}  {split:\\t:1}"
+output = "{split:\\t:0}"
+no_sort = true
+
+[preview]
+command = "copyq read '{split:\\t:0}'"
+
+[keybindings]
+enter = "actions:copy"
+ctrl-v = "actions:paste"
+ctrl-d = "actions:delete"
+
+[actions.copy]
+description = "Copy selected item to clipboard"
+command = "copyq select '{split:\\t:0}'"
+mode = "execute"
+
+[actions.paste]
+description = "Paste selected item to active window"
+command = "copyq select '{split:\\t:0}' && copyq paste"
+mode = "execute"
+
+[actions.delete]
+description = "Delete selected item"
+command = "copyq remove '{split:\\t:0}'"
+mode = "fork"

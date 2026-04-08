@@ -1,0 +1,117 @@
+[metadata]
+name = "quick"
+description = "Pick a command, then choose how to open it in tmux"
+requirements = ["tmux"]
+
+[source]
+command = """
+cat <<'EOF'
+Open OpenCode|opencode
+Open Neovim|nvim
+EOF
+"""
+
+# Source entries are "Label|command".
+display = "{split:|:0}"
+output = "{split:|:1}"
+
+no_sort = true
+
+[keybindings]
+enter = "toggle_action_picker"
+
+[actions.hsplit]
+description = "Open in tmux horizontal split"
+command = """
+target_pane() {
+  if [ -n "${TV_TMUX_TARGET_PANE:-}" ]; then
+    printf '%s' "$TV_TMUX_TARGET_PANE"
+    return 0
+  fi
+  if [ -n "${TMUX:-}" ]; then
+    tmux display-message -p '#{pane_id}'
+    return 0
+  fi
+  client="$(
+    tmux list-clients -F '#{client_activity} #{client_name}' 2>/dev/null \
+      | sort -nr \
+      | sed -n '1{s/^[0-9]* //;p;}'
+  )"
+  [ -n "$client" ] || return 1
+  tmux display-message -p -t "$client" '#{pane_id}'
+}
+
+if tmux info >/dev/null 2>&1; then
+  target="$(target_pane)" || { zsh -lc {}; exit 0; }
+  cwd="$(tmux display-message -p -t "$target" '#{pane_current_path}')"
+  new_pane="$(tmux split-window -h -t "$target" -c "$cwd" -P -F '#{pane_id}' zsh -lc 'eval "$1"; exec zsh -l' zsh '{}')"
+  tmux select-pane -t "$new_pane"
+else
+  zsh -lc '{}'
+fi
+"""
+mode = "execute"
+
+[actions.vsplit]
+description = "Open in tmux vertical split"
+command = """
+target_pane() {
+  if [ -n "${TV_TMUX_TARGET_PANE:-}" ]; then
+    printf '%s' "$TV_TMUX_TARGET_PANE"
+    return 0
+  fi
+  if [ -n "${TMUX:-}" ]; then
+    tmux display-message -p '#{pane_id}'
+    return 0
+  fi
+  client="$(
+    tmux list-clients -F '#{client_activity} #{client_name}' 2>/dev/null \
+      | sort -nr \
+      | sed -n '1{s/^[0-9]* //;p;}'
+  )"
+  [ -n "$client" ] || return 1
+  tmux display-message -p -t "$client" '#{pane_id}'
+}
+
+if tmux info >/dev/null 2>&1; then
+  target="$(target_pane)" || { zsh -lc {}; exit 0; }
+  cwd="$(tmux display-message -p -t "$target" '#{pane_current_path}')"
+  new_pane="$(tmux split-window -v -t "$target" -c "$cwd" -P -F '#{pane_id}' zsh -lc 'eval "$1"; exec zsh -l' zsh '{}')"
+  tmux select-pane -t "$new_pane"
+else
+  zsh -lc '{}'
+fi
+"""
+mode = "execute"
+
+[actions.window]
+description = "Open in new tmux window"
+command = """
+target_pane() {
+  if [ -n "${TV_TMUX_TARGET_PANE:-}" ]; then
+    printf '%s' "$TV_TMUX_TARGET_PANE"
+    return 0
+  fi
+  if [ -n "${TMUX:-}" ]; then
+    tmux display-message -p '#{pane_id}'
+    return 0
+  fi
+  client="$(
+    tmux list-clients -F '#{client_activity} #{client_name}' 2>/dev/null \
+      | sort -nr \
+      | sed -n '1{s/^[0-9]* //;p;}'
+  )"
+  [ -n "$client" ] || return 1
+  tmux display-message -p -t "$client" '#{pane_id}'
+}
+
+if tmux info >/dev/null 2>&1; then
+  target="$(target_pane)" || { zsh -lc {}; exit 0; }
+  cwd="$(tmux display-message -p -t "$target" '#{pane_current_path}')"
+  new_win="$(tmux new-window -c "$cwd" -P -F '#{window_id}' zsh -lc 'eval "$1"; exec zsh -l' zsh '{}')"
+  tmux select-window -t "$new_win"
+else
+  zsh -lc '{}'
+fi
+"""
+mode = "execute"

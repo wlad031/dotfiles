@@ -4,3 +4,22 @@ ghostty:
 zsh:
   ~/dotfiles/zsh/hosts/pc1-arch/.zshrc: ~/.zshrc_host
   ~/dotfiles/zsh/hosts/pc1-arch/tools.yaml: ~/tools.host.yaml
+
+ly:
+  ~/dotfiles/ly/config.ini: /etc/ly/config.ini
+
+hypr:
+  ~/dotfiles/hypr: ~/.config/hypr
+
+swaync:
+  ~/dotfiles/swaync/config.json: ~/.config/swaync/config.json
+  ~/dotfiles/swaync/style.css: ~/.config/swaync/style.css
+
+waybar:
+  ~/dotfiles/waybar: ~/.config/waybar
+
+rofi:
+  ~/dotfiles/rofi: ~/.config/rofi
+
+cava:
+  ~/dotfiles/cava/config: ~/.config/cava/config
