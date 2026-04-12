@@ -173,6 +173,11 @@ tools:
       - type: command
         value: tenv
 
+  opentofu:
+    checks:
+      - type: bash
+        value: 'tenv tofu list | grep -q "1.11"'
+
   notes:
     load: true
     checks:
