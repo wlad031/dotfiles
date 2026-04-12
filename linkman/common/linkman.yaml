@@ -45,3 +45,6 @@ television:
 k9s:
   ~/dotfiles/k9s/config.yaml: ~/.config/k9s/config.yaml
   ~/dotfiles/k9s/aliases.yaml: ~/.config/k9s/aliases.yaml
+
+fastfetch:
+  ~/dotfiles/fastfetch/custom.jsonc: ~/.config/fastfetch/custom.jsonc

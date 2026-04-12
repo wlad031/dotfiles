@@ -187,7 +187,7 @@ ohmyposh_setup() {
 
   if [[ "$installed" = true ]]; then
     if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-      eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/zen.toml)"
+      eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/gruvbox.json)"
     fi
   fi
 }
@@ -341,10 +341,11 @@ docker_setup() {
   __set_tool_var "docker" "$installed"
 
   if [[ "$installed" = true ]]; then
+
     __docker_set_sock() {
       local sock=$1
       if [[ ! -e "$sock" ]]; then
-        log_error "Socket not found: $sock"
+        log_debug "Socket not found: $sock"
         return
       fi
       export DOCKER_SOCK="$sock"
@@ -367,6 +368,10 @@ docker_setup() {
       __docker_set_sock "$rancher_dir/docker.sock"
     }
 
+    __docker_change_host_docker() {
+      __docker_set_sock "/var/run/docker.sock"
+    }
+
     __docker_change_host() {
       local host=$1
       if [[ "$host" = "rancher" ]]; then
@@ -375,6 +380,8 @@ docker_setup() {
         __docker_change_host_lima "$2"
       elif [[ "$host" = "colima" ]]; then
         __docker_change_host_colima "$2"
+      elif [[ "$host" = "docker" ]]; then
+        __docker_change_host_docker
       else
         log_error "Unknown docker host: $host"
       fi
@@ -414,14 +421,14 @@ docker_setup() {
     alias docker=__docker
 
     __docker_get_default_host() {
-      if [[ -d "${RANCHER_DIR:-$HOME/.rd}" ]]; then
+      if [[ -f "/var/run/docker.sock" ]]; then
+        echo "docker"
+      elif [[ -d "${RANCHER_DIR:-$HOME/.rd}" ]]; then
         echo "rancher"
       elif [[ -d "${LIMA_DIR:-$HOME/.lima}" ]]; then
         echo "lima"
       elif [[ -d "${COLIMA_DIR:-$HOME/.colima}" ]]; then
         echo "colima"
-      elif [[ -f "/var/run/docker.sock" ]]; then
-        echo "docker"
       fi
     }
 
@@ -1289,7 +1296,6 @@ sysready_status() {
 }
 
 source_safe "$HOME/.zshrc_host"
-# source_safe "$HOME/.zshrc_user"
 dotfiles_module_load_all
 
 ###############################################################################
@@ -1303,20 +1309,10 @@ alias mv='mv -i'
 alias rm='rm -i'
 ###############################################################################
 
-# sysready (failures only)
 dotfiles_sysready_failures() {
   local sysready="$HOME/dotfiles/utils/sysready"
   [[ -x "$sysready" ]] || return 0
-
-  local output line
-  output="$("$sysready" 2>&1)" || true
-
-  while IFS= read -r line; do
-    # sysready text format: <name> <OK|FAIL>\t<required|optional>\t<details>
-    if [[ "$line" == error:* || "$line" == *$'\t'FAIL$'\t'optional$'\t'* ]]; then
-      print -r -- "$line"
-    fi
-  done <<<"$output"
+  sysready | grep "required" | grep "FAIL"
 }
 
 if [[ -o interactive ]]; then

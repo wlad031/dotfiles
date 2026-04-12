@@ -121,12 +121,6 @@ tools:
       - type: dir
         value: ~/.sdkman
 
-  gcloud:
-    load: true
-    checks:
-      - type: dir
-        value: ~/apps/google-cloud-sdk
-
   coursier:
     load: true
     checks:
