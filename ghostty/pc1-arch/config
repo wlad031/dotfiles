@@ -1,6 +1,6 @@
 config-file = ~/dotfiles/ghostty/common
 
 font-size = 9
-font-family = Hermit
+font-family = Hurmit Nerd Font
 background-opacity = 0.75
 background-blur = 0

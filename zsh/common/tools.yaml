@@ -53,16 +53,16 @@ tools:
         value: serpl
 
   dig:
-    fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
     checks:
       - type: command
         value: dig
+        fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
 
   nslookup:
-    fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
     checks:
       - type: command
         value: nslookup
+        fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
 
   k9s:
     checks:
@@ -73,3 +73,21 @@ tools:
     checks:
       - type: command
         value: k9s
+
+  mediainfo:
+    checks:
+      - type: command
+        value: mediainfo
+
+  yazi:
+    load: true
+    checks:
+      - type: command
+        value: yazi
+      - type: bash
+        value: 'ya pkg list | grep -q "boydaihungst/mediainfo"'
+        fix: 'ya pkg add boydaihungst/mediainfo'
+      - type: bash
+        value: 'ya pkg list | grep -q "bennyyip/gruvbox-dark"'
+        fix: 'ya pkg add bennyyip/gruvbox-dark'
+

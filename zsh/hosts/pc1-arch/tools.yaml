@@ -147,12 +147,6 @@ tools:
       - type: command
         value: zoxide
 
-  yazi:
-    load: true
-    checks:
-      - type: command
-        value: yazi
-
   luaver:
     load: true
     checks:

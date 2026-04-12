@@ -20,6 +20,7 @@ tools:
         value: ~/.config/zsh
       - type: apt
         value: zsh
+        fix: "sudo apt-get update && sudo apt-get install -y zsh"
       - type: pacman
         value: zsh
       - type: cargo
@@ -62,6 +63,8 @@ tools:
       - type: sha256
         value: ~/.ssh/id_ed25519.pub
         sha256: "<expected-hex>"
+      - type: bash
+        value: 'ya pkg list | grep -q "yazi-rs/plugins:piper"'
 EOF
 }
 
@@ -156,6 +159,19 @@ check_executable() {
     printf 'ok:%s' "$value"
   else
     printf 'fail:%s' "$value"
+  fi
+}
+
+check_bash() {
+  local value="$1"
+  if [[ -z "$value" ]]; then
+    printf 'fail:%s' "bash command not set"
+    return
+  fi
+  if bash -o pipefail -c "$value" >/dev/null 2>&1; then
+    printf 'ok:%s' "$value"
+  else
+    printf 'fail:%s' "$value (exit $?)"
   fi
 }
 
@@ -754,6 +770,7 @@ run_check() {
     systemd_enabled) check_systemd_enabled "$value" ;;
     systemd_active) check_systemd_active "$value" ;;
     sha256) check_sha256 "$value" "$sha256" ;;
+    bash) check_bash "$value" ;;
     *) printf 'fail:%s' "unknown check type '$type'" ;;
   esac
 }
@@ -885,7 +902,7 @@ finalize_tool() {
   fi
 }
 
-while IFS=$'\t' read -r name command optional tool_fix check_type check_value check_pattern check_venv check_sha256 check_fix; do
+while IFS=$'\t' read -r name command optional check_type check_value check_pattern check_venv check_sha256 check_fix; do
   [[ -z "$name" ]] && continue
 
   if [[ -z "$current_name" ]]; then
@@ -907,7 +924,7 @@ while IFS=$'\t' read -r name command optional tool_fix check_type check_value ch
     tool_count=$((tool_count + 1))
   fi
 
-  for var in tool_fix check_pattern check_venv check_sha256 check_fix; do
+  for var in check_pattern check_venv check_sha256 check_fix; do
     if [[ "${!var}" == "__NULL__" ]]; then
       printf -v "$var" ''
     fi
@@ -925,9 +942,6 @@ while IFS=$'\t' read -r name command optional tool_fix check_type check_value ch
     fi
   else
     tool_ok=false
-    if [[ -z "$check_fix" ]]; then
-      check_fix="$tool_fix"
-    fi
     if [[ "$check_type" == "env" && -n "$check_pattern" ]]; then
       item="$check_type $check_value~$check_pattern"
     else
@@ -939,7 +953,7 @@ while IFS=$'\t' read -r name command optional tool_fix check_type check_value ch
     missing_checks+=("$item")
   fi
 done < <(
-  yq -r '.tools // {} | to_entries[] | .key as $name | .value as $tool | ($tool.command // $name) as $cmd | ($tool.optional // false) as $opt | ($tool.fix // "__NULL__") as $tool_fix | ($tool.checks // []) as $checks | if ($checks|length)==0 then [$name,$cmd,$opt,$tool_fix,"command",$cmd,"__NULL__","__NULL__","__NULL__","__NULL__"] else $checks[] | [$name,$cmd,$opt,$tool_fix,.type,.value,(.pattern // "__NULL__"),(.venv // "__NULL__"),(.sha256 // "__NULL__"),(.fix // "__NULL__")] end | @tsv' "$merged_config"
+  yq -r '.tools // {} | to_entries[] | .key as $name | .value as $tool | ($tool.command // $name) as $cmd | ($tool.optional // false) as $opt | ($tool.checks // []) as $checks | if ($checks|length)==0 then [$name,$cmd,$opt,"command",$cmd,"__NULL__","__NULL__","__NULL__","__NULL__"] else $checks[] | [$name,$cmd,$opt,.type,.value,(.pattern // "__NULL__"),(.venv // "__NULL__"),(.sha256 // "__NULL__"),(.fix // "__NULL__")] end | @tsv' "$merged_config"
 )
 
 finalize_tool

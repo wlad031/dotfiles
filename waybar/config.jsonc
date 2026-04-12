@@ -160,14 +160,14 @@
       "format": " {usage:>2}%",
       "justify": "center",
       "interval": 2,
-      "on-click": "ghostty --title='htop-floating' --window-height=80 --window-width=150 -e htop"
+      "on-click": "ghostty --title='htop-floating' --window-height=80 --window-width=150 --command=htop"
     },
 
     "memory": {
       "format": " {percentage:>2}%",
       "justify": "center",
       "interval": 2,
-      "on-click": "ghostty --title='htop-floating' --window-height=30 --window-width=120 -e htop"
+      "on-click": "ghostty --title='htop-floating' --window-height=30 --window-width=120 --comman=htop"
     },
 
     "pulseaudio": {
