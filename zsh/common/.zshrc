@@ -652,8 +652,16 @@ sesh_setup() {
 }
 
 sdkman_setup() {
-  source_safe "$HOME/.sdkman/bin/sdkman-init.sh"
-  __set_tool_var "sdkman" true
+  local sdkman_dir="$HOME/.sdkman"
+  local installed=false
+  if [[ -d "$sdkman_dir" ]]; then
+    installed=true
+  fi
+
+  if [[ "$installed" = true ]]; then
+    source_safe "$HOME/.sdkman/bin/sdkman-init.sh"
+    __set_tool_var "sdkman" true
+  fi
 }
 
 pyenv_setup() {
