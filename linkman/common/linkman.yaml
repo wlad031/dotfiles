@@ -1,5 +1,7 @@
 opencode:
   ~/dotfiles/opencode/opencode.json: ~/.config/opencode/opencode.json
+  ~/dotfiles/opencode/skills: ~/.config/opencode/skills
+  ~/dotfiles/opencode/prompts: ~/.config/opencode/prompts
 
 git:
   ~/dotfiles/git/.gitconfig: ~/.gitconfig

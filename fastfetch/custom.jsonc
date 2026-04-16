@@ -141,6 +141,12 @@
             "keyColor": "cyan"
         },
         {
+            "type": "command",
+            "key": "sysready",
+            "shell": "bash",
+            "text" : "sysready | grep 'required' | grep 'FAIL' | wc -l"
+        },
+        {
             "type": "custom",
             "format": "└{$1}{$1}┘",
             "outputColor": "90"
