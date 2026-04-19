@@ -1,5 +1,6 @@
 ghostty:
-  ~/dotfiles/ghostty/pc1-arch: ~/.config/ghostty
+  ~/dotfiles/ghostty/common: ~/.config/ghostty/config
+  ~/dotfiles/ghostty/themes: ~/.config/ghostty/themes
 
 zsh:
   ~/dotfiles/zsh/hosts/pc1-arch/.zshrc: ~/.zshrc_host

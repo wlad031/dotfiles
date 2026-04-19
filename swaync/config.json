@@ -59,60 +59,64 @@
     "buttons-grid": {
       "actions": [
         {
-          "label": "󰝟",
+          "label": "󰝟 Sound",
           "type": "toggle",
           "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = true ] && pactl set-sink-mute @DEFAULT_SINK@ 1 || pactl set-sink-mute @DEFAULT_SINK@ 0'",
           "update-command": "sh -c 'pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | grep -q yes && echo true || echo false'"
         },
         {
-          "label": "󰍭",
+          "label": "󰍭 Mic",
           "type": "toggle",
           "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = true ] && pactl set-source-mute @DEFAULT_SOURCE@ 1 || pactl set-source-mute @DEFAULT_SOURCE@ 0'",
           "update-command": "sh -c 'pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null | grep -q yes && echo true || echo false'"
         },
 
         {
-          "label": "",
+          "label": " Wi-Fi",
           "command": "kitty nmtui"
         },
         {
-          "label": "",
+          "label": " Bluetooth",
           "command": "blueman-manager"
         },
         {
-          "label": "󰤄",
+          "label": "󰤄 DND",
           "type": "toggle",
           "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = true ] && swaync-client -dn >/dev/null || swaync-client -df >/dev/null'",
           "update-command": "sh -c 'swaync-client -D 2>/dev/null || echo false'"
         },
 
         {
-          "label": "󰀟",
+          "label": "󰀟 Cast",
           "command": "sh -c 'command -v gnome-network-displays >/dev/null 2>&1 && exec gnome-network-displays || notify-send swaync \"gnome-network-displays not installed\"'"
         },
 
         {
-          "label": "󰈙",
+          "label": "󰈙 Files",
           "command": "sh -c 'xdg-open \"$HOME/Documents\"'"
         },
         {
-          "label": "",
+          "label": " Settings",
           "command": "gnome-control-center"
         },
         {
-          "label": "",
+          "label": " Notes",
           "command": "sh -c 'xdg-open \"$HOME/notes\"'"
         },
         {
-          "label": "",
+          "label": "🔄 USB Reset",
+          "command": "/home/vgerasimov/dotfiles/scripts/reset-xhci.sh"
+        },
+        {
+          "label": " Lock",
           "command": "hyprlock"
         },
         {
-          "label": "",
+          "label": " Reboot",
           "command": "systemctl reboot"
         },
         {
-          "label": "",
+          "label": " Power Off",
           "command": "systemctl poweroff"
         }
       ]

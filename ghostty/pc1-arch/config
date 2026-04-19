@@ -1,6 +1,15 @@
+# Ghostty Configuration - Local Overrides
+# This file is symlinked from ~/.config/ghostty/config
+# It loads the common config first, then applies these overrides
+
 config-file = ~/dotfiles/ghostty/common
 
-font-size = 9
+# Local appearance overrides
+font-size = 12
 font-family = Hurmit Nerd Font
 background-opacity = 0.75
-background-blur = 0
+background-blur = 0  # Disable background blur (corrected setting name)
+background = #000000  # Black background
+
+# Test command to verify config is loaded
+bell-command = 'echo "Config loaded!"'

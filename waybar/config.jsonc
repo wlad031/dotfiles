@@ -13,7 +13,7 @@
     "modules-left": [
       "hyprland/workspaces",
       "wlr/taskbar",
-      "hyprland/mode"
+      "hyprland/submap"
     ],
 
     "modules-center": [
@@ -45,6 +45,14 @@
       "persistent-workspaces": {
         "*": 5
       }
+    },
+
+    "hyprland/submap": {
+      "format": "{icon} {}",
+      "format-icons": {
+        "default": ""
+      },
+      "tooltip": false
     },
 
     "wlr/taskbar": {
@@ -101,15 +109,17 @@
       "escape": true
     },
 
-    "custom/screenshot": {
-      "exec-if": "test -x /sbin/hyprshot",
-      "exec": "echo",
-      "interval": "once",
-      "tooltip": true,
-      "tooltip-format": "Screenshot (full screen)",
-      "format": "\uf030",
-      "on-click": "/sbin/hyprshot -m output"
-    },
+      "custom/screenshot": {
+        "exec-if": "test -x /sbin/hyprshot",
+        "exec": "echo -n ' '",
+        "interval": "once",
+        "tooltip": true,
+        "tooltip-format": "Left click: region\nRight click: active monitor",
+        "format": "📸",
+        "return-type": "text",
+        "on-click": "/sbin/hyprshot -m region -z",
+        "on-click-right": "/sbin/hyprshot -m output -m active"
+      },
 
     "custom/notification": {
       "tooltip": false,
@@ -167,7 +177,7 @@
       "format": " {percentage:>2}%",
       "justify": "center",
       "interval": 2,
-      "on-click": "ghostty --title='htop-floating' --window-height=30 --window-width=120 --comman=htop"
+      "on-click": "ghostty --title='htop-floating' --window-height=30 --window-width=120 --command=htop"
     },
 
     "pulseaudio": {

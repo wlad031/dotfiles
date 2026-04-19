@@ -1306,6 +1306,14 @@ sysready_status() {
 source_safe "$HOME/.zshrc_host"
 dotfiles_module_load_all
 
+if [[ -f ~/.ssh-agent-env ]]; then
+  source ~/.ssh-agent-env
+fi
+if ! kill -0 "$SSH_AGENT_PID" 2>/dev/null; then
+  ssh-agent > ~/.ssh-agent-env
+  source ~/.ssh-agent-env
+fi
+
 ###############################################################################
 # Common aliases
 alias xx='exit'

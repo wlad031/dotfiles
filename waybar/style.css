@@ -48,6 +48,7 @@ tooltip {
 #memory,
 #custom-hyprsunset,
 #custom-screenshot,
+#custom-xhci-reset,
 #network,
 #bluetooth,
 #pulseaudio,
@@ -80,6 +81,17 @@ tooltip {
 }
 
 #custom-screenshot:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#custom-xhci-reset {
+   color: @red;
+   padding: 2px 6px;
+   border-radius: 8px;
+   background: rgba(255, 255, 0, 0.3);
+ }
+
+#custom-xhci-reset:hover {
   background: rgba(255, 255, 255, 0.06);
 }
 
