@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url="${OPENCODE_URL:-https://opencode.local.vgerasimov.dev}"
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv-sessions.json"
+
+line="$(tv opencode-sessions)"
+slug="$(printf '%s' "$line" | awk -F ' │ ' '{print $NF}')"
+sid="$(jq -r --arg slug "$slug" '.[] | select(.slug == $slug) | .id' "$cache" | head -n1)"
+
+exec opencode attach "$url" --session "$sid"

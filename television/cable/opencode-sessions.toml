@@ -1,0 +1,10 @@
+[metadata]
+name = "opencode-sessions"
+description = "OpenCode sessions"
+requirements = ["curl", "jq"]
+
+[source]
+command = "~/.config/television/scripts/oc-tv-source"
+
+[preview]
+command = "~/.config/television/scripts/oc-tv-preview '{}'"

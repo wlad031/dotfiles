@@ -1,37 +1,79 @@
-# Television channel for sesh session management
-# https://github.com/joshmedeski/sesh
-
 [metadata]
 name = "sesh"
-description = "Session manager integrating tmux sessions, zoxide directories, and config paths"
-requirements = ["sesh", "fd"]
+description = "Session manager integrating tmux sessions, zoxide directories, and OpenCode sessions"
+requirements = ["sesh"]
 
 [source]
-# Multiple source commands for cycling through different modes
-# Press Ctrl+S to cycle between sources
 command = [
-  "sesh list --icons",                          # all sessions (default)
-  "sesh list -t --icons",                       # tmux sessions only
-  "sesh list -c --icons",                       # config directories
-  "sesh list -z --icons",                       # zoxide directories
-  "fd -H -d 2 -t d -E .Trash . ~"               # find directories
+  "sesh list --icons",
+  "~/.config/television/scripts/oc-tv-source",
 ]
 ansi = true
 output = "{strip_ansi|split: :1..|join: }"
 
 [preview]
-command = "sesh preview '{strip_ansi|split: :1..|join: }'"
+command = '''
+item="{}"
+
+if printf "%s" "$item" | grep -q "opencode"; then
+  ~/.config/television/scripts/oc-tv-preview "$item"
+else
+  sesh preview '{strip_ansi|split: :1..|join: }'
+fi
+'''
 
 [keybindings]
 enter = "actions:connect"
-ctrl-d = [ "actions:kill_session", "reload_source" ]
+ctrl-d = ["actions:kill_session", "reload_source"]
 
 [actions.connect]
 description = "Connect to selected session"
-command = "sesh connect '{strip_ansi|split: :1..|join: }'"
 mode = "execute"
+command = '''
+item="{}"
+
+if printf "%s" "$item" | grep -q "opencode"; then
+  slug="$(printf "%s" "$item" | awk -F ' │ ' '{print $NF}')"
+
+  cache="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv-sessions.json"
+
+  sid="$(jq -r --arg slug "$slug" \
+    '.[] | select(.slug == $slug) | .id' "$cache" | head -n1)"
+
+  title="$(jq -r --arg slug "$slug" \
+    '.[] | select(.slug == $slug) | (.title // .slug)' "$cache" | head -n1)"
+
+  # sanitize title for tmux
+  tmux_name="$(
+    printf "%s" "$title" \
+      | tr '[:upper:]' '[:lower:]' \
+      | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g; s/-+/-/g'
+  )"
+
+  # fallback if empty
+  if [ -z "$tmux_name" ]; then
+    tmux_name="oc-$slug"
+  fi
+
+  if [ "$scope" = "local" ]; then
+    cmd="opencode --session '$sid'"
+  else
+    cmd="opencode attach '$url' --session '$sid'"
+  fi
+
+  if ! tmux has-session -t "$tmux_name" 2>/dev/null; then
+    tmux new-session -d -s "$tmux_name" "$cmd"
+  fi
+
+  tmux switch-client -t "$tmux_name"
+
+else
+  sesh connect "$(printf "%s" "$item" | sed 's/^[^ ]* //')"
+fi
+'''
 
 [actions.kill_session]
-description = "Kill selected tmux session (press Ctrl+r to reload)"
+description = "Kill selected tmux session"
 command = "tmux kill-session -t '{strip_ansi|split: :1..|join: }'"
 mode = "fork"
+

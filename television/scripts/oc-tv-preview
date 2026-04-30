@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+line="$*"
+
+
+scope="$(printf '%s' "$line" | awk '{print $2}' | cut -d: -f2)"
+slug="$(printf '%s' "$line" | awk -F ' │ ' '{print $(NF-1)}')"
+target="$(printf '%s' "$line" | awk -F ' │ ' '{print $NF}')"
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
+cache="$cache_dir/${scope}.json"
+
+sid="$(
+  jq -r --arg slug "$slug" '.[] | select(.slug == $slug) | .id' "$cache" | head -n1
+)"
+
+jq -r --arg sid "$sid" --arg scope "$scope" --arg target "$target" '
+  .[] | select(.id == $sid) |
+
+  "Scope:     \($scope)
+Target:    \($target)
+Title:     \(.title // "untitled")
+
+Directory: \(.directory)
+Slug:      \(.slug)
+Version:   \(.version)
+Updated:   \((.time.updated / 1000) | strftime("%Y-%m-%d %H:%M:%S"))"
+' "$cache"
+
+printf "\nMessages:\n"
+
+if [ "$scope" = "remote" ]; then
+  curl -fsS "$target/api/session/$sid/message" |
+    jq -r '
+
+      [
+        .[]?
+        | {
+            role: (.info.role // "message"),
+            text: ([.parts[]?
+              | select(.type == "text")
+
+              | select((.synthetic // false) == false)
+              | .text
+            ] | join("\n"))
+          }
+        | select(.text != "")
+      ][-6:][] |
+      "\n── \(.role) ──\n\(.text)"
+
+    ' 2>/dev/null || true
+else
+  printf "Local message preview unavailable without a local opencode server.\n"
+fi

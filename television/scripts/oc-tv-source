@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
+mkdir -p "$cache_dir"
+
+
+remote_url="${OPENCODE_REMOTE_URL:-https://opencode-ui.local.vgerasimov.dev}"
+
+emit() {
+  scope="$1"
+  url="$2"
+  cache="$3"
+
+  python3 - "$scope" "$url" "$cache" <<'PY'
+import json, sys, datetime
+
+scope, url, cache = sys.argv[1:]
+sessions = json.load(open(cache))
+sessions.sort(key=lambda s: s.get("time", {}).get("updated", 0), reverse=True)
+
+for s in sessions:
+    updated_ms = s.get("time", {}).get("updated", 0)
+    updated = datetime.datetime.fromtimestamp(updated_ms / 1000).strftime("%Y-%m-%d %H:%M")
+    directory = s.get("directory", "")
+    title = s.get("title") or "untitled"
+    slug = s.get("slug", "")
+    print(f"󰣖 opencode:{scope} {updated} │ {directory} │ {title} │ {slug} │ {url}")
+PY
+}
+
+local_cache="$cache_dir/local.json"
+remote_cache="$cache_dir/remote.json"
+
+opencode session list --format json > "$local_cache" 2>/dev/null || true
+[ -s "$local_cache" ] && emit local local "$local_cache"
+
+curl -fsS "$remote_url/api/session" > "$remote_cache" 2>/dev/null || true
+
+[ -s "$remote_cache" ] && emit remote "$remote_url" "$remote_cache"
+
