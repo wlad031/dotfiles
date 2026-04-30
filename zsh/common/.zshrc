@@ -1334,3 +1334,12 @@ dotfiles_sysready_failures() {
 if [[ -o interactive ]]; then
   dotfiles_sysready_failures
 fi
+
+export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+
+# homelab-dredge-runtime
+if [ -z "${XDG_RUNTIME_DIR:-}" ]; then
+  export XDG_RUNTIME_DIR="$HOME/.local/state/xdg-runtime"
+fi
+[ -d "$XDG_RUNTIME_DIR" ] || mkdir -p "$XDG_RUNTIME_DIR"
+chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true

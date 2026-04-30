@@ -13,6 +13,7 @@
       "enabled": true
     }
   },
+  "plugin": ["opencode-devcontainers"],
   "agent": {
     "build": {
       "permission": "allow"
