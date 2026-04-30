@@ -33,15 +33,23 @@ command = '''
 item="{}"
 
 if printf "%s" "$item" | grep -q "opencode"; then
-  slug="$(printf "%s" "$item" | awk -F ' │ ' '{print $NF}')"
+  scope="$(printf "%s" "$item" | awk '{print $2}' | cut -d: -f2)"
+  slug="$(printf "%s" "$item" | awk -F ' │ ' '{print $(NF-1)}')"
+  url="$(printf "%s" "$item" | awk -F ' │ ' '{print $NF}')"
 
-  cache="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv-sessions.json"
+  cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
+  cache="$cache_dir/${scope}.json"
 
   sid="$(jq -r --arg slug "$slug" \
     '.[] | select(.slug == $slug) | .id' "$cache" | head -n1)"
 
   title="$(jq -r --arg slug "$slug" \
     '.[] | select(.slug == $slug) | (.title // .slug)' "$cache" | head -n1)"
+
+  if [ -z "$sid" ] || [ "$sid" = "null" ]; then
+    printf "Unable to resolve OpenCode session for slug: %s\n" "$slug" >&2
+    exit 1
+  fi
 
   # sanitize title for tmux
   tmux_name="$(
@@ -76,4 +84,3 @@ fi
 description = "Kill selected tmux session"
 command = "tmux kill-session -t '{strip_ansi|split: :1..|join: }'"
 mode = "fork"
-

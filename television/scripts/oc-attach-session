@@ -1,11 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-url="${OPENCODE_URL:-https://opencode.local.vgerasimov.dev}"
-cache="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv-sessions.json"
-
 line="$(tv opencode-sessions)"
-slug="$(printf '%s' "$line" | awk -F ' │ ' '{print $NF}')"
+
+scope="$(printf '%s' "$line" | awk '{print $2}' | cut -d: -f2)"
+slug="$(printf '%s' "$line" | awk -F ' │ ' '{print $(NF-1)}')"
+target="$(printf '%s' "$line" | awk -F ' │ ' '{print $NF}')"
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
+cache="$cache_dir/${scope}.json"
+
 sid="$(jq -r --arg slug "$slug" '.[] | select(.slug == $slug) | .id' "$cache" | head -n1)"
 
-exec opencode attach "$url" --session "$sid"
+if [ -z "$sid" ] || [ "$sid" = "null" ]; then
+  printf 'Could not resolve session id for slug: %s\n' "$slug" >&2
+  exit 1
+fi
+
+if [ "$scope" = "local" ]; then
+  exec opencode --session "$sid"
+else
+  exec opencode attach "$target" --session "$sid"
+fi
