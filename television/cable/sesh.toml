@@ -35,7 +35,6 @@ item="{}"
 if printf "%s" "$item" | grep -q "opencode"; then
   scope="$(printf "%s" "$item" | awk '{print $2}' | cut -d: -f2)"
   sid="$(printf "%s" "$item" | awk -F ' │ ' '{print $(NF-1)}')"
-  url="$(printf "%s" "$item" | awk -F ' │ ' '{print $NF}')"
 
   cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
   cache="$cache_dir/${scope}.json"
@@ -64,11 +63,7 @@ if printf "%s" "$item" | grep -q "opencode"; then
     if [ "$scope" = "local" ]; then
       tmux new-session -d -s "$tmux_name" /sbin/opencode --session "$sid"
     else
-      if [ -n "${OPENCODE_SERVER_PASSWORD:-}" ]; then
-        tmux new-session -d -s "$tmux_name" /sbin/opencode attach "$url" --session "$sid" --password "$OPENCODE_SERVER_PASSWORD"
-      else
-        tmux new-session -d -s "$tmux_name" /sbin/opencode attach "$url" --session "$sid"
-      fi
+      tmux new-session -d -s "$tmux_name" /sbin/opencode attach "https://opencode.local.vgerasimov.dev" --session "$sid"
     fi
   fi
 

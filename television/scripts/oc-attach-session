@@ -15,5 +15,5 @@ fi
 if [ "$scope" = "local" ]; then
   exec /sbin/opencode --session "$sid"
 else
-  exec /sbin/opencode attach "$target" --session "$sid"
+  exec /sbin/opencode attach "https://opencode.local.vgerasimov.dev" --session "$sid"
 fi
