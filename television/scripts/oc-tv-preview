@@ -6,15 +6,11 @@ line="$*"
 
 
 scope="$(printf '%s' "$line" | awk '{print $2}' | cut -d: -f2)"
-slug="$(printf '%s' "$line" | awk -F ' │ ' '{print $(NF-1)}')"
+sid="$(printf '%s' "$line" | awk -F ' │ ' '{print $(NF-1)}')"
 target="$(printf '%s' "$line" | awk -F ' │ ' '{print $NF}')"
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
 cache="$cache_dir/${scope}.json"
-
-sid="$(
-  jq -r --arg slug "$slug" '.[] | select(.slug == $slug) | .id' "$cache" | head -n1
-)"
 
 jq -r --arg sid "$sid" --arg scope "$scope" --arg target "$target" '
   .[] | select(.id == $sid) |

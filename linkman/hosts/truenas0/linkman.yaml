@@ -1,0 +1,4 @@
+zsh:
+  ~/dotfiles/zsh/hosts/truenas0/.zshrc: ~/.zshrc_host
+  ~/dotfiles/zsh/hosts/truenas0/tools.yaml: ~/tools.host.yaml
+

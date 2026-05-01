@@ -24,3 +24,9 @@ rofi:
 
 cava:
   ~/dotfiles/cava/config: ~/.config/cava/config
+
+opencode:
+  ~/dotfiles/opencode/opencode.local.json: ~/.config/opencode/opencode.json
+  ~/dotfiles/opencode/skills: ~/.config/opencode/skills
+  ~/dotfiles/opencode/prompts: ~/.config/opencode/prompts
+

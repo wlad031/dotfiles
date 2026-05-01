@@ -34,20 +34,17 @@ item="{}"
 
 if printf "%s" "$item" | grep -q "opencode"; then
   scope="$(printf "%s" "$item" | awk '{print $2}' | cut -d: -f2)"
-  slug="$(printf "%s" "$item" | awk -F ' │ ' '{print $(NF-1)}')"
+  sid="$(printf "%s" "$item" | awk -F ' │ ' '{print $(NF-1)}')"
   url="$(printf "%s" "$item" | awk -F ' │ ' '{print $NF}')"
 
   cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
   cache="$cache_dir/${scope}.json"
 
-  sid="$(jq -r --arg slug "$slug" \
-    '.[] | select(.slug == $slug) | .id' "$cache" | head -n1)"
-
-  title="$(jq -r --arg slug "$slug" \
-    '.[] | select(.slug == $slug) | (.title // .slug)' "$cache" | head -n1)"
+  title="$(jq -r --arg sid "$sid" \
+    '.[] | select(.id == $sid) | (.title // .slug // .id)' "$cache" | head -n1)"
 
   if [ -z "$sid" ] || [ "$sid" = "null" ]; then
-    printf "Unable to resolve OpenCode session for slug: %s\n" "$slug" >&2
+    printf "Unable to resolve OpenCode session id from selection\n" >&2
     exit 1
   fi
 
@@ -60,17 +57,19 @@ if printf "%s" "$item" | grep -q "opencode"; then
 
   # fallback if empty
   if [ -z "$tmux_name" ]; then
-    tmux_name="oc-$slug"
-  fi
-
-  if [ "$scope" = "local" ]; then
-    cmd="opencode --session '$sid'"
-  else
-    cmd="opencode attach '$url' --session '$sid'"
+    tmux_name="oc-$sid"
   fi
 
   if ! tmux has-session -t "$tmux_name" 2>/dev/null; then
-    tmux new-session -d -s "$tmux_name" "$cmd"
+    if [ "$scope" = "local" ]; then
+      tmux new-session -d -s "$tmux_name" /sbin/opencode --session "$sid"
+    else
+      if [ -n "${OPENCODE_SERVER_PASSWORD:-}" ]; then
+        tmux new-session -d -s "$tmux_name" /sbin/opencode attach "$url" --session "$sid" --password "$OPENCODE_SERVER_PASSWORD"
+      else
+        tmux new-session -d -s "$tmux_name" /sbin/opencode attach "$url" --session "$sid"
+      fi
+    fi
   fi
 
   tmux switch-client -t "$tmux_name"

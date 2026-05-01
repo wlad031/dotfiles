@@ -1,0 +1,65 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "plan",
+  "share": "disabled",
+  "permission": {
+    "edit": "ask",
+    "bash": "ask"
+  },
+  "plugin": ["opencode-devcontainers"],
+  "agent": {
+    "build": {
+      "permission": "allow"
+    },
+    "orchestrator": {
+      "description": "Delegates work, validates outputs, retries or switches worker models.",
+      "mode": "primary",
+      "model": "openai/gpt-5",
+      "reasoningEffort": "high",
+      "textVerbosity": "low",
+      "temperature": 0.1,
+      "prompt": "{file:./prompts/orchestrator.txt}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "impl-*": "allow",
+          "research-*": "allow",
+          "test-*": "allow"
+        }
+      }
+    },
+
+    "impl-gemini-free": {
+      "mode": "subagent",
+      "hidden": true,
+      "model": "openrouter/google/gemini-3-flash-preview",
+      "temperature": 0.1,
+      "prompt": "{file:./prompts/impl-worker.txt}"
+    },
+    "impl-qwen-free": {
+      "mode": "subagent",
+      "hidden": true,
+      "model": "openrouter/qwen/qwen3-coder:free",
+      "temperature": 0.1,
+      "prompt": "{file:./prompts/impl-worker.txt}"
+    },
+
+    "research-gemini-free": {
+      "mode": "subagent",
+      "hidden": true,
+      "model": "openrouter/google/gemini-3-flash-preview",
+      "temperature": 0.1,
+      "prompt": "{file:./prompts/research-worker.txt}"
+    },
+    "research-qwen-free": {
+      "mode": "subagent",
+      "hidden": true,
+      "model": "openrouter/qwen/qwen3-coder:free",
+      "temperature": 0.1,
+      "prompt": "{file:./prompts/research-worker.txt}"
+    }
+  },
+  "command": {
+  }
+}
+

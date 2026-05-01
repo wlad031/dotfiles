@@ -16,7 +16,9 @@
   "plugin": ["opencode-devcontainers"],
   "agent": {
     "build": {
-      "permission": "allow"
+      "permission": {
+        "*": "allow"
+      }
     },
     "orchestrator": {
       "description": "Delegates work, validates outputs, retries or switches worker models.",

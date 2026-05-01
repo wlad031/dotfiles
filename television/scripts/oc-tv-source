@@ -24,8 +24,9 @@ for s in sessions:
     updated = datetime.datetime.fromtimestamp(updated_ms / 1000).strftime("%Y-%m-%d %H:%M")
     directory = s.get("directory", "")
     title = s.get("title") or "untitled"
+    sid = s.get("id", "")
     slug = s.get("slug", "")
-    print(f"󰣖 opencode:{scope} {updated} │ {directory} │ {title} │ {slug} │ {url}")
+    print(f"󰣖 opencode:{scope} {updated} │ {directory} │ {title} │ {slug} │ {sid} │ {url}")
 PY
 }
 
@@ -38,4 +39,3 @@ opencode session list --format json > "$local_cache" 2>/dev/null || true
 curl -fsS "$remote_url/api/session" > "$remote_cache" 2>/dev/null || true
 
 [ -s "$remote_cache" ] && emit remote "$remote_url" "$remote_cache"
-
