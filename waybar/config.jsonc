@@ -86,6 +86,7 @@
 
     "clock": {
       "locale": "en_GB.utf8",
+      "interval": 1,
       "format": "{:%Y-%m-%d %H:%M:%S}",
       "format-alt": "{:%Y-%m-%d %H:%M:%S}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<span font='monospace 14'>{calendar}</span>"

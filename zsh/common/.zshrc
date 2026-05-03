@@ -187,7 +187,7 @@ ohmyposh_setup() {
 
   if [[ "$installed" = true ]]; then
     if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-      eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/gruvbox.json)"
+      eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/pure.json)"
     fi
   fi
 }
