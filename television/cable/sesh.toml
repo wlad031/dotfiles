@@ -6,7 +6,7 @@ requirements = ["sesh"]
 [source]
 command = [
   "sesh list --icons",
-  "~/.config/television/scripts/oc-tv-source",
+  "~/.config/television/scripts/oc-tv-source | sort -r -k3,4",
 ]
 ansi = true
 output = "{strip_ansi|split: :1..|join: }"
