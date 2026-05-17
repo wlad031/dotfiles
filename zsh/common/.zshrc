@@ -1306,6 +1306,12 @@ sysready_status() {
 source_safe "$HOME/.zshrc_host"
 dotfiles_module_load_all
 
+# Knowledge gateway / OpenCode integration
+export KNOWLEDGE_GATEWAY_URL="http://127.0.0.1:18100"
+if [[ -z "${OPENCODE_SESSION_ID:-}" ]]; then
+  export OPENCODE_SESSION_ID="$(hostname)-$(date +%s)"
+fi
+
 if [[ -f ~/.ssh-agent-env ]]; then
   source ~/.ssh-agent-env
 fi

@@ -7,13 +7,26 @@
     "bash": "ask"
   },
   "mcp": {
+    "knowledge": {
+      "type": "local",
+      "command": [
+        "python",
+        "/home/vgerasimov/Projects/knowledge-memory-stack/knowledge-llm-gateway/app/mcp_server.py",
+        "--transport",
+        "stdio"
+      ],
+      "enabled": true
+    },
     "n8n-llm-gateway": {
       "type": "remote",
       "url": "http://10.10.10.90:18111/mcp",
       "enabled": true
     }
   },
-  "plugin": ["opencode-devcontainers"],
+  "plugin": [
+    "opencode-devcontainers",
+    "opencode-knowledge-hooks"
+  ],
   "agent": {
     "build": {
       "permission": {
