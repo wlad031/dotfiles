@@ -1,6 +1,6 @@
 [terminal.shell]
 program = "wsl"
-args = ["-d", "Ubuntu"]
+args = ["-d", "Ubuntu", "--exec", "tmux", "new-session", "-A", "-s", "main"]
 
 [font]
 size = 12
