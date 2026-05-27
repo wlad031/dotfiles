@@ -21,6 +21,12 @@
       "type": "remote",
       "url": "http://10.10.10.90:18111/mcp",
       "enabled": true
+    },
+    "browserless": {
+      "type": "remote",
+      "enabled": true,
+      "url": "http://10.10.10.90:31001/mcp?token=5bfa3aa20ba6f07e56e3162d527b341c54f1bcc85db5d2c30b3c5b56fffcb55c",
+      "timeout": 20000
     }
   },
   "plugin": [
