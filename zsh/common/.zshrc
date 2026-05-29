@@ -1349,3 +1349,8 @@ if [ -z "${XDG_RUNTIME_DIR:-}" ]; then
 fi
 [ -d "$XDG_RUNTIME_DIR" ] || mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true
+
+# Use TeX Live 2025 (matches Overleaf-style engine setup)
+export PATH="/usr/local/texlive/2025/bin/x86_64-linux:$PATH"
+export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:${MANPATH:-}"
+export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:${INFOPATH:-}"
