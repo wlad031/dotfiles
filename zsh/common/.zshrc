@@ -906,7 +906,7 @@ aerospace_setup() {
       fi
 
       replace_placeholders "$template_file" \
-         "gaps" $gaps                       \
+         "gaps" "$gaps"                       \
          > "$config_file"
 
       log_info "Updated $config_file with:"
