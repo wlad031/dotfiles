@@ -1,5 +1,5 @@
 #rofi -h | grep -F -- -replace
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
 if [ "$ROFI_RETV" == "0" ]; then
   echo -e "Find emoji\n"
