@@ -1,6 +1,7 @@
 require "user.options"
 require "user.keymaps"
 require "user.autocmds"
+require "user.message-logging"
 require "user.lazy-setup"
 require "user.visuals"
 local ok = pcall(require, "user.dynamic")
