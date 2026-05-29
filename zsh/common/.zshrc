@@ -964,8 +964,8 @@ ansible_setup() {
     function __playbook() {
       local playbook="$1"
       shift
-      local args="$@"
-      ansible-playbook "$playbook" --private-key="$ANSIBLE_DEFAULT_PRIVATE_KEY_FILE" "$args"
+      local args=("$@")
+      ansible-playbook "$playbook" --private-key="$ANSIBLE_DEFAULT_PRIVATE_KEY_FILE" "${args[@]}"
     }
 
     alias ave="__vault_edit"
