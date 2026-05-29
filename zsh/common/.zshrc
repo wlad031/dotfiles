@@ -742,8 +742,8 @@ thefuck_setup() {
   fi
   __set_tool_var "thefuck" "$installed"
 
-  eval $(thefuck --alias)
   if [[ "$installed" = true ]]; then
+    eval $(thefuck --alias)
     alias tf='fuck'
   fi
 }
