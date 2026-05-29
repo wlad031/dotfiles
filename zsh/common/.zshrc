@@ -990,7 +990,7 @@ tenv_setup() {
 
   if [[ "$installed" = true ]]; then
     if [[ ! -f "$HOME/.tenv.completion.zsh" ]]; then
-      tenv completion zsh > $HOME/.tenv.completion.zsh
+      tenv completion zsh > "$HOME/.tenv.completion.zsh"
     fi
     source_safe "$HOME/.tenv.completion.zsh"
   fi
