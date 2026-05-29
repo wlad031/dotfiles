@@ -1273,7 +1273,7 @@ sysready_status() {
     [[ -z "$name" ]] && continue
     key=$(__tool_key "$name")
     var="DOTFILES_TOOL_${key}_INSTALLED"
-    value=$(eval "printf '%s' \"\${$var-}\"")
+    value=${(P)var}
     if [[ -z "$value" ]]; then
       value="unknown"
     fi
@@ -1290,7 +1290,7 @@ sysready_status() {
       [[ -z "$name" ]] && continue
       key=$(__tool_key "$name")
       var="DOTFILES_TOOL_${key}_INSTALLED"
-      value=$(eval "printf '%s' \"\${$var-}\"")
+      value=${(P)var}
       if [[ -z "$value" ]]; then
         value="unknown"
       fi
