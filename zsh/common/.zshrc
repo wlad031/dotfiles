@@ -644,7 +644,7 @@ sesh_setup() {
     local session
     session=$(sesh list | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
     [[ -z "$session" ]] && return
-    sesh connect $session
+    sesh connect "$session"
   }
 
   zle -N sesh-sessions
