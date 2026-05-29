@@ -1053,6 +1053,8 @@ notes_setup() {
 
 occ_setup() {
   local nextcloud_container="nextcloud"
+  local installed=false
+
   if ! __cmd_installed docker; then
     __set_tool_var "occ" false
     return
@@ -1061,6 +1063,8 @@ occ_setup() {
     __set_tool_var "occ" false
     return
   fi
+
+  installed=true
   __set_tool_var "occ" true
 
   if [[ "$installed" = true ]]; then
