@@ -18,5 +18,6 @@ return {
     require("languages.jinja").SetupLsp(capabilities)
     require("languages.harper").SetupLsp(capabilities)
     require("languages.clojure").SetupLsp(capabilities)
+    require("languages.latex").SetupLsp(capabilities)
   end,
 }

@@ -10,6 +10,7 @@ return {
 				python = require("languages.python").linters(),
 				json = require("languages.json").linters(),
 				jsonc = require("languages.json").linters(),
+				tex = { "chktex" },
 			}
 
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {

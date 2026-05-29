@@ -23,44 +23,31 @@ return {
         filetype = "jinja",
       }
       -- Setup treesitter
-      local treesitter = require("nvim-treesitter")
-      treesitter.setup()
-      -- Install parsers
-      treesitter.install({
-        "lua",
-        "regex",
-        "html",
-        "java",
-        "scala",
-        "clojure",
-        "python",
-        "bash",
-        "markdown",
-        "xml",
-        "json",
-        "yaml",
-        "markdown_inline",
-        "ledger",
-        "jinja2",
-        "latex",
-        "terraform",
-        "vim",
-        "vimdoc",
-        "query",
-      })
-      -- Enable treesitter highlighting and indentation via FileType autocmd
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "lua", "regex", "html", "java", "scala", "clojure", "python", "bash",
-          "markdown", "xml", "json", "yaml", "markdown_inline", "ledger",
-          "jinja", "latex", "terraform", "vim", "vimdoc", "query",
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = {
+          "lua",
+          "regex",
+          "html",
+          "java",
+          "scala",
+          "clojure",
+          "python",
+          "bash",
+          "markdown",
+          "xml",
+          "json",
+          "yaml",
+          "markdown_inline",
+          "ledger",
+          "jinja2",
+          "latex",
+          "terraform",
+          "vim",
+          "vimdoc",
+          "query",
         },
-        -- callback = function()
-        --   -- Syntax highlighting, provided by Neovim
-        --   vim.treesitter.start()
-        --   -- Indentation, provided by nvim-treesitter
-        --   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        -- end,
+        highlight = { enable = true },
+        indent = { enable = true },
       })
     end,
   },

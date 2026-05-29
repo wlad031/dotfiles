@@ -20,6 +20,7 @@ return {
           go = require("languages.golang").formatters(),
           javascript = require("languages.javascript").formatters(),
           python = require("languages.python").formatters(),
+          tex = { "latexindent" },
           ["*"] = { "codespell" },
           ["_"] = { "trim_whitespace" },
         },
