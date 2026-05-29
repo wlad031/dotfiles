@@ -36,14 +36,14 @@ d1h=${d1h%.*}
 
 display_large_w="2500"
 display_small_w="1450"
-if [[ d1w -gt display_large_w ]]; then
+if [[ "$d1w" -gt "$display_large_w" ]]; then
   echo "yabai: Display 1: large: ${d1w}x${d1h}"
   yabai -m config top_padding    250
   yabai -m config bottom_padding  20
   yabai -m config left_padding   250
   yabai -m config right_padding  250
   yabai -m config window_gap      20
-elif [[ d1w -lt display_small_w ]]; then
+elif [[ "$d1w" -lt "$display_small_w" ]]; then
   echo "yabai: Display 1: small: ${d1w}x${d1h}"
   yabai -m config layout stack
 else
