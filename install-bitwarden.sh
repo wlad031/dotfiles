@@ -36,7 +36,7 @@ main() {
 
     log_info "Running Ansible playbook to install Bitwarden..."
     cd "$dir/ansible"
-    ansible-playbook playbooks/playbook.yml
+    ansible-playbook playbooks/install-bitwarden.yml
 
     log_info "Playbook executed successfully"
 }
