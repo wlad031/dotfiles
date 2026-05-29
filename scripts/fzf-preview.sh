@@ -30,6 +30,6 @@ get_command() {
 file_path="$1"
 mime_type=$(get_mime_type "$file_path")
 command=$(get_command "$mime_type")
-command=${command//\{path\}/$file_path}
+command=${command//\{path\}/$(printf '%q' "$file_path")}
 eval "$command"
 
