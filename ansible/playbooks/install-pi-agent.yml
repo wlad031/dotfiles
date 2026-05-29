@@ -1,0 +1,144 @@
+- name: Install Pi coding agent on localhost
+  hosts: localhost
+  connection: local
+
+  vars:
+    # List of pi extension sources to install
+    # e.g. ["npm:@foo/pi-tools", "git:github.com/bar/my-pi-ext"]
+    pi_extensions: []
+
+    # Core settings
+    pi_npm_package: "@earendil-works/pi-coding-agent"
+    # Set this if you want to force a specific npm prefix. Empty = auto-detect from `npm config get prefix`.
+    pi_npm_prefix: ""
+    pi_npm_prefix_fallback: "{{ ansible_facts['env']['HOME'] }}/.local"
+    pi_node_min_version: "22.19.0"
+    # When true, update an existing Pi install to npm latest version
+    pi_update_existing: true
+
+  tasks:
+    - name: Check that npm is installed (precondition)
+      ansible.builtin.shell:
+        cmd: "command -v npm"
+      register: npm_check
+      changed_when: false
+      failed_when: false
+
+    - name: Fail if npm is not installed
+      ansible.builtin.fail:
+        msg: "npm is required and must be installed before running this playbook."
+      when: npm_check.rc != 0
+
+    - name: Check that node is installed (precondition)
+      ansible.builtin.shell:
+        cmd: "command -v node"
+      register: node_check
+      changed_when: false
+      failed_when: false
+
+    - name: Fail if node is not installed
+      ansible.builtin.fail:
+        msg: "node is required and must be installed before running this playbook."
+      when: node_check.rc != 0
+
+    - name: Check installed node version
+      ansible.builtin.shell:
+        cmd: "node --version"
+      register: node_version_check
+      changed_when: false
+      failed_when: false
+      when: node_check.rc == 0
+
+    - name: Fail if node version is below minimum
+      ansible.builtin.fail:
+        msg: "Node.js {{ node_version_check.stdout | default('unknown') | trim }} is installed, but Pi requires >= {{ pi_node_min_version }}."
+      when: node_check.rc == 0 and (node_version_check.stdout | trim | regex_replace('^v', '') is version(pi_node_min_version, '<'))
+
+    - name: Detect npm global prefix
+      ansible.builtin.command:
+        cmd: "npm config get prefix"
+      register: npm_prefix_check
+      changed_when: false
+      failed_when: false
+
+    - name: Resolve effective npm prefix
+      ansible.builtin.set_fact:
+        pi_npm_prefix_effective: >-
+          {{
+            (pi_npm_prefix | default('') | trim) if (pi_npm_prefix | default('') | trim != '')
+            else
+            ((npm_prefix_check.stdout | default('') | trim)
+              if (npm_prefix_check.rc == 0 and (npm_prefix_check.stdout | default('') | trim != ''))
+              else
+              pi_npm_prefix_fallback)
+          }}
+
+    - name: Resolve pi binary path
+      ansible.builtin.set_fact:
+        pi_binary: "{{ pi_npm_prefix_effective }}/bin/pi"
+
+    - name: Check whether pi is already installed
+      ansible.builtin.stat:
+        path: "{{ pi_binary }}"
+      register: pi_binary_stat
+
+    - name: Read installed Pi metadata from npm
+      ansible.builtin.command:
+        cmd: "npm list -g --depth=0 --prefix {{ pi_npm_prefix_effective }} --json '{{ pi_npm_package }}'"
+      register: pi_npm_list_check
+      changed_when: false
+      failed_when: false
+      when: pi_binary_stat.stat.exists
+
+    - name: Normalize installed Pi version from npm metadata
+      ansible.builtin.set_fact:
+        pi_installed_version: >-
+          {{ (((pi_npm_list_check.stdout | default('') | trim | from_json).dependencies | default({})).get(pi_npm_package, {}).version | default('') | default('') | regex_replace('^v', '')) }}
+      when: pi_binary_stat.stat.exists
+
+    - name: Get latest Pi version from npm
+      ansible.builtin.command:
+        cmd: "npm view {{ pi_npm_package }} version"
+      register: pi_latest_version_check
+      changed_when: false
+      when: (pi_binary_stat.stat.exists and pi_update_existing | bool)
+
+    - name: Fail if unable to determine installed Pi version
+      ansible.builtin.fail:
+        msg: "Failed to detect installed Pi version from npm metadata."
+      when: pi_binary_stat.stat.exists and (pi_installed_version is not defined or (pi_installed_version | trim == ''))
+
+    - name: Fail if unable to determine latest Pi version
+      ansible.builtin.fail:
+        msg: "Failed to fetch latest Pi version from npm, cannot perform update check."
+      when: >
+        pi_binary_stat.stat.exists and pi_update_existing | bool and
+        (pi_latest_version_check.rc != 0 or (pi_latest_version_check.stdout | trim == ''))
+
+    - name: Install Pi (or update to latest when needed)
+      ansible.builtin.command:
+        cmd: "npm install -g --ignore-scripts --no-fund --no-audit --prefix {{ pi_npm_prefix_effective }} {{ pi_npm_package }}"
+      when: >
+        not pi_binary_stat.stat.exists or
+        (pi_update_existing | bool and
+         ((pi_installed_version | trim == '') or
+          (pi_installed_version | trim is version((pi_latest_version_check.stdout | trim), '<'))))
+      register: pi_install
+      changed_when: >
+        not pi_binary_stat.stat.exists or
+        (pi_update_existing | bool and
+         ((pi_installed_version | trim == '') or
+          (pi_installed_version | trim is version((pi_latest_version_check.stdout | trim), '<'))))
+
+    - name: Install configured Pi extensions
+      ansible.builtin.command:
+        cmd: "{{ pi_binary }} install {{ item }}"
+      loop: "{{ pi_extensions }}"
+      loop_control:
+        label: "{{ item }}"
+      when: >
+        pi_extensions | length > 0 and
+        (
+          pi_binary_stat.stat.exists
+          or (pi_install is defined and not pi_install.skipped)
+        )
