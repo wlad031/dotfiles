@@ -327,7 +327,7 @@ rancher_setup() {
   fi
   __set_tool_var "rancher" "$installed"
 
-  if [[installed = true ]]; then
+  if [[ "$installed" = true ]]; then
     export PATH="$PATH:$rancher_dir/bin"
     export RANCHER_DIR="$rancher_dir"
   fi
