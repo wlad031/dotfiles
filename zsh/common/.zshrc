@@ -1318,13 +1318,32 @@ if [[ -z "${OPENCODE_SESSION_ID:-}" ]]; then
   export OPENCODE_SESSION_ID="$(hostname)-$(date +%s)"
 fi
 
+# ssh-agent: keep one reusable per-user agent
 if [[ -f ~/.ssh-agent-env ]]; then
-  source ~/.ssh-agent-env
+  source ~/.ssh-agent-env >/dev/null 2>&1
 fi
-if ! kill -0 "$SSH_AGENT_PID" 2>/dev/null; then
-  ssh-agent > ~/.ssh-agent-env
-  source ~/.ssh-agent-env
+
+if ! kill -0 "${SSH_AGENT_PID:-}" 2>/dev/null; then
+  # Reuse an already running agent if possible
+  existing_pid=$(pgrep -u "$USER" -x ssh-agent | head -n1)
+  if [[ -n "$existing_pid" ]]; then
+    export SSH_AGENT_PID="$existing_pid"
+    export SSH_AUTH_SOCK="$(find /tmp /run/user/$UID -type s -name 'agent.*' 2>/dev/null | head -n1)"
+    {
+      echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;"
+      echo "SSH_AGENT_PID=$SSH_AGENT_PID; export SSH_AGENT_PID;"
+    } > ~/.ssh-agent-env
+  else
+    ssh-agent -s | sed '/^echo Agent pid /d' > ~/.ssh-agent-env
+    source ~/.ssh-agent-env >/dev/null 2>&1
+  fi
 fi
+
+# Clean up stale extra agents (keep current)
+for pid in $(pgrep -u "$USER" -x ssh-agent); do
+  [[ "$pid" = "$SSH_AGENT_PID" ]] && continue
+  kill "$pid" 2>/dev/null || true
+done
 
 ###############################################################################
 # Common aliases
