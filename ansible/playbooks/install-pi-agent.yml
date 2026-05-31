@@ -5,7 +5,8 @@
   vars:
     # List of pi extension sources to install
     # e.g. ["npm:@foo/pi-tools", "git:github.com/bar/my-pi-ext"]
-    pi_extensions: []
+    pi_extensions:
+      - "npm:@a5c-ai/babysitter-pi"
 
     # Core settings
     pi_npm_package: "@earendil-works/pi-coding-agent"

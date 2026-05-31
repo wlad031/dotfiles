@@ -1,5 +1,11 @@
 *.bak
 *.log
 */lazygit/state.yml
+
+# Babysitter (a5c) generated runtime files
+.a5c/
+.a5c/runs/
+.a5c/processes/
+
 Library/Application Support/lazygit/state.yml
 .link_state
