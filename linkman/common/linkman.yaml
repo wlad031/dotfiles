@@ -46,3 +46,13 @@ k9s:
 
 fastfetch:
   ~/dotfiles/fastfetch/custom.jsonc: ~/.config/fastfetch/custom.jsonc
+
+eza:
+  ~/dotfiles/eza:
+    mode: folder
+    dst: ~/.config/eza
+
+pi:
+  ~/dotfiles/pi/agent:
+    mode: folder
+    dst: ~/.pi/agent

@@ -1,0 +1,19 @@
+{
+  "lastChangelogVersion": "0.77.0",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.3-codex-spark",
+  "defaultThinkingLevel": "xhigh",
+  "theme": "gruvbox-dark",
+  "packages": [
+    "npm:@victor-software-house/pi-curated-themes",
+    "npm:pi-web-access",
+    "npm:pi-lens",
+    "npm:@tintinweb/pi-subagents",
+    "npm:pi-ask-user",
+    "npm:pi-btw",
+    "npm:pi-bar",
+    "npm:context-mode",
+    "npm:pi-chrome",
+    "npm:pi-hermes-memory"
+  ]
+}

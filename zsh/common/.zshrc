@@ -222,6 +222,7 @@ eza_setup() {
   __set_tool_var "eza" "$installed"
 
   if [[ "$installed" = true ]]; then
+    export EZA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/eza"
     local eza_default_args="-la --git --git-repos-no-status --icons=auto --time-style=long-iso"
     alias ls="eza $eza_default_args"
     alias tree="eza $eza_default_args --tree"
