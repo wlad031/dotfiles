@@ -1,25 +1,25 @@
 [terminal.shell]
 program = "wsl"
-args = ["-d", "Ubuntu", "--exec", "tmux", "new-session", "-A", "-s", "main"]
+args = ["-d", "Ubuntu", "--exec", "tmux", "new-session", "-A", "-s", "default"]
 
 [font]
-size = 12
+size = 11
 
 [font.normal]
-family = "Hack Nerd Font"
+family = "Hurmit Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "Hack Nerd Font"
+family = "Hurmit Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "Hack Nerd Font"
+family = "Hurmit Nerd Font Mono"
 style = "Regular"
 
 [font.bold_italic]
-family = "Hack Nerd Font"
-style = "Bold"
+family = "Hurmit Nerd Font Mono"
+style = "Bold Italic"
 
 [window]
 opacity = 1.0
@@ -27,7 +27,7 @@ decorations = "Full"
 
 [window.dimensions]
 columns = 200
-lines = 70
+lines = 50
 
 [window.padding]
 x = 2
