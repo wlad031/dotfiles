@@ -1359,8 +1359,14 @@ alias rm='rm -i'
 
 dotfiles_sysready_failures() {
   local sysready="$HOME/dotfiles/utils/sysready"
+  local fail_count
+
   [[ -x "$sysready" ]] || return 0
-  sysready | grep "required" | grep "FAIL"
+
+  fail_count=$(sysready | grep "required" | grep "FAIL" | wc -l)
+  if [[ "$fail_count" -gt 0 ]]; then
+    log_warn "sysready: ${fail_count} required checks failing (run 'sysready' for details)"
+  fi
 }
 
 if [[ -o interactive ]]; then

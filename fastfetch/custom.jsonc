@@ -52,8 +52,15 @@
         },
         {
             "type": "shell",
-            "key": "│ └",
+            "key": "│ ├",
             "keyColor": "yellow"
+        },
+        {
+            "type": "command",
+            "key": "│ └",
+            "keyColor": "yellow",
+            "shell": "bash",
+            "text": "fail=$(sysready | grep 'required' | grep 'FAIL' | wc -l); if [ \"$fail\" -gt 0 ]; then echo \"${fail} required checks failing\"; else echo \"all required checks passing\"; fi"
         },
         {
             "type": "wm",
@@ -139,12 +146,6 @@
             "type": "media",
             "key": "│ └󰝚",
             "keyColor": "cyan"
-        },
-        {
-            "type": "command",
-            "key": "sysready",
-            "shell": "bash",
-            "text" : "sysready | grep 'required' | grep 'FAIL' | wc -l"
         },
         {
             "type": "custom",

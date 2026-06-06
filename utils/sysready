@@ -4,7 +4,7 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: sysready.sh [config.yaml override.yaml ...] [--format json]
+Usage: sysready.sh [config.yaml override.yaml ...] [--format json] [--plain|--ascii|--unicode]
 
 Checks tools defined in a YAML file.
 
@@ -124,12 +124,22 @@ expand_path() {
 check_command() {
   local value="$1"
   local path
+
   path=$(command -v "$value" 2>/dev/null || true)
   if [[ -n "$path" ]]; then
     printf 'ok:%s' "$path"
-  else
-    printf 'fail:%s' "$value"
+    return
   fi
+
+  if [[ "$value" == "bat" ]]; then
+    path=$(command -v batcat 2>/dev/null || true)
+    if [[ -n "$path" ]]; then
+      printf 'ok:%s' "$path"
+      return
+    fi
+  fi
+
+  printf 'fail:%s' "$value"
 }
 
 check_file() {
@@ -776,6 +786,7 @@ run_check() {
 }
 
 format="text"
+plain_table=false
 configs=()
 
 while [[ $# -gt 0 ]]; do
@@ -793,12 +804,26 @@ while [[ $# -gt 0 ]]; do
       format="json"
       shift
       ;;
+    --plain|--ascii)
+      plain_table=true
+      shift
+      ;;
+    --unicode)
+      plain_table=false
+      shift
+      ;;
     *)
       configs+=("$1")
       shift
       ;;
   esac
 done
+
+if [[ "$plain_table" == false ]]; then
+  if [[ "${LC_ALL:-${LANG:-}}" != *UTF-8* && "${LC_CTYPE:-${LANG:-}}" != *UTF-8* ]]; then
+    plain_table=true
+  fi
+fi
 
 if [[ ${#configs[@]} -eq 0 ]]; then
   configs=("$HOME/tools.yaml" "$HOME/tools.host.yaml")
@@ -835,12 +860,63 @@ if ! merge_configs "$merged_config" "$yq_flavor" "${configs[@]}"; then
   exit 2
 fi
 
+declare -A TOOL_SOURCE
+
+declare -A TOOL_SOURCE_CHAIN
+
+detect_tool_sources() {
+  local idx=0
+  local config label tool
+
+  for config in "${configs[@]}"; do
+    if [[ $idx -eq 0 ]]; then
+      label="common"
+    elif [[ $idx -eq 1 ]]; then
+      label="host"
+    else
+      label="config$((idx + 1))"
+    fi
+
+    while IFS= read -r tool; do
+      [[ -z "$tool" ]] && continue
+      if [[ -z "${TOOL_SOURCE_CHAIN[$tool]:-}" ]]; then
+        TOOL_SOURCE_CHAIN[$tool]="$label"
+      elif [[ ",${TOOL_SOURCE_CHAIN[$tool]}," != *",${label},"* ]]; then
+        TOOL_SOURCE_CHAIN[$tool]+=",${label}"
+      fi
+      TOOL_SOURCE[$tool]="$label"
+    done < <(yq -r '.tools // {} | to_entries[] | .key' "$config")
+    idx=$((idx + 1))
+  done
+}
+
+detect_tool_sources
+
 tool_count=0
 installed_count=0
 missing_required=0
 missing_optional=0
+missing_required_common=0
+missing_required_host=0
+missing_required_other=0
+total_common=0
+total_host=0
+total_other=0
 
 tools_json=()
+
+# Text-mode table rendering cache
+declare -a TABLE_TOOL
+declare -a TABLE_STATUS
+declare -a TABLE_SOURCE
+declare -a TABLE_REQUIRED
+declare -a TABLE_DETAILS
+
+table_tool_width=4
+table_status_width=10
+table_source_width=5
+table_required_width=8
+table_details_width=40
 
 current_name=""
 current_command=""
@@ -849,21 +925,185 @@ missing_checks=()
 tool_ok=true
 command_path=""
 
+repeat_char() {
+  local char="$1"
+  local count="$2"
+  local output=""
+  local i
+
+  for ((i = 0; i < count; i++)); do
+    output+="$char"
+  done
+  printf '%s' "$output"
+}
+
+truncate_text() {
+  local text="$1"
+  local max_len="$2"
+
+  if (( ${#text} <= max_len )); then
+    printf '%s' "$text"
+    return
+  fi
+
+  if (( max_len <= 3 )); then
+    printf '%s' "${text:0:max_len}"
+    return
+  fi
+
+  printf '%s…' "${text:0:max_len-1}"
+}
+
+add_table_row() {
+  local name="$1"
+  local status="$2"
+  local source="$3"
+  local required="$4"
+  local details="$5"
+
+  TABLE_TOOL+=("$name")
+  TABLE_STATUS+=("$status")
+  TABLE_SOURCE+=("$source")
+  TABLE_REQUIRED+=("$required")
+  TABLE_DETAILS+=("$details")
+
+  if (( ${#name} > table_tool_width )); then
+    table_tool_width=${#name}
+  fi
+  if (( ${#status} > table_status_width )); then
+    table_status_width=${#status}
+  fi
+  if (( ${#source} > table_source_width )); then
+    table_source_width=${#source}
+  fi
+  if (( ${#required} > table_required_width )); then
+    table_required_width=${#required}
+  fi
+  if (( ${#details} > table_details_width )); then
+    table_details_width=${#details}
+  fi
+}
+
+render_text_table() {
+  local row_count="${#TABLE_TOOL[@]}"
+  if [[ "$row_count" -eq 0 ]]; then
+    return
+  fi
+
+  local max_details_width=80
+  local details_width=$table_details_width
+  if (( details_width > max_details_width )); then
+    details_width=$max_details_width
+  fi
+
+  local h='─'
+  local v='│'
+  local tl='┌'
+  local tr='┐'
+  local ml='├'
+  local mr='┤'
+  local bl='└'
+  local br='┘'
+  local hm='┬'
+  local mm='┼'
+  local bm='┴'
+
+  if [[ "$plain_table" == true ]]; then
+    h='-'
+    v='|'
+    tl='+'
+    tr='+'
+    ml='+'
+    mr='+'
+    bl='+'
+    br='+'
+    hm='+'
+    mm='+'
+    bm='+'
+  fi
+
+  local top_sep="${tl}$(repeat_char "$h" $((table_tool_width + 2)))${hm}$(repeat_char "$h" $((table_status_width + 2)))${hm}$(repeat_char "$h" $((table_source_width + 2)))${hm}$(repeat_char "$h" $((table_required_width + 2)))${hm}$(repeat_char "$h" $((details_width + 2)))${tr}"
+  local header_sep="${ml}$(repeat_char "$h" $((table_tool_width + 2)))${mm}$(repeat_char "$h" $((table_status_width + 2)))${mm}$(repeat_char "$h" $((table_source_width + 2)))${mm}$(repeat_char "$h" $((table_required_width + 2)))${mm}$(repeat_char "$h" $((details_width + 2)))${mr}"
+  local bottom_sep="${bl}$(repeat_char "$h" $((table_tool_width + 2)))${bm}$(repeat_char "$h" $((table_status_width + 2)))${bm}$(repeat_char "$h" $((table_source_width + 2)))${bm}$(repeat_char "$h" $((table_required_width + 2)))${bm}$(repeat_char "$h" $((details_width + 2)))${br}"
+
+  local i
+  local status
+  local source
+  local required
+  local details
+
+  printf '%s\n' "$top_sep"
+  printf '%s %-*s %s %-*s %s %-*s %s %-*s %s %-*s %s\n' \
+    "$v" "$table_tool_width" "Tool" \
+    "$v" "$table_status_width" "Status" \
+    "$v" "$table_source_width" "Source" \
+    "$v" "$table_required_width" "Level" \
+    "$v" "$details_width" "Details" "$v"
+  printf '%s\n' "$header_sep"
+
+  for i in "${!TABLE_TOOL[@]}"; do
+    status="${TABLE_STATUS[$i]}"
+    source="${TABLE_SOURCE[$i]}"
+    required="${TABLE_REQUIRED[$i]}"
+    details="$(truncate_text "${TABLE_DETAILS[$i]}" "$details_width")"
+
+    printf '%s %-*s %s %-*s %s %-*s %s %-*s %s %-*s %s\n' \
+      "$v" "$table_tool_width" "${TABLE_TOOL[$i]}" \
+      "$v" "$table_status_width" "$status" \
+      "$v" "$table_source_width" "$source" \
+      "$v" "$table_required_width" "$required" \
+      "$v" "$details_width" "$details" "$v"
+  done
+
+  printf '%s\n' "$bottom_sep"
+}
+
 finalize_tool() {
   if [[ -z "$current_name" ]]; then
     return
   fi
 
+  local tool_source="${TOOL_SOURCE[$current_name]:-config}"
+  local source_chain="${TOOL_SOURCE_CHAIN[$current_name]:-$tool_source}"
+  local source_label="$source_chain"
+  case "$tool_source" in
+    common)
+      total_common=$((total_common + 1))
+      ;;
+    host)
+      total_host=$((total_host + 1))
+      ;;
+    *)
+      total_other=$((total_other + 1))
+      ;;
+  esac
+
+  local status_text=""
+
   if [[ "$tool_ok" == true ]]; then
     installed_count=$((installed_count + 1))
     status="OK"
+    status_text="OK"
   else
     if [[ "$current_optional" == "true" ]]; then
       missing_optional=$((missing_optional + 1))
       status="FAIL"
+      status_text="WARN"
     else
       missing_required=$((missing_required + 1))
+      case "$tool_source" in
+        common)
+          missing_required_common=$((missing_required_common + 1))
+          ;;
+        host)
+          missing_required_host=$((missing_required_host + 1))
+          ;;
+        *)
+          missing_required_other=$((missing_required_other + 1))
+          ;;
+      esac
       status="FAIL"
+      status_text="FAIL"
     fi
   fi
 
@@ -881,8 +1121,10 @@ finalize_tool() {
       --arg command "$current_command" \
       --argjson required "$required_json" \
       --argjson installed "$tool_ok" \
+      --arg source "$tool_source" \
+      --arg sources "$source_chain" \
       --arg missing "$missing_join" \
-      '{name:$name, command:$command, required:$required, installed:$installed, missing_checks:($missing | split("\n") | map(select(length > 0)))}'
+      '{name:$name, command:$command, required:$required, installed:$installed, source:$source, sources:($sources | split(",") | map(select(length > 0))), missing_checks:($missing | split("\n") | map(select(length > 0))) }'
     )
     tools_json+=("$tool_json")
   else
@@ -898,7 +1140,7 @@ finalize_tool() {
       required_label="required"
     fi
 
-    printf '%-30s %s\t%s\t%s\n' "$current_name" "$status" "$required_label" "$details"
+    add_table_row "$current_name" "$status_text" "$source_label" "$required_label" "$details"
   fi
 }
 
@@ -972,8 +1214,32 @@ if [[ "$format" == "json" ]]; then
     --argjson installed "$installed_count" \
     --argjson missing_required "$missing_required" \
     --argjson missing_optional "$missing_optional" \
+    --argjson missing_required_common "$missing_required_common" \
+    --argjson missing_required_host "$missing_required_host" \
+    --argjson missing_required_other "$missing_required_other" \
+    --argjson total_common "$total_common" \
+    --argjson total_host "$total_host" \
+    --argjson total_other "$total_other" \
     --argjson tools "$tools_array" \
-    '{summary:{total:$total, installed:$installed, missing_required:$missing_required, missing_optional:$missing_optional}, tools:$tools}'
+    '{summary:{total:$total, installed:$installed, missing_required:$missing_required, missing_optional:$missing_optional, by_source:{common:{total:$total_common, missing_required:$missing_required_common}, host:{total:$total_host, missing_required:$missing_required_host}, other:{total:$total_other, missing_required:$missing_required_other}}}, tools:$tools}'
+fi
+
+if [[ "$format" == "text" ]]; then
+  render_text_table
+  echo
+  failure_count=$((missing_required + missing_optional))
+  echo "Summary:"
+  echo "  Total tools:     $installed_count/$total installed"
+  echo "  Failed checks:   $failure_count (required $missing_required, optional $missing_optional)"
+  if [[ "${#configs[@]}" -gt 1 ]]; then
+    echo
+    echo "Common/host summary:"
+    echo "  common: required $missing_required_common/$total_common failed"
+    echo "  host:   required $missing_required_host/$total_host failed"
+    if [[ $total_other -gt 0 ]]; then
+      echo "  other:  required $missing_required_other/$total_other failed"
+    fi
+  fi
 fi
 
 if [[ "$missing_required" -gt 0 ]]; then

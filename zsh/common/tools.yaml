@@ -48,6 +48,7 @@ tools:
         pattern: ".*zsh$"
 
   serpl:
+    optional: true
     checks:
       - type: command
         value: serpl
@@ -75,6 +76,7 @@ tools:
         value: k9s
 
   mediainfo:
+    optional: true
     checks:
       - type: command
         value: mediainfo

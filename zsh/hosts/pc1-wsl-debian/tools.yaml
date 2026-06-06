@@ -75,12 +75,6 @@ tools:
       - type: dir
         value: ~/.config/lazygit
 
-  devmoji:
-    load: true
-    checks:
-      - type: command
-        value: devmoji
-
   neovim:
     load: true
     checks:
@@ -115,18 +109,6 @@ tools:
       - type: dir
         value: ~/.sdkman
 
-  gcloud:
-    load: true
-    checks:
-      - type: dir
-        value: ~/apps/google-cloud-sdk
-
-  coursier:
-    load: true
-    checks:
-      - type: command
-        value: cs
-
   fastfetch:
     load: true
     checks:
@@ -158,14 +140,6 @@ tools:
     checks:
       - type: command
         value: ansible
-
-  tldr:
-    load: true
-    checks:
-      - type: command
-        value: tldr
-      - type: dir
-        value: ~/.config/tealdeer
 
   tenv:
     load: true
