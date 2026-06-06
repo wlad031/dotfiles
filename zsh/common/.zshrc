@@ -1163,18 +1163,6 @@ opencode_setup() {
   fi
 }
 
-ask_sh_setup() {
-  local installed=false
-  if __cmd_installed ask-sh; then
-    installed=true
-  fi
-  __set_tool_var "ask_sh" "$installed"
-
-  if [[ "$installed" = true ]]; then
-    eval "$(ask-sh --init)"
-  fi
-}
-
 neofetch_setup() {
   if [[ "$WELCOME_SCREEN_ENABLED" = false ]]; then
     return
@@ -1355,6 +1343,7 @@ alias ll="ls -la"
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
+alias ask="$HOME/Projects/ask-pi/.venv/bin/ask"
 ###############################################################################
 
 dotfiles_sysready_failures() {

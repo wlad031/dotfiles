@@ -161,13 +161,6 @@ tools:
       - type: file
         value: ~/.config/opencode/opencode.json
 
-  ask:
-    load:
-      setup: ask_sh_setup
-    checks:
-      - type: command
-        value: ask-sh
-
   ghostty:
     checks:
       - type: command
