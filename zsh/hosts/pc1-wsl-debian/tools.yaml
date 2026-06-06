@@ -58,6 +58,8 @@ tools:
     checks:
       - type: command
         value: tmux
+      - type: file
+        value: ~/.tmux.conf
 
   docker:
     load: true
