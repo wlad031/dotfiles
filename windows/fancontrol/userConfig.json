@@ -1,0 +1,377 @@
+﻿{
+    "__VERSION__":  "268",
+    "Sensors":  {
+                    "AdlxWrapperSettings":  {
+                                                "Enabled":  false
+                                            },
+                    "DisabledPlugins":  [
+
+                                        ],
+                    "DisableStorageSensors":  false,
+                    "LibreHardwareMonitorSettings":  {
+                                                         "Controller":  false,
+                                                         "CPU":  true,
+                                                         "EmbeddedEC":  true,
+                                                         "GPU":  true,
+                                                         "Memory":  false,
+                                                         "Motherboard":  true,
+                                                         "PowerMonitor":  false,
+                                                         "PSU":  false,
+                                                         "Storage":  true,
+                                                         "StorageUpdateInterval":  "00:01:00",
+                                                         "ZeroRPMOverride":  false
+                                                     },
+                    "NvAPIWrapperSettings":  {
+                                                 "Enabled":  true,
+                                                 "ZeroRPMOverride":  false
+                                             }
+                },
+    "FanControl":  {
+                       "Controls":  [
+                                        {
+                                            "NickName":  "GPU Fan",
+                                            "Identifier":  "/gpu-amd/5/control/0",
+                                            "IsHidden":  false,
+                                            "Enable":  true,
+                                            "SelectedFanCurve":  {
+                                                                     "Name":  "GPU Hotspot Ultra Quiet Curve"
+                                                                 },
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  3,
+                                            "SelectedCommandStepDown":  15,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "CPU Fan",
+                                            "Identifier":  "/lpc/nct6686d/control/0",
+                                            "IsHidden":  false,
+                                            "Enable":  true,
+                                            "SelectedFanCurve":  {
+                                                                     "Name":  "CPU Ultra Quiet Curve"
+                                                                 },
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  {
+                                                                    "Identifier":  "/lpc/nct6686d/fan/0"
+                                                                },
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  10,
+                                            "SelectedCommandStepUp":  3,
+                                            "SelectedCommandStepDown":  15,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "Pump Fan",
+                                            "Identifier":  "/lpc/nct6686d/control/1",
+                                            "IsHidden":  false,
+                                            "Enable":  true,
+                                            "SelectedFanCurve":  {
+                                                                     "Name":  "Pump Ultra Quiet Curve"
+                                                                 },
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  30,
+                                            "SelectedCommandStepUp":  3,
+                                            "SelectedCommandStepDown":  15,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #1",
+                                            "Identifier":  "/lpc/nct6686d/control/2",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #2",
+                                            "Identifier":  "/lpc/nct6686d/control/3",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #3",
+                                            "Identifier":  "/lpc/nct6686d/control/4",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #4",
+                                            "Identifier":  "/lpc/nct6686d/control/5",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #5",
+                                            "Identifier":  "/lpc/nct6686d/control/6",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        },
+                                        {
+                                            "NickName":  "System Fan #6",
+                                            "Identifier":  "/lpc/nct6686d/control/7",
+                                            "IsHidden":  false,
+                                            "Enable":  false,
+                                            "SelectedFanCurve":  null,
+                                            "SelectedOffset":  0,
+                                            "PairedFanSensor":  null,
+                                            "SelectedStart":  0,
+                                            "SelectedStop":  0,
+                                            "MinimumPercent":  0,
+                                            "SelectedCommandStepUp":  8,
+                                            "SelectedCommandStepDown":  8,
+                                            "ManualControlValue":  50,
+                                            "ManualControl":  false,
+                                            "ForceApply":  false,
+                                            "Calibration":  null
+                                        }
+                                    ],
+                       "CustomSensors":  [
+
+                                         ],
+                       "FanCurves":  [
+                                         {
+                                             "Name":  "CPU Temp Graph 1",
+                                             "IsHidden":  false,
+                                             "CommandMode":  0,
+                                             "SelectedTempSource":  {
+                                                                        "Identifier":  "/gpu-amd/5/temperature/0"
+                                                                    },
+                                             "Points":  [
+                                                            "20,0",
+                                                            "39.3477059148701,8.78400000000002",
+                                                            "49.9863366605129,17.6728888888889",
+                                                            "61.7722707218624,32.6062222222222",
+                                                            "71.2,48.6",
+                                                            "77.4173159360431,71.3617777777778",
+                                                            "80.1291237731677,100"
+                                                        ],
+                                             "MaximumTemperature":  120,
+                                             "MinimumTemperature":  20,
+                                             "MaximumCommand":  100,
+                                             "HysteresisConfig":  {
+                                                                      "ResponseTimeUp":  1,
+                                                                      "ResponseTimeDown":  1,
+                                                                      "HysteresisValueUp":  2,
+                                                                      "HysteresisValueDown":  2,
+                                                                      "IgnoreHysteresisAtLimits":  true
+                                                                  }
+                                         },
+                                         {
+                                             "Name":  "CPU Ultra Quiet Curve",
+                                             "IsHidden":  false,
+                                             "CommandMode":  0,
+                                             "SelectedTempSource":  {
+                                                                        "Identifier":  "/amdcpu/0/temperature/2"
+                                                                    },
+                                             "Points":  [
+                                                            "30,15",
+                                                            "60,20",
+                                                            "75,30",
+                                                            "85,45",
+                                                            "92,70",
+                                                            "96,100"
+                                                        ],
+                                             "MaximumTemperature":  100,
+                                             "MinimumTemperature":  30,
+                                             "MaximumCommand":  100,
+                                             "HysteresisConfig":  {
+                                                                      "ResponseTimeUp":  3,
+                                                                      "ResponseTimeDown":  15,
+                                                                      "HysteresisValueUp":  4,
+                                                                      "HysteresisValueDown":  7,
+                                                                      "IgnoreHysteresisAtLimits":  true
+                                                                  }
+                                         },
+                                         {
+                                             "Name":  "Pump Ultra Quiet Curve",
+                                             "IsHidden":  false,
+                                             "CommandMode":  0,
+                                             "SelectedTempSource":  {
+                                                                        "Identifier":  "/amdcpu/0/temperature/2"
+                                                                    },
+                                             "Points":  [
+                                                            "20,35",
+                                                            "75,40",
+                                                            "88,50",
+                                                            "94,75",
+                                                            "97,100"
+                                                        ],
+                                             "MaximumTemperature":  100,
+                                             "MinimumTemperature":  20,
+                                             "MaximumCommand":  100,
+                                             "HysteresisConfig":  {
+                                                                      "ResponseTimeUp":  3,
+                                                                      "ResponseTimeDown":  15,
+                                                                      "HysteresisValueUp":  4,
+                                                                      "HysteresisValueDown":  7,
+                                                                      "IgnoreHysteresisAtLimits":  true
+                                                                  }
+                                         },
+                                         {
+                                             "Name":  "GPU Hotspot Ultra Quiet Curve",
+                                             "IsHidden":  false,
+                                             "CommandMode":  0,
+                                             "SelectedTempSource":  {
+                                                                        "Identifier":  "/gpu-amd/5/temperature/7"
+                                                                    },
+                                             "Points":  [
+                                                            "35,18",
+                                                            "75,25",
+                                                            "88,40",
+                                                            "98,65",
+                                                            "108,100"
+                                                        ],
+                                             "MaximumTemperature":  110,
+                                             "MinimumTemperature":  35,
+                                             "MaximumCommand":  100,
+                                             "HysteresisConfig":  {
+                                                                      "ResponseTimeUp":  3,
+                                                                      "ResponseTimeDown":  15,
+                                                                      "HysteresisValueUp":  4,
+                                                                      "HysteresisValueDown":  7,
+                                                                      "IgnoreHysteresisAtLimits":  true
+                                                                  }
+                                         }
+                                     ],
+                       "FanSensors":  [
+                                          {
+                                              "Identifier":  "/gpu-amd/5/fan/0",
+                                              "IsHidden":  false,
+                                              "NickName":  "GPU Fan"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/0",
+                                              "IsHidden":  false,
+                                              "NickName":  "CPU Fan"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/1",
+                                              "IsHidden":  false,
+                                              "NickName":  "Pump Fan"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/2",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #1"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/3",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #2"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/4",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #3"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/5",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #4"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/6",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #5"
+                                          },
+                                          {
+                                              "Identifier":  "/lpc/nct6686d/fan/7",
+                                              "IsHidden":  false,
+                                              "NickName":  "System Fan #6"
+                                          }
+                                      ],
+                       "TemperatureSensors":  [
+
+                                              ]
+                   },
+    "MainWindow":  {
+                       "Fahrenheit":  false,
+                       "HideCalibration":  false,
+                       "HideFanSpeedCards":  false,
+                       "HorizontalUIOrientation":  false,
+                       "PrimaryColor":  "#FF607D8B",
+                       "SecondaryColor":  "#FFAEEA00",
+                       "SelectedTheme":  "",
+                       "ShowHiddenCards":  false,
+                       "SyncThemeWithWindows":  true,
+                       "SyncTrayIconColorWithWindows":  true,
+                       "TrayIconColor":  null,
+                       "TrayIcons":  [
+
+                                     ]
+                   }
+}
