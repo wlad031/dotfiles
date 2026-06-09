@@ -103,6 +103,11 @@ tools:
       - type: dir
         value: ~/.config/sesh
 
+  tv:
+    checks:
+      - type: command
+        value: tv
+
   sdkman:
     load: true
     checks:
