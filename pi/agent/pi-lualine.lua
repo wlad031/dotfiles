@@ -24,6 +24,7 @@ return {
         "model",
         { kind = "activity", format = "{value}" },
         "context",
+        "tps",
       },
     },
 
