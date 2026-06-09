@@ -8,11 +8,11 @@ return {
       placement = "top",
       segments = {
         "repo",
-        { kind = "cwd", format = "{value}" },
+        { kind = "cwd", pattern = "{value}", color = "cwd" },
         "branch",
         "dirty",
         "worktree",
-        { kind = "skill", format = "Skill: {value}" },
+        { kind = "skill", pattern = "Skill: {value}", color = "skill" },
       },
     },
 
@@ -22,9 +22,18 @@ return {
       placement = "bottom",
       segments = {
         "model",
-        { kind = "activity", format = "{value}" },
-        "context",
-        "tps",
+        { kind = "activity", pattern = "{value}", color = "activity" },
+        {
+          kind = "context",
+          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          colors = {
+            low = "usageLow",
+            medium = "usageMedium",
+            high = "usageHigh",
+            critical = "usageCritical",
+          },
+        },
+        { kind = "tps", color = "token" },
       },
     },
 
@@ -33,8 +42,26 @@ return {
       separator = " | ",
       placement = "bottom",
       segments = {
-        "codex5h",
-        "codexWeek",
+        {
+          kind = "codex5h",
+          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          colors = {
+            low = "usageLow",
+            medium = "usageMedium",
+            high = "usageHigh",
+            critical = "usageCritical",
+          },
+        },
+        {
+          kind = "codexWeek",
+          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          colors = {
+            low = "usageLow",
+            medium = "usageMedium",
+            high = "usageHigh",
+            critical = "usageCritical",
+          },
+        },
       },
     },
   },
