@@ -1,30 +1,39 @@
 return {
   separator = " | ",
 
-  -- Layout inspired by your Neovim lualine setup:
-  -- line 1: model, thinking, context, codex, branch, dirty, tokens
-  -- line 2: repo, cwd, worktree, skill, activity
   lines = {
+    -- Project / location line above the editor.
     {
       separator = " | ",
-      segments = {
-        "model",
-        "thinking",
-        "context",
-        "codex",
-        "branch",
-        "dirty",
-        "token",
-      },
-    },
-    {
-      separator = " | ",
+      placement = "top",
       segments = {
         "repo",
-        { kind = "cwd", format = "cwd: {value}" },
+        { kind = "cwd", format = "{value}" },
+        "branch",
+        "dirty",
         "worktree",
         { kind = "skill", format = "Skill: {value}" },
-        { kind = "activity", format = "Act: {value}" },
+      },
+    },
+
+    -- Session state line below the editor.
+    {
+      separator = " | ",
+      placement = "bottom",
+      segments = {
+        "model",
+        { kind = "activity", format = "{value}" },
+        "context",
+      },
+    },
+
+    -- Codex quota line below the editor.
+    {
+      separator = " | ",
+      placement = "bottom",
+      segments = {
+        "codex5h",
+        "codexWeek",
       },
     },
   },

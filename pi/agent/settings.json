@@ -1,13 +1,16 @@
 {
   "lastChangelogVersion": "0.78.1",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex-spark",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "theme": "gruvbox-dark",
   "quietStartup": true,
   "extensions": [
     "/home/geras/dotfiles/pi/agent/extensions/pi-lualine"
   ],
+  "pi-lualine": {
+    "config": "$HOME/dotfiles/pi/agent/pi-lualine.lua"
+  },
   "packages": [
     "npm:@victor-software-house/pi-curated-themes",
     "npm:pi-web-access",
