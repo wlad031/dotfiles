@@ -178,3 +178,13 @@ tools:
 
   nslookup:
     fix: "yay -S --noconfirm bind"
+
+  k9s:
+    checks:
+      - type: command
+        value: k9s
+
+  flux9s:
+    checks:
+      - type: command
+        value: k9s

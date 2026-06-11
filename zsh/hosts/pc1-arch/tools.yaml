@@ -198,3 +198,13 @@ tools:
       - type: locale
         value: en_GB.utf8
     fix: "sudoedit /etc/locale.gen (uncomment 'en_GB.UTF-8 UTF-8') && sudo locale-gen"
+
+  k9s:
+    checks:
+      - type: command
+        value: k9s
+
+  flux9s:
+    checks:
+      - type: command
+        value: k9s

@@ -65,15 +65,6 @@ tools:
         value: nslookup
         fix: "sudo apt-get update && sudo apt-get install -y dnsutils"
 
-  k9s:
-    checks:
-      - type: command
-        value: k9s
-
-  flux9s:
-    checks:
-      - type: command
-        value: k9s
 
   mediainfo:
     optional: true
