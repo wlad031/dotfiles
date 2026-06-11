@@ -30,3 +30,8 @@ opencode:
   ~/dotfiles/opencode/skills: ~/.config/opencode/skills
   ~/dotfiles/opencode/prompts: ~/.config/opencode/prompts
 
+k9s:
+  ~/dotfiles/k9s/config.yaml: ~/.config/k9s/config.yaml
+  ~/dotfiles/k9s/aliases.yaml: ~/.config/k9s/aliases.yaml
+  ~/dotfiles/k9s/skins: ~/.config/k9s/skins
+

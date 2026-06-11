@@ -4,3 +4,9 @@ ghostty:
 zsh:
   ~/dotfiles/zsh/hosts/pc1-wsl-debian/.zshrc: ~/.zshrc_host
   ~/dotfiles/zsh/hosts/pc1-wsl-debian/tools.yaml: ~/tools.host.yaml
+
+k9s:
+  ~/dotfiles/k9s/config.yaml: ~/.config/k9s/config.yaml
+  ~/dotfiles/k9s/aliases.yaml: ~/.config/k9s/aliases.yaml
+  ~/dotfiles/k9s/skins: ~/.config/k9s/skins
+
