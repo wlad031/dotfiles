@@ -8,11 +8,21 @@ return {
       placement = "top",
       segments = {
         "repo",
-        { kind = "cwd", pattern = "{value}", color = "cwd" },
+        {
+          kind = "cwd",
+          pattern = "{value}",
+          color = "cwd",
+          maxWidth = 48,
+        },
         "branch",
         "dirty",
         "worktree",
-        { kind = "skill", pattern = "Skill: {value}", color = "skill" },
+        {
+          kind = "skill",
+          pattern = "Skill: {value}",
+          color = "skill",
+          maxWidth = 24,
+        },
       },
     },
 
@@ -22,10 +32,18 @@ return {
       placement = "bottom",
       segments = {
         "model",
-        { kind = "activity", pattern = "{value}", color = "activity" },
+        {
+          kind = "activity",
+          pattern = "{value}",
+          color = "activity",
+          minWidth = 12,
+          maxWidth = 26,
+        },
         {
           kind = "context",
           pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          minWidth = 24,
+          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
@@ -44,7 +62,9 @@ return {
       segments = {
         {
           kind = "codex5h",
-          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space,reverse=true)}",
+          minWidth = 24,
+          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
@@ -54,7 +74,9 @@ return {
         },
         {
           kind = "codexWeek",
-          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space)}",
+          pattern = "{value} {progress(width=8,fill=█,empty=░,open=space,close=space,reverse=true)}",
+          minWidth = 24,
+          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
