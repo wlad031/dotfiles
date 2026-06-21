@@ -1,3 +1,16 @@
+local red_to_green = {
+  { at = 0, color = "#cc241d" },
+  { at = 10, color = "#fb4934" },
+  { at = 20, color = "#d65d0e" },
+  { at = 30, color = "#fe8019" },
+  { at = 40, color = "#d79921" },
+  { at = 50, color = "#fabd2f" },
+  { at = 60, color = "#b8bb26" },
+  { at = 70, color = "#98971a" },
+  { at = 80, color = "#8ec07c" },
+  { at = 90, color = "#689d6a" },
+}
+
 return {
   separator = " | ",
 
@@ -36,7 +49,7 @@ return {
           kind = "activity",
           pattern = "{value}",
           color = "activity",
-          minWidth = 12,
+          minWidth = 26,
           maxWidth = 26,
         },
         {
@@ -50,24 +63,12 @@ return {
             close = "space",
             colors = {
               fill = {
-                stops = {
-                  { at = 0, color = "#8ec07c" },
-                  { at = 10, color = "#98971a" },
-                  { at = 20, color = "#b8bb26" },
-                  { at = 30, color = "#d5c4a1" },
-                  { at = 40, color = "#fabd2f" },
-                  { at = 50, color = "#d79921" },
-                  { at = 60, color = "#fe8019" },
-                  { at = 70, color = "#d65d0e" },
-                  { at = 80, color = "#fb4934" },
-                  { at = 90, color = "#cc241d" },
-                },
+                value = "remaining_percent",
+                stops = red_to_green,
               },
               empty = "#3c3836",
             },
           },
-          minWidth = 24,
-          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
@@ -97,24 +98,11 @@ return {
             colors = {
               fill = {
                 value = "remaining_percent",
-                stops = {
-                  { at = 0, color = "#cc241d" },
-                  { at = 10, color = "#fb4934" },
-                  { at = 20, color = "#d65d0e" },
-                  { at = 30, color = "#fe8019" },
-                  { at = 40, color = "#d79921" },
-                  { at = 50, color = "#fabd2f" },
-                  { at = 60, color = "#d5c4a1" },
-                  { at = 70, color = "#b8bb26" },
-                  { at = 80, color = "#98971a" },
-                  { at = 90, color = "#8ec07c" },
-                },
+                stops = red_to_green,
               },
               empty = "#3c3836",
             },
           },
-          minWidth = 24,
-          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
@@ -135,24 +123,11 @@ return {
             colors = {
               fill = {
                 value = "remaining_percent",
-                stops = {
-                  { at = 0, color = "#cc241d" },
-                  { at = 10, color = "#fb4934" },
-                  { at = 20, color = "#d65d0e" },
-                  { at = 30, color = "#fe8019" },
-                  { at = 40, color = "#d79921" },
-                  { at = 50, color = "#fabd2f" },
-                  { at = 60, color = "#d5c4a1" },
-                  { at = 70, color = "#b8bb26" },
-                  { at = 80, color = "#98971a" },
-                  { at = 90, color = "#8ec07c" },
-                },
+                stops = red_to_green,
               },
               empty = "#3c3836",
             },
           },
-          minWidth = 24,
-          maxWidth = 36,
           colors = {
             low = "usageLow",
             medium = "usageMedium",
