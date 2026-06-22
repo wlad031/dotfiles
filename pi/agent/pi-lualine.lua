@@ -111,6 +111,18 @@ return {
           },
         },
         {
+          kind = "codex5hWindow",
+          pattern = "{value}",
+          color = "usageLow",
+          maxWidth = 14,
+        },
+        {
+          kind = "codex5hReset",
+          pattern = "{value}",
+          color = "usageHigh",
+          maxWidth = 18,
+        },
+        {
           kind = "codexWeek",
           pattern = "{value} {progress}",
           progress = {
@@ -134,6 +146,18 @@ return {
             high = "usageHigh",
             critical = "usageCritical",
           },
+        },
+        {
+          kind = "codexWeekWindow",
+          pattern = "{value}",
+          color = "usageLow",
+          maxWidth = 16,
+        },
+        {
+          kind = "codexWeekReset",
+          pattern = "{value}",
+          color = "usageHigh",
+          maxWidth = 20,
         },
       },
     },
