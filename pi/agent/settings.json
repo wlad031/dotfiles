@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.79.1",
+  "lastChangelogVersion": "0.80.2",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "defaultModel": "gpt-5.3-codex-spark",
   "defaultThinkingLevel": "medium",
   "theme": "gruvbox-dark",
   "quietStartup": true,

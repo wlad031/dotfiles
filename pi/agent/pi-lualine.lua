@@ -111,16 +111,9 @@ return {
           },
         },
         {
-          kind = "codex5hWindow",
-          pattern = "5h window: {value}",
-          color = "usageLow",
-          maxWidth = 14,
-        },
-        {
           kind = "codex5hReset",
           pattern = "Reset: {value}",
           color = "usageHigh",
-          maxWidth = 18,
         },
         {
           kind = "codexWeek",
@@ -148,16 +141,9 @@ return {
           },
         },
         {
-          kind = "codexWeekWindow",
-          pattern = "1wk window: {value}",
-          color = "usageLow",
-          maxWidth = 16,
-        },
-        {
           kind = "codexWeekReset",
           pattern = "Reset: {value}",
           color = "usageHigh",
-          maxWidth = 20,
         },
       },
     },
