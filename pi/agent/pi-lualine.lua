@@ -44,17 +44,17 @@ return {
       separator = " | ",
       placement = "bottom",
       segments = {
-        "model",
+        { kind = "model", pattern = "Model: {value}" },
         {
           kind = "activity",
-          pattern = "{value}",
+          pattern = "Act: {value}",
           color = "activity",
           minWidth = 26,
           maxWidth = 26,
         },
         {
           kind = "context",
-          pattern = "{value} {progress}",
+          pattern = "Ctx: {value} {progress}",
           progress = {
             width = 8,
             fill = "█",
@@ -76,7 +76,7 @@ return {
             critical = "usageCritical",
           },
         },
-        { kind = "tps", color = "token" },
+        { kind = "tps", pattern = "Tok/s: {value}", color = "token" },
       },
     },
 
@@ -87,7 +87,7 @@ return {
       segments = {
         {
           kind = "codex5h",
-          pattern = "{value} {progress}",
+          pattern = "5h {value} {progress}",
           progress = {
             width = 8,
             fill = "█",
@@ -112,19 +112,19 @@ return {
         },
         {
           kind = "codex5hWindow",
-          pattern = "{value}",
+          pattern = "5h window: {value}",
           color = "usageLow",
           maxWidth = 14,
         },
         {
           kind = "codex5hReset",
-          pattern = "{value}",
+          pattern = "Reset: {value}",
           color = "usageHigh",
           maxWidth = 18,
         },
         {
           kind = "codexWeek",
-          pattern = "{value} {progress}",
+          pattern = "1wk {value} {progress}",
           progress = {
             width = 8,
             fill = "█",
@@ -149,13 +149,13 @@ return {
         },
         {
           kind = "codexWeekWindow",
-          pattern = "{value}",
+          pattern = "1wk window: {value}",
           color = "usageLow",
           maxWidth = 16,
         },
         {
           kind = "codexWeekReset",
-          pattern = "{value}",
+          pattern = "Reset: {value}",
           color = "usageHigh",
           maxWidth = 20,
         },
