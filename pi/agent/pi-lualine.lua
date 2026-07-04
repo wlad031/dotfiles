@@ -70,7 +70,7 @@ return {
         {
           kind = "session",
           format = function(ctx)
-            return label("Session", ctx.session_time)
+            return label("Session", ctx.session)
           end,
           color = "session",
           minWidth = 16,
