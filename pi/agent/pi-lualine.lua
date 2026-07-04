@@ -1,3 +1,7 @@
+local function label(name, value)
+  return name .. ": " .. tostring(value or "n/a")
+end
+
 local red_to_green = {
   { at = 0, color = "#cc241d" },
   { at = 10, color = "#fb4934" },
@@ -23,7 +27,9 @@ return {
         "repo",
         {
           kind = "cwd",
-          pattern = "{value}",
+          format = function(ctx)
+            return ctx.cwd
+          end,
           color = "cwd",
           maxWidth = 48,
         },
@@ -32,7 +38,9 @@ return {
         "worktree",
         {
           kind = "skill",
-          pattern = "Skill: {value}",
+          format = function(ctx)
+            return label("Skill", ctx.skill)
+          end,
           color = "skill",
           maxWidth = 24,
         },
@@ -44,13 +52,29 @@ return {
       separator = " | ",
       placement = "bottom",
       segments = {
-        { kind = "model", pattern = "Model: {value}" },
+        {
+          kind = "model",
+          format = function(ctx)
+            return label("Model", ctx.model)
+          end,
+        },
         {
           kind = "activity",
-          pattern = "Act: {value}",
+          format = function(ctx)
+            return label("Act", ctx.activity)
+          end,
           color = "activity",
           minWidth = 26,
           maxWidth = 26,
+        },
+        {
+          kind = "session",
+          format = function(ctx)
+            return label("Session", ctx.session_time)
+          end,
+          color = "session",
+          minWidth = 16,
+          maxWidth = 16,
         },
         {
           kind = "context",
@@ -76,7 +100,13 @@ return {
             critical = "usageCritical",
           },
         },
-        { kind = "tps", pattern = "Tok/s: {value}", color = "token" },
+        {
+          kind = "tps",
+          format = function(ctx)
+            return label("Tok/s", ctx.tps)
+          end,
+          color = "token",
+        },
       },
     },
 
@@ -112,7 +142,10 @@ return {
         },
         {
           kind = "codex5hReset",
-          pattern = "Reset: {value}",
+          resetMode = "time",
+          format = function(ctx)
+            return label("Reset", ctx.value)
+          end,
           color = "usageHigh",
         },
         {
@@ -142,7 +175,10 @@ return {
         },
         {
           kind = "codexWeekReset",
-          pattern = "Reset: {value}",
+          resetMode = "time",
+          format = function(ctx)
+            return label("Reset", ctx.value)
+          end,
           color = "usageHigh",
         },
       },
