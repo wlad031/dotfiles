@@ -1,8 +1,8 @@
 local BAR_WIDTH = 8
-local SEP = " | "
+local SEP = "  │  "
 
-local function label(name, value)
-  return name .. ": " .. tostring(value or "n/a")
+local function fallback(value)
+  return tostring(value or "n/a")
 end
 
 local function join(parts)
@@ -80,39 +80,41 @@ local function tps(value)
   if type(value) ~= "number" then
     return "n/a"
   end
-  return string.format("%.1f", value)
+  return string.format("%.1f/s", value)
 end
 
 local function activity(ctx)
   if ctx.activity_phase ~= "tool" or not ctx.active_tool_name then
-    return ctx.activity_phase or "idle"
+    return "● " .. fallback(ctx.activity_phase or "idle")
   end
 
   local count = type(ctx.active_tool_count) == "number" and ctx.active_tool_count or 1
-  local suffix = count > 1 and (" x" .. count) or ""
-  return "tool: " .. ctx.active_tool_name .. suffix
+  local suffix = count > 1 and (" ×" .. count) or ""
+  return "⚙ " .. ctx.active_tool_name .. suffix
 end
 
 local function git(ctx)
+  local dirty = tonumber(ctx.dirty) or 0
+  local dirty_text = dirty > 0 and ("±" .. dirty) or "✓"
+
   return join({
-    ctx.value,
-    "⎇ " .. tostring(ctx.branch or "no git"),
-    tostring(ctx.dirty or 0),
-    tostring(ctx.worktree or "no git"),
+    "󰜘 " .. fallback(ctx.value),
+    " " .. fallback(ctx.branch or "no git"),
+    dirty_text,
+    "󰌢 " .. fallback(ctx.worktree or "no git"),
   })
 end
 
 local function model(ctx)
-  local context = compact_number(ctx.model_context_window)
-  return label("Model", ctx.value .. " (" .. context .. " context)")
+  return "󰚩 " .. fallback(ctx.value) .. " · " .. compact_number(ctx.model_context_window)
 end
 
 local function context(ctx)
   local used = tonumber(ctx.value)
   return join({
-    "Ctx: " .. percent(used) .. " " .. bar(used),
-    "Tok: ↑" .. compact_number(ctx.token_input) .. "/↓" .. compact_number(ctx.token_output),
-    "Tok/s: " .. tps(ctx.tps_value),
+    "󰾆 " .. percent(used) .. " " .. bar(used),
+    "󰄨 ↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output),
+    "󱎫 " .. tps(ctx.tps_value),
   })
 end
 
@@ -121,15 +123,15 @@ local function quota(label_text, used, reset_time)
     label_text,
     percent(remaining_percent(used)),
     bar(used),
-    "| Reset:",
-    tostring(reset_time or "n/a"),
+    "↺",
+    fallback(reset_time),
   }, " ")
 end
 
 local function codex(ctx)
   return join({
-    quota("5h", ctx.codex_5h_percent, ctx.codex_5h_reset_time),
-    quota("1wk", ctx.codex_week_percent, ctx.codex_week_reset_time),
+    " " .. quota("5h", ctx.codex_5h_percent, ctx.codex_5h_reset_time),
+    quota("1w", ctx.codex_week_percent, ctx.codex_week_reset_time),
   })
 end
 
@@ -150,15 +152,15 @@ return {
         {
           kind = "cwd",
           format = function(ctx)
-            return ctx.value
+            return " " .. ctx.value
           end,
           color = "cwd",
-          maxWidth = 48,
+          maxWidth = 52,
         },
         {
           kind = "skill",
           format = function(ctx)
-            return label("Skill", ctx.value)
+            return "󱜙 " .. fallback(ctx.value)
           end,
           color = "skill",
           maxWidth = 24,
@@ -177,21 +179,19 @@ return {
         },
         {
           kind = "activity",
-          format = function(ctx)
-            return label("Act", activity(ctx))
-          end,
+          format = activity,
           color = "activity",
-          minWidth = 26,
-          maxWidth = 26,
+          minWidth = 16,
+          maxWidth = 24,
         },
         {
           kind = "session",
           format = function(ctx)
-            return label("Session", format_seconds(ctx.session_seconds))
+            return "󱎫 " .. format_seconds(ctx.session_seconds)
           end,
           color = "session",
-          minWidth = 16,
-          maxWidth = 16,
+          minWidth = 10,
+          maxWidth = 14,
         },
         {
           kind = "context",
