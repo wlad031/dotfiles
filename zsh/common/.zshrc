@@ -1344,6 +1344,10 @@ alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
 alias ask="$HOME/Projects/ask-pi/.venv/bin/ask"
+
+# Source the zsh command tracer as a function so it wins over /usr/bin/whatis
+# and can inspect aliases/functions from the current interactive shell.
+source_safe "$HOME/dotfiles/utils/whatis/whatis"
 ###############################################################################
 
 dotfiles_sysready_failures() {
