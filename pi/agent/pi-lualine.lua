@@ -107,7 +107,7 @@ return {
         {
           kind = "model",
           format = function(ctx)
-            return label("Model", ctx.value)
+            return label("Model", ctx.value .. " (" .. ctx.model_context .. " context)")
           end,
         },
         {
@@ -131,7 +131,8 @@ return {
         {
           kind = "context",
           format = function(ctx)
-            return "Ctx: " .. percent(ctx.usage_percent) .. " " .. bar(ctx.usage_percent)
+            local used = tonumber(ctx.value)
+            return "Ctx: " .. percent(used) .. " " .. bar(used)
           end,
           color = "context",
         },
@@ -151,34 +152,22 @@ return {
       placement = "bottom",
       segments = {
         {
-          kind = "codex5h",
+          kind = "codex",
           format = function(ctx)
-            return "5h " .. percent(remaining_percent(ctx.usage_percent)) .. " " .. bar(ctx.usage_percent)
+            return "5h "
+              .. percent(remaining_percent(ctx.codex_5h_percent))
+              .. " "
+              .. bar(ctx.codex_5h_percent)
+              .. " | Reset: "
+              .. tostring(ctx.codex_5h_reset_time or "n/a")
+              .. " | 1wk "
+              .. percent(remaining_percent(ctx.codex_week_percent))
+              .. " "
+              .. bar(ctx.codex_week_percent)
+              .. " | Reset: "
+              .. tostring(ctx.codex_week_reset_time or "n/a")
           end,
           color = "codex",
-        },
-        {
-          kind = "codex5hReset",
-          resetMode = "time",
-          format = function(ctx)
-            return label("Reset", ctx.value)
-          end,
-          color = "usageHigh",
-        },
-        {
-          kind = "codexWeek",
-          format = function(ctx)
-            return "1wk " .. percent(remaining_percent(ctx.usage_percent)) .. " " .. bar(ctx.usage_percent)
-          end,
-          color = "codex",
-        },
-        {
-          kind = "codexWeekReset",
-          resetMode = "time",
-          format = function(ctx)
-            return label("Reset", ctx.value)
-          end,
-          color = "usageHigh",
         },
       },
     },
