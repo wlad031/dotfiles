@@ -2,18 +2,70 @@ local function label(name, value)
   return name .. ": " .. tostring(value or "n/a")
 end
 
-local red_to_green = {
-  { at = 0, color = "#cc241d" },
-  { at = 10, color = "#fb4934" },
-  { at = 20, color = "#d65d0e" },
-  { at = 30, color = "#fe8019" },
-  { at = 40, color = "#d79921" },
-  { at = 50, color = "#fabd2f" },
-  { at = 60, color = "#b8bb26" },
-  { at = 70, color = "#98971a" },
-  { at = 80, color = "#8ec07c" },
-  { at = 90, color = "#689d6a" },
-}
+local function format_seconds(seconds)
+  if type(seconds) ~= "number" then
+    return "n/a"
+  end
+
+  seconds = math.max(0, math.floor(seconds))
+  local days = math.floor(seconds / 86400)
+  local hours = math.floor((seconds % 86400) / 3600)
+  local minutes = math.floor((seconds % 3600) / 60)
+  local secs = seconds % 60
+  local parts = {}
+
+  if days > 0 then
+    parts[#parts + 1] = days .. "d"
+  end
+  if hours > 0 or (days > 0 and (minutes > 0 or secs > 0)) then
+    parts[#parts + 1] = hours .. "h"
+  end
+  if minutes > 0 or (hours > 0 and secs > 0) or (days > 0 and secs > 0) then
+    parts[#parts + 1] = minutes .. "m"
+  end
+  parts[#parts + 1] = secs .. "s"
+
+  return table.concat(parts, " ")
+end
+
+local function percent(value)
+  if type(value) ~= "number" then
+    return "n/a"
+  end
+  return string.format("%.0f%%", value)
+end
+
+local function remaining_percent(used)
+  if type(used) ~= "number" then
+    return nil
+  end
+  return 100 - used
+end
+
+local function bar(used, width)
+  width = width or 8
+  if type(used) ~= "number" then
+    return string.rep("░", width)
+  end
+  local remaining_ratio = math.max(0, math.min(1, remaining_percent(used) / 100))
+  local filled = math.floor(remaining_ratio * width + 0.5)
+  return string.rep("█", filled) .. string.rep("░", width - filled)
+end
+
+local function tps(value)
+  if type(value) ~= "number" then
+    return "n/a"
+  end
+  return string.format("%.1f", value)
+end
+
+local function activity(ctx)
+  if ctx.activity_phase == "tool" and ctx.active_tool_name then
+    local count = type(ctx.active_tool_count) == "number" and ctx.active_tool_count or 1
+    return "tool: " .. ctx.active_tool_name .. (count > 1 and (" x" .. count) or "")
+  end
+  return ctx.activity_phase or "idle"
+end
 
 return {
   separator = " | ",
@@ -61,7 +113,7 @@ return {
         {
           kind = "activity",
           format = function(ctx)
-            return label("Act", ctx.activity)
+            return label("Act", activity(ctx))
           end,
           color = "activity",
           minWidth = 26,
@@ -70,7 +122,7 @@ return {
         {
           kind = "session",
           format = function(ctx)
-            return label("Session", ctx.session)
+            return label("Session", format_seconds(ctx.session_seconds))
           end,
           color = "session",
           minWidth = 16,
@@ -78,32 +130,15 @@ return {
         },
         {
           kind = "context",
-          pattern = "Ctx: {value} {progress}",
-          progress = {
-            width = 8,
-            fill = "█",
-            empty = "░",
-            open = "space",
-            close = "space",
-            colors = {
-              fill = {
-                value = "remaining_percent",
-                stops = red_to_green,
-              },
-              empty = "#3c3836",
-            },
-          },
-          colors = {
-            low = "usageLow",
-            medium = "usageMedium",
-            high = "usageHigh",
-            critical = "usageCritical",
-          },
+          format = function(ctx)
+            return "Ctx: " .. percent(ctx.context_percent) .. " " .. bar(ctx.context_percent)
+          end,
+          color = "context",
         },
         {
           kind = "tps",
           format = function(ctx)
-            return label("Tok/s", ctx.tps)
+            return label("Tok/s", tps(ctx.tps_value))
           end,
           color = "token",
         },
@@ -117,67 +152,31 @@ return {
       segments = {
         {
           kind = "codex5h",
-          pattern = "5h {value} {progress}",
-          progress = {
-            width = 8,
-            fill = "█",
-            empty = "░",
-            open = "space",
-            close = "space",
-            reverse = true,
-            colors = {
-              fill = {
-                value = "remaining_percent",
-                stops = red_to_green,
-              },
-              empty = "#3c3836",
-            },
-          },
-          colors = {
-            low = "usageLow",
-            medium = "usageMedium",
-            high = "usageHigh",
-            critical = "usageCritical",
-          },
+          format = function(ctx)
+            return "5h " .. percent(remaining_percent(ctx.codex_5h_percent)) .. " " .. bar(ctx.codex_5h_percent)
+          end,
+          color = "codex",
         },
         {
           kind = "codex5hReset",
           resetMode = "time",
           format = function(ctx)
-            return label("Reset", ctx.value)
+            return label("Reset", ctx.codex_5h_reset_time)
           end,
           color = "usageHigh",
         },
         {
           kind = "codexWeek",
-          pattern = "1wk {value} {progress}",
-          progress = {
-            width = 8,
-            fill = "█",
-            empty = "░",
-            open = "space",
-            close = "space",
-            reverse = true,
-            colors = {
-              fill = {
-                value = "remaining_percent",
-                stops = red_to_green,
-              },
-              empty = "#3c3836",
-            },
-          },
-          colors = {
-            low = "usageLow",
-            medium = "usageMedium",
-            high = "usageHigh",
-            critical = "usageCritical",
-          },
+          format = function(ctx)
+            return "1wk " .. percent(remaining_percent(ctx.codex_week_percent)) .. " " .. bar(ctx.codex_week_percent)
+          end,
+          color = "codex",
         },
         {
           kind = "codexWeekReset",
           resetMode = "time",
           format = function(ctx)
-            return label("Reset", ctx.value)
+            return label("Reset", ctx.codex_week_reset_time)
           end,
           color = "usageHigh",
         },
