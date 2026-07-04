@@ -80,7 +80,7 @@ return {
         {
           kind = "cwd",
           format = function(ctx)
-            return ctx.cwd
+            return tostring(ctx.value):gsub("^cwd: ", "")
           end,
           color = "cwd",
           maxWidth = 48,
@@ -91,7 +91,7 @@ return {
         {
           kind = "skill",
           format = function(ctx)
-            return label("Skill", ctx.skill)
+            return label("Skill", ctx.value)
           end,
           color = "skill",
           maxWidth = 24,
@@ -107,7 +107,7 @@ return {
         {
           kind = "model",
           format = function(ctx)
-            return label("Model", ctx.model)
+            return label("Model", ctx.value)
           end,
         },
         {
@@ -131,7 +131,7 @@ return {
         {
           kind = "context",
           format = function(ctx)
-            return "Ctx: " .. percent(ctx.context_percent) .. " " .. bar(ctx.context_percent)
+            return "Ctx: " .. percent(ctx.usage_percent) .. " " .. bar(ctx.usage_percent)
           end,
           color = "context",
         },
@@ -153,7 +153,7 @@ return {
         {
           kind = "codex5h",
           format = function(ctx)
-            return "5h " .. percent(remaining_percent(ctx.codex_5h_percent)) .. " " .. bar(ctx.codex_5h_percent)
+            return "5h " .. percent(remaining_percent(ctx.usage_percent)) .. " " .. bar(ctx.usage_percent)
           end,
           color = "codex",
         },
@@ -161,14 +161,14 @@ return {
           kind = "codex5hReset",
           resetMode = "time",
           format = function(ctx)
-            return label("Reset", ctx.codex_5h_reset_time)
+            return label("Reset", ctx.value)
           end,
           color = "usageHigh",
         },
         {
           kind = "codexWeek",
           format = function(ctx)
-            return "1wk " .. percent(remaining_percent(ctx.codex_week_percent)) .. " " .. bar(ctx.codex_week_percent)
+            return "1wk " .. percent(remaining_percent(ctx.usage_percent)) .. " " .. bar(ctx.usage_percent)
           end,
           color = "codex",
         },
@@ -176,7 +176,7 @@ return {
           kind = "codexWeekReset",
           resetMode = "time",
           format = function(ctx)
-            return label("Reset", ctx.codex_week_reset_time)
+            return label("Reset", ctx.value)
           end,
           color = "usageHigh",
         },
