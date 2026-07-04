@@ -1,28 +1,24 @@
 return {
   separator = " | ",
 
-  -- Layout inspired by your Neovim lualine setup:
-  -- line 1: model, thinking, context, codex, branch, dirty, tokens
-  -- line 2: repo, cwd, worktree, skill, activity
+  -- Compact fallback layout using the consolidated pi-lualine segment kinds.
+  -- Personal styling lives in pi-lualine.lua; this file stays simple and portable.
   lines = {
     {
       separator = " | ",
       segments = {
         "model",
         "thinking",
+        { kind = "session", format = "Session: {value}" },
         "context",
         "codex",
-        "branch",
-        "dirty",
-        "token",
+        "git",
       },
     },
     {
       separator = " | ",
       segments = {
-        "repo",
         { kind = "cwd", format = "cwd: {value}" },
-        "worktree",
         { kind = "skill", format = "Skill: {value}" },
         { kind = "activity", format = "Act: {value}" },
       },
