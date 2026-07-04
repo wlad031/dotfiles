@@ -154,16 +154,18 @@ return {
           kind = "context",
           format = function(ctx)
             local used = tonumber(ctx.value)
-            return "Ctx: " .. percent(used) .. " " .. bar(used)
+            return "Ctx: "
+              .. percent(used)
+              .. " "
+              .. bar(used)
+              .. " | Tok: ↑"
+              .. compact_number(ctx.token_input)
+              .. "/↓"
+              .. compact_number(ctx.token_output)
+              .. " | Tok/s: "
+              .. tps(ctx.tps_value)
           end,
           color = "context",
-        },
-        {
-          kind = "tps",
-          format = function(ctx)
-            return label("Tok/s", tps(ctx.tps_value))
-          end,
-          color = "token",
         },
       },
     },
