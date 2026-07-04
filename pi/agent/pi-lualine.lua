@@ -35,6 +35,20 @@ local function percent(value)
   return string.format("%.0f%%", value)
 end
 
+local function compact_number(value)
+  if type(value) ~= "number" then
+    return "n/a"
+  end
+  local abs = math.abs(value)
+  if abs >= 1000000 then
+    return string.format("%.1fM", value / 1000000)
+  end
+  if abs >= 1000 then
+    return string.format("%.1fk", value / 1000)
+  end
+  return tostring(value)
+end
+
 local function remaining_percent(used)
   if type(used) ~= "number" then
     return nil
@@ -76,18 +90,26 @@ return {
       separator = " | ",
       placement = "top",
       segments = {
-        "repo",
+        {
+          kind = "git",
+          format = function(ctx)
+            return table.concat({
+              ctx.value,
+              "⎇ " .. tostring(ctx.branch or "no git"),
+              tostring(ctx.dirty or 0),
+              tostring(ctx.worktree or "no git"),
+            }, " | ")
+          end,
+          color = "branch",
+        },
         {
           kind = "cwd",
           format = function(ctx)
-            return tostring(ctx.value):gsub("^cwd: ", "")
+            return ctx.value
           end,
           color = "cwd",
           maxWidth = 48,
         },
-        "branch",
-        "dirty",
-        "worktree",
         {
           kind = "skill",
           format = function(ctx)
@@ -107,7 +129,7 @@ return {
         {
           kind = "model",
           format = function(ctx)
-            return label("Model", ctx.value .. " (" .. ctx.model_context .. " context)")
+            return label("Model", ctx.value .. " (" .. compact_number(ctx.model_context_window) .. " context)")
           end,
         },
         {
