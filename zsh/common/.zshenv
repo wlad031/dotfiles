@@ -40,11 +40,11 @@ setopt SHARE_HISTORY
 ###############################################################################
 
 ###############################################################################
-add_to_path "$HOME/dotfiles/utils"
 for d in $HOME/dotfiles/utils/*; do
   if [[ -d $d ]]; then
     add_to_path "$d"
   fi
 done
+add_to_path "$HOME/dotfiles/utils"
 
 export PATH

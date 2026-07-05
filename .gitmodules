@@ -10,3 +10,6 @@
 [submodule "pi/agent/extensions/pi-lualine"]
 	path = pi/agent/extensions/pi-lualine
 	url = git@gitea.local.vgerasimov.dev:wlad031/pi-lualine.git
+[submodule "utils/pi-loop"]
+	path = utils/pi-loop
+	url = git@gitea.local.vgerasimov.dev:wlad031/pi-loop.git
