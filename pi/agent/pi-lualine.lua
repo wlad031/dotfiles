@@ -1,6 +1,13 @@
 local BAR_WIDTH = 8
 local SEP = "  │  "
 
+local COL_MODEL = 35
+local COL_ACTIVITY = 24
+local COL_SESSION = 14
+local COL_CONTEXT = 20
+local COL_TOKENS = 18
+local COL_TPS = 12
+
 local function fallback(value)
   return tostring(value or "n/a")
 end
@@ -109,30 +116,49 @@ local function model(ctx)
   return "󰚩 " .. fallback(ctx.value) .. " · " .. compact_number(ctx.model_context_window)
 end
 
-local function context(ctx)
+local function context_usage(ctx)
   local used = tonumber(ctx.value)
-  return join({
-    "󰾆 " .. percent(used) .. " " .. bar(used),
-    "󰄨 ↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output),
-    "󱎫 " .. tps(ctx.tps_value),
-  })
+  return "󰾆 " .. percent(used) .. " " .. bar(used)
 end
 
-local function quota(label_text, used, reset_time)
+local function context_tokens(ctx)
+  return "󰄨 ↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output)
+end
+
+local function context_tps(ctx)
+  return "󱎫 " .. tps(ctx.tps_value)
+end
+
+local function codex_usage(label_text, used)
   return table.concat({
     label_text,
     percent(remaining_percent(used)),
     bar(used),
+  }, " ")
+end
+
+local function codex_reset(label_text, reset_time)
+  return table.concat({
+    label_text,
     "↺",
     fallback(reset_time),
   }, " ")
 end
 
-local function codex(ctx)
-  return join({
-    " " .. quota("5h", ctx.codex_5h_percent, ctx.codex_5h_reset_time),
-    quota("1w", ctx.codex_week_percent, ctx.codex_week_reset_time),
-  })
+local function codex_5h(ctx)
+  return " " .. codex_usage("5h", ctx.codex_5h_percent)
+end
+
+local function codex_1w(ctx)
+  return codex_usage("1w", ctx.codex_week_percent)
+end
+
+local function codex_5h_reset(ctx)
+  return " " .. codex_reset("5h", ctx.codex_5h_reset_time)
+end
+
+local function codex_1w_reset(ctx)
+  return codex_reset("1w", ctx.codex_week_reset_time)
 end
 
 return {
@@ -195,13 +221,15 @@ return {
         {
           kind = "model",
           format = model,
+          minWidth = COL_MODEL + 1,
+          maxWidth = COL_MODEL + 1,
         },
         {
           kind = "activity",
           format = activity,
           color = "activity",
-          minWidth = 16,
-          maxWidth = 24,
+          minWidth = COL_ACTIVITY,
+          maxWidth = COL_ACTIVITY,
         },
         {
           kind = "session",
@@ -209,13 +237,29 @@ return {
             return "󱎫 " .. format_seconds(ctx.session_seconds)
           end,
           color = "session",
-          minWidth = 10,
-          maxWidth = 14,
+          minWidth = COL_SESSION,
+          maxWidth = COL_SESSION,
         },
         {
           kind = "context",
-          format = context,
+          format = context_usage,
           color = "context",
+          minWidth = COL_CONTEXT,
+          maxWidth = COL_CONTEXT,
+        },
+        {
+          kind = "context",
+          format = context_tokens,
+          color = "context",
+          minWidth = COL_TOKENS,
+          maxWidth = COL_TOKENS,
+        },
+        {
+          kind = "context",
+          format = context_tps,
+          color = "context",
+          minWidth = COL_TPS,
+          maxWidth = COL_TPS,
         },
       },
     },
@@ -227,8 +271,39 @@ return {
       segments = {
         {
           kind = "codex",
-          format = codex,
+          format = codex_5h,
           color = "codex",
+          minWidth = COL_MODEL,
+          maxWidth = COL_MODEL,
+        },
+        {
+          kind = "codex",
+          format = codex_1w,
+          color = "codex",
+          minWidth = COL_ACTIVITY,
+          maxWidth = COL_ACTIVITY,
+        },
+      },
+    },
+
+    -- Codex reset line below the editor.
+    {
+      separator = SEP,
+      placement = "bottom",
+      segments = {
+        {
+          kind = "codex",
+          format = codex_5h_reset,
+          color = "codex",
+          minWidth = COL_MODEL,
+          maxWidth = COL_MODEL,
+        },
+        {
+          kind = "codex",
+          format = codex_1w_reset,
+          color = "codex",
+          minWidth = COL_ACTIVITY,
+          maxWidth = COL_ACTIVITY,
         },
       },
     },
