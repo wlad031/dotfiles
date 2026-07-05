@@ -627,7 +627,6 @@ g_setup() {
   __set_tool_var "g" "$installed"
 
   if [[ "$installed" = true ]]; then
-    export GOROOT="$HOME/.go"
     export GOPATH="$HOME/go"
 
     unalias g > /dev/null 2>&1
@@ -1365,8 +1364,6 @@ dotfiles_sysready_failures() {
 if [[ -o interactive ]]; then
   dotfiles_sysready_failures
 fi
-
-export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
 # homelab-dredge-runtime
 if [ -z "${XDG_RUNTIME_DIR:-}" ]; then
