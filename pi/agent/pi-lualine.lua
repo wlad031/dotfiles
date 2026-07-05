@@ -139,16 +139,35 @@ return {
   separator = SEP,
 
   lines = {
-    -- Project / location line above the editor.
+    -- Project / session line above the editor.
     {
       separator = SEP,
       placement = "top",
       segments = {
         {
           kind = "git",
-          format = git,
+          format = function(ctx)
+            return "󰜘 " .. fallback(ctx.value)
+          end,
           color = "branch",
+          maxWidth = 32,
         },
+        {
+          kind = "session_name",
+          format = function(ctx)
+            return "󰆼 " .. fallback(ctx.value)
+          end,
+          color = "session",
+          maxWidth = 48,
+        },
+      },
+    },
+
+    -- Location / skill line above the editor.
+    {
+      separator = SEP,
+      placement = "top",
+      segments = {
         {
           kind = "cwd",
           format = function(ctx)
