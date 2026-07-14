@@ -129,12 +129,28 @@ local function context_tps(ctx)
   return "󱎫 " .. tps(ctx.tps_value)
 end
 
-local function codex_usage(label_text, used)
-  return table.concat({
-    label_text,
-    percent(remaining_percent(used)),
-    bar(used),
-  }, " ")
+local function usage_progress(value_key)
+  return {
+    value = value_key,
+    width = BAR_WIDTH,
+    fill = "█",
+    empty = "░",
+    open = "empty",
+    close = "empty",
+    reverse = true,
+    colors = {
+      fill = {
+        value = value_key,
+        stops = {
+          { at = 0, color = "usageLow" },
+          { at = 50, color = "usageMedium" },
+          { at = 75, color = "usageHigh" },
+          { at = 90, color = "usageCritical" },
+        },
+      },
+      empty = "separators",
+    },
+  }
 end
 
 local function codex_reset(label_text, reset_time)
@@ -143,14 +159,6 @@ local function codex_reset(label_text, reset_time)
     "↺",
     fallback(reset_time),
   }, " ")
-end
-
-local function codex_5h(ctx)
-  return " " .. codex_usage("5h", ctx.codex_5h_percent)
-end
-
-local function codex_1w(ctx)
-  return codex_usage("1w", ctx.codex_week_percent)
 end
 
 local function codex_5h_reset(ctx)
@@ -271,15 +279,15 @@ return {
       segments = {
         {
           kind = "codex",
-          format = codex_5h,
-          color = "codex",
+          pattern = " 5h {toPercent(codex_5h_percent)} {progress}",
+          progress = usage_progress("codex_5h_percent"),
           minWidth = COL_MODEL,
           maxWidth = COL_MODEL,
         },
         {
           kind = "codex",
-          format = codex_1w,
-          color = "codex",
+          pattern = "1w {toPercent(codex_week_percent)} {progress}",
+          progress = usage_progress("codex_week_percent"),
           minWidth = COL_ACTIVITY,
           maxWidth = COL_ACTIVITY,
         },
