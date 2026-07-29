@@ -75,6 +75,12 @@ tools:
       - type: dir
         value: ~/.config/lazygit
 
+  lazydocker:
+    load: true
+    checks:
+      - type: command
+        value: lazydocker
+
   neovim:
     load: true
     checks:

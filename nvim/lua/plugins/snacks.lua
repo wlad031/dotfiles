@@ -140,6 +140,11 @@ Pickers.colorschemes = function()
         picker.preview.state.colorscheme = nil
         vim.schedule(function()
           local new_scheme = item.text
+          -- Catppuccin.nvim v2 renamed the unflavoured colorscheme. The old
+          -- name may still appear in pickers/cache, so persist the new name.
+          if new_scheme == "catppuccin" then
+            new_scheme = "catppuccin-nvim"
+          end
           vim.cmd("colorscheme " .. new_scheme)
 
           local config_path = vim.fn.stdpath("config")

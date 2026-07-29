@@ -1,8 +1,11 @@
 {
-  "lastChangelogVersion": "0.80.3",
+  "lastChangelogVersion": "0.82.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
+  "transport": "sse",
+  "httpIdleTimeoutMs": 120000,
+  "websocketConnectTimeoutMs": 15000,
   "theme": "gruvbox-dark",
   "quietStartup": true,
   "extensions": [
@@ -20,6 +23,7 @@
     "npm:context-mode",
     "npm:pi-chrome",
     "npm:pi-hermes-memory",
-    "npm:pi-paster"
+    "npm:pi-paster",
+    "npm:pi-ticktick"
   ]
 }

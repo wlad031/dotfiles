@@ -29,6 +29,10 @@ path = "~/Projects/homelab"
 startup_command = "~/.config/sesh/homelab.sh"
 
 [[session]]
+name = "truenas0"
+startup_command = "ssh truenas0"
+
+[[session]]
 name = "notes"
 path = "~/notes"
 
