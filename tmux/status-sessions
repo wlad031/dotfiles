@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# Render the bottom tmux status row with sessions sorted by creation time.
+# tmux #{S:...} preserves server order only, so use list-sessions + sort here.
+
+current_session=${1-}
+
+tmux list-sessions -F '#{session_created} #{session_id} #{session_name}' 2>/dev/null |
+  sort -n |
+  while IFS= read -r session_line; do
+    [ -n "$session_line" ] || continue
+
+    rest=${session_line#* }
+    session_id=${rest%% *}
+    session_name=${rest#* }
+
+    if [ "$session_name" = "$current_session" ]; then
+      printf '#[range=session|%s]#[bg=#fabd2f]#[fg=#3c3836]#[nobold]#[noitalics]#[nounderscore]#[bg=#fabd2f]#[fg=#504945]#[bold] 󰆍 %s #[bg=#3c3836]#[fg=#fabd2f]#[nobold]#[noitalics]#[nounderscore]#[norange]'         "$session_id" "$session_name"
+    else
+      printf '#[range=session|%s]#[bg=#504945]#[fg=#3c3836]#[noitalics]#[bg=#504945]#[fg=#ebdbb2] 󰆍 %s #[bg=#3c3836]#[fg=#504945]#[noitalics]#[norange]'         "$session_id" "$session_name"
+    fi
+  done
