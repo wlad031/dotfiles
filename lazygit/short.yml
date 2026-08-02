@@ -1,0 +1,8 @@
+gui:
+   screenMode: half
+   sidePanelWidth: 0.25
+   sidePanels:
+     - [files]
+     - [branches, commits]
+   showCommandLog: false
+   showBottomLine: false
