@@ -262,9 +262,19 @@ customCommands:
     command: >
       git commit -m "[autocommit] $(date +'%Y-%m-%dT%H:%M:%S%z')"
 
-    decription: 'Autocommit'
+    description: 'Autocommit'
     context: 'global'
     prompts:
       - type: 'confirm'
         title: 'Autocommit'
         body: 'Are you sure you want to create an autocommit?'
+  - key: 'G'
+    command: "$HOME/dotfiles/lazygit/pi-commit-current-diff.sh"
+    description: 'Pi: generate commit message and commit'
+    context: 'global'
+    output: terminal
+    loadingText: 'Generating commit message with pi'
+    prompts:
+      - type: 'confirm'
+        title: 'Pi commit current diff'
+        body: 'Generate a commit message with pi from the staged diff and commit? If nothing is staged, all working tree changes will be staged first.'
