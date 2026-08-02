@@ -3,7 +3,8 @@ name: tester
 # QA-oriented validation agent
 description: |-
   Runs focused validation for a scoped implementation and reports pass/fail evidence.
-tools: Read, Grep, Find, Bash
+tools: read, grep, find, bash
+extensions: false
 thinking: medium
 max_turns: 180
 ---

@@ -3,7 +3,8 @@ name: reviewer
 # Independent reviewer
 # Strictly reviews code, no edits
 description: "Independent reviewer for correctness, security, and maintainability."
-tools: Read, Grep, Find, Bash
+tools: read, grep, find, bash
+extensions: false
 thinking: high
 max_turns: 260
 ---

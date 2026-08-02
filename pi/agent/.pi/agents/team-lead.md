@@ -4,7 +4,8 @@ name: team-lead
 description: |-
   Orchestrates a mini engineering crew: coordinates developer, tester, and reviewer agents,
   tracks tasks, and enforces review-before-merge behavior.
-tools: Read, Grep, Find, Bash, Agent, TaskCreate, TaskUpdate, TaskList, TaskGet, SendMessage, Write, Edit
+tools: "read, grep, find, bash, ext:pi-subagents/Agent, ext:pi-subagents/get_subagent_result, ext:pi-subagents/steer_subagent"
+allowed_subagents: developer, tester, reviewer
 thinking: high
 max_turns: 250
 ---

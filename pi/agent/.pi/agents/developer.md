@@ -3,7 +3,8 @@ name: developer
 # Scoped implementer
 description: |-
   Implements one assigned code slice precisely, with minimal, focused edits.
-tools: Read, Grep, Find, Bash, Write, Edit
+tools: read, grep, find, bash, write, edit
+extensions: false
 thinking: medium
 max_turns: 220
 ---

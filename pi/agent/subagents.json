@@ -1,0 +1,7 @@
+{
+  "widgetMode": "all",
+  "fleetView": true,
+  "outputTranscript": true,
+  "fallbackSubagent": "none",
+  "defaultJoinMode": "async"
+}
