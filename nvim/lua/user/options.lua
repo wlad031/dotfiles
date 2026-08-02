@@ -8,6 +8,8 @@ vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
 vim.opt.wrap = false
 vim.opt.colorcolumn = { "80", "100", "120" }
+-- Avoid E325 swap-file ATTENTION prompts exploding inside scheduled picker callbacks.
+vim.opt.shortmess:append("A")
 
 -- Edgy recommended options
 -- https://github.com/folke/edgy.nvim
