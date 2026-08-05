@@ -277,4 +277,4 @@ customCommands:
     prompts:
       - type: 'confirm'
         title: 'Pi commit current diff'
-        body: 'Generate a commit message with pi from the staged diff and commit? If nothing is staged, all working tree changes will be staged first.'
+        body: 'Generate a commit message with pi from staged changes only, then commit them? Unstaged changes will be ignored.'

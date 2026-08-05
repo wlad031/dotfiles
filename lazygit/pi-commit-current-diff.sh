@@ -4,28 +4,8 @@ set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 
-has_staged=false
-if ! git diff --cached --quiet --exit-code; then
-  has_staged=true
-fi
-
-has_worktree=false
-if ! git diff --quiet --exit-code || [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
-  has_worktree=true
-fi
-
-if [[ "$has_staged" == false && "$has_worktree" == false ]]; then
-  echo "No changes to commit."
-  exit 1
-fi
-
-if [[ "$has_staged" == false ]]; then
-  echo "No staged changes found; staging all working tree changes first."
-  git add -A
-fi
-
 if git diff --cached --quiet --exit-code; then
-  echo "No staged changes to commit after staging."
+  echo "No staged changes to commit. Stage the files you want included, then run this again."
   exit 1
 fi
 
@@ -47,8 +27,8 @@ Output ONLY the commit message text:
 - Keep the subject line under 72 characters.
 - Add a blank line plus wrapped body only if it adds useful context.
 PROMPT
-  printf '\nRepository status:\n'
-  git status --short
+  printf '\nStaged files:\n'
+  git diff --cached --name-status
   printf '\nStaged diffstat:\n'
   git diff --cached --stat
   printf '\nStaged diff:\n'
