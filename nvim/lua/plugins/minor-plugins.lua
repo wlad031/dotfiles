@@ -1,9 +1,5 @@
 require "user.keymaps"
 
-local number_toggle = {
-  "sitiom/nvim-numbertoggle"
-}
-
 local todo_comments = {
   "folke/todo-comments.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
@@ -119,7 +115,6 @@ local preview = {
 }
 
 local plugins = {
-  number_toggle,
   todo_comments,
   -- mini_starter,
   indent_blankline,
