@@ -10,7 +10,7 @@
   "quietStartup": true,
   "extensions": [
     "/home/geras/dotfiles/pi/agent/extensions/pi-lualine",
-    "/home/geras/dotfiles/pi/agent/extensions/pi-bat"
+    "/home/geras/dotfiles/pi/agent/extensions/pi-pretty-tools"
   ],
   "pi-lualine": {
     "config": "$HOME/dotfiles/pi/agent/pi-lualine.lua"
