@@ -25,7 +25,6 @@
     "npm:pi-chrome",
     "npm:pi-hermes-memory",
     "npm:pi-paster",
-    "npm:pi-ticktick",
-    "https://github.com/buddingnewinsights/pi-diff"
+    "npm:pi-ticktick"
   ]
 }
