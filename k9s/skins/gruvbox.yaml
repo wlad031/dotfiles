@@ -1,0 +1,103 @@
+# ------------------------
+# Gruvbox Theme for k9s
+# Transparent background: bgColor is set to k9s' terminal-default token.
+# ------------------------
+foreground: &foreground "#ebdbb2"
+muted: &muted "#928374"
+selection: &selection "#504945"
+yellow: &yellow "#fabd2f"
+orange: &orange "#fe8019"
+red: &red "#fb4934"
+green: &green "#b8bb26"
+aqua: &aqua "#8ec07c"
+blue: &blue "#83a598"
+purple: &purple "#d3869b"
+white: &white "#ffffff"
+default: &default default
+
+k9s:
+  body:
+    fgColor: *foreground
+    bgColor: *default
+    logoColor: *blue
+  prompt:
+    fgColor: *foreground
+    bgColor: *default
+    suggestColor: *orange
+  info:
+    fgColor: *purple
+    sectionColor: *foreground
+  help:
+    fgColor: *foreground
+    bgColor: *default
+    keyColor: *purple
+    numKeyColor: *blue
+    sectionColor: *green
+  dialog:
+    fgColor: *foreground
+    bgColor: *default
+    buttonFgColor: *foreground
+    labelFgColor: *orange
+    fieldFgColor: *foreground
+  frame:
+    border:
+      fgColor: *selection
+      focusColor: *foreground
+    menu:
+      fgColor: *foreground
+      keyColor: *purple
+      numKeyColor: *purple
+    crumbs:
+      fgColor: *foreground
+      bgColor: *default
+      activeColor: *blue
+    status:
+      newColor: *aqua
+      modifyColor: *blue
+      addColor: *green
+      pendingColor: *yellow
+      errorColor: *red
+      highlightColor: *orange
+      killColor: *muted
+      completedColor: *muted
+    title:
+      fgColor: *foreground
+      bgColor: *default
+      highlightColor: *orange
+      counterColor: *blue
+      filterColor: *purple
+  views:
+    charts:
+      bgColor: *default
+      defaultDialColors:
+        - *blue
+        - *red
+      defaultChartColors:
+        - *blue
+        - *red
+    table:
+      fgColor: *foreground
+      bgColor: *default
+      cursorFgColor: *white
+      header:
+        fgColor: *foreground
+        bgColor: *default
+        sorterColor: *yellow
+    xray:
+      fgColor: *foreground
+      bgColor: *default
+      cursorColor: *foreground
+      graphicColor: *blue
+      showIcons: false
+    yaml:
+      keyColor: *purple
+      colonColor: *blue
+      valueColor: *foreground
+    logs:
+      fgColor: *foreground
+      bgColor: *default
+      indicator:
+        fgColor: *foreground
+        bgColor: *default
+        toggleOnColor: *default
+        toggleOffColor: *default
