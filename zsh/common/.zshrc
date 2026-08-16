@@ -748,6 +748,25 @@ thefuck_setup() {
   fi
 }
 
+atuin_setup() {
+  local atuin_dir="$HOME/.atuin/bin"
+  local installed=false
+
+  if __cmd_installed atuin; then
+    installed=true
+  elif [[ -x "$atuin_dir/atuin" ]]; then
+    export PATH="$atuin_dir:$PATH"
+    installed=true
+  fi
+  __set_tool_var "atuin" "$installed"
+
+  if [[ "$installed" = true ]]; then
+    # Keep Atuin's default key bindings, including Ctrl-R and Up-arrow.
+    # Tmux popup behavior is controlled by ~/.config/atuin/config.toml.
+    eval "$(atuin init zsh)"
+  fi
+}
+
 fastfetch_setup() {
   if [[ "$WELCOME_SCREEN_ENABLED" = false ]]; then
     return
@@ -1299,6 +1318,27 @@ sysready_status() {
 
 source_safe "$HOME/.zshrc_host"
 dotfiles_module_load_all
+
+__atuin_rebind_keys() {
+  if [[ "${DOTFILES_TOOL_ATUIN_INSTALLED:-false}" != true ]]; then
+    return
+  fi
+
+  # zsh-vi-mode is loaded by Antigen and can override Atuin's default
+  # Ctrl-R/Up bindings. Re-apply them after all dotfiles modules are loaded.
+  bindkey -M emacs '^r' atuin-search 2>/dev/null
+  bindkey -M viins '^r' atuin-search-viins 2>/dev/null
+  bindkey -M vicmd '/' atuin-search 2>/dev/null
+
+  bindkey -M emacs '^[[A' atuin-up-search 2>/dev/null
+  bindkey -M viins '^[[A' atuin-up-search-viins 2>/dev/null
+  bindkey -M vicmd '^[[A' atuin-up-search-vicmd 2>/dev/null
+  bindkey -M emacs '^[OA' atuin-up-search 2>/dev/null
+  bindkey -M viins '^[OA' atuin-up-search-viins 2>/dev/null
+  bindkey -M vicmd '^[OA' atuin-up-search-vicmd 2>/dev/null
+  bindkey -M vicmd 'k' atuin-up-search-vicmd 2>/dev/null
+}
+__atuin_rebind_keys
 
 # Knowledge gateway / OpenCode integration
 export KNOWLEDGE_GATEWAY_URL="http://127.0.0.1:18100"

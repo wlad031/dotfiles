@@ -23,6 +23,12 @@ tools:
       - type: command
         value: tmux
 
+  atuin:
+    load: true
+    checks:
+      - type: command
+        value: atuin
+
   cargo:
     load: true
 

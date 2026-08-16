@@ -13,6 +13,9 @@ tmux:
   ~/dotfiles/tmux/.tmux.conf: ~/.tmux.conf
   ~/dotfiles/sesh: ~/.config/sesh
 
+atuin:
+  ~/dotfiles/atuin/config.toml: ~/.config/atuin/config.toml
+
 bash:
   ~/dotfiles/bash/.bashrc: ~/.bashrc
 

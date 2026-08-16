@@ -1,0 +1,21 @@
+# Atuin shell history configuration
+# https://docs.atuin.sh/main/configuration/config/
+
+# Keep the default fuzzy search behavior explicit.
+search_mode = "fuzzy"
+
+# Enter inserts the selected command into the prompt for review.
+# Press Enter again at the prompt to execute it.
+enter_accept = false
+
+# Sync automatically against the self-hosted homelab Atuin server when logged in.
+sync_address = "https://atuin.local.vgerasimov.dev"
+auto_sync = true
+sync_frequency = "1h"
+
+# Use a tmux popup for Atuin's search UI when inside tmux.
+# Requires tmux >= 3.2; Atuin falls back to normal rendering when unavailable.
+[tmux]
+enabled = true
+width = "80%"
+height = "60%"
