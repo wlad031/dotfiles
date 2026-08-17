@@ -2,11 +2,11 @@ local BAR_WIDTH = 8
 local SEP = "  │  "
 
 local COL_MODEL = 35
+local COL_HALF_MODEL = (COL_MODEL + 1) / 2
 local COL_ACTIVITY = 24
 local COL_SESSION = 14
 local COL_CONTEXT = 20
 local COL_TOKENS = 18
-local COL_TPS = 12
 
 local function fallback(value)
   return tostring(value or "n/a")
@@ -83,13 +83,6 @@ local function bar(used, width)
   return string.rep("█", filled) .. string.rep("░", width - filled)
 end
 
-local function tps(value)
-  if type(value) ~= "number" then
-    return "n/a"
-  end
-  return string.format("%.1f/s", value)
-end
-
 local function activity(ctx)
   if ctx.activity_phase ~= "tool" or not ctx.active_tool_name then
     return "● " .. fallback(ctx.activity_phase or "idle")
@@ -125,10 +118,6 @@ local function context_tokens(ctx)
   return "󰄨 ↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output)
 end
 
-local function context_tps(ctx)
-  return "󱎫 " .. tps(ctx.tps_value)
-end
-
 local function usage_progress(value_key)
   return {
     value = value_key,
@@ -159,10 +148,6 @@ local function codex_reset(label_text, reset_time)
     "↺",
     fallback(reset_time),
   }, " ")
-end
-
-local function codex_5h_reset(ctx)
-  return " " .. codex_reset("5h", ctx.codex_5h_reset_time)
 end
 
 local function codex_1w_reset(ctx)
@@ -263,55 +248,18 @@ return {
           maxWidth = COL_TOKENS,
         },
         {
-          kind = "context",
-          format = context_tps,
-          color = "context",
-          minWidth = COL_TPS,
-          maxWidth = COL_TPS,
-        },
-      },
-    },
-
-    -- Codex quota line below the editor.
-    {
-      separator = SEP,
-      placement = "bottom",
-      segments = {
-        {
-          kind = "codex",
-          pattern = " 5h {toPercent(codex_5h_percent)} {progress}",
-          progress = usage_progress("codex_5h_percent"),
-          minWidth = COL_MODEL,
-          maxWidth = COL_MODEL,
-        },
-        {
           kind = "codex",
           pattern = "1w {toPercent(codex_week_percent)} {progress}",
           progress = usage_progress("codex_week_percent"),
-          minWidth = COL_ACTIVITY,
-          maxWidth = COL_ACTIVITY,
-        },
-      },
-    },
-
-    -- Codex reset line below the editor.
-    {
-      separator = SEP,
-      placement = "bottom",
-      segments = {
-        {
-          kind = "codex",
-          format = codex_5h_reset,
-          color = "codex",
-          minWidth = COL_MODEL,
-          maxWidth = COL_MODEL,
+          minWidth = COL_HALF_MODEL,
+          maxWidth = COL_HALF_MODEL,
         },
         {
           kind = "codex",
           format = codex_1w_reset,
           color = "codex",
-          minWidth = COL_ACTIVITY,
-          maxWidth = COL_ACTIVITY,
+          minWidth = COL_HALF_MODEL,
+          maxWidth = COL_HALF_MODEL,
         },
       },
     },
