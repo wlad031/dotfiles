@@ -19,3 +19,6 @@ sync_frequency = "1h"
 enabled = true
 width = "80%"
 height = "60%"
+
+[ai]
+enabled = true
