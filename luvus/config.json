@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "theme": "terminal",
+  "language": "en",
+  "shell": "default",
+  "sidebar_width": 26,
+  "sidebars": null,
+  "layout": {
+    "col_gap": 1,
+    "row_gap": 0,
+    "show_titles": true,
+    "pane_title_path": false,
+    "agent_title": true,
+    "resume_in_new_workspace": true,
+    "file_open": "readonly",
+    "scrollback_bytes": 10485760,
+    "files_show_hidden": true,
+    "compact_width": 50,
+    "shift_enter": "esc-cr"
+  },
+  "notifications": {
+    "sound_on_done": true,
+    "sound_on_blocked": true
+  },
+  "check_updates": true,
+  "resume_launch_flags": false,
+  "keybindings": {},
+  "prefix": "ctrl+space",
+  "mission_pricing": {},
+  "mission_budget": null,
+  "docks_off": []
+}

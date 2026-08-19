@@ -54,3 +54,5 @@ pi:
   ~/dotfiles/pi/agent:
     mode: folder
     dst: ~/.pi/agent
+luvus:
+  ~/dotfiles/luvus/config.json: ~/.luvus/config.json
