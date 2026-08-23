@@ -25,7 +25,7 @@
   "check_updates": true,
   "resume_launch_flags": false,
   "keybindings": {},
-  "prefix": "ctrl+space",
+  "prefix": "ctrl+g",
   "mission_pricing": {},
   "mission_budget": null,
   "docks_off": []
