@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -u
+
+log="${XDG_CACHE_HOME:-$HOME/.cache}/sesh-command-palette.log"
+mkdir -p "$(dirname "$log")"
+
+resolve_target_pane() {
+  saved="$(tmux show-option -gqv @command_palette_target_pane 2>/dev/null || true)"
+  if [ -n "$saved" ] && tmux display-message -p -t "$saved" '#{pane_id}' >/dev/null 2>&1; then
+    printf '%s' "$saved"
+    return 0
+  fi
+
+  if [ -n "${TV_TMUX_TARGET_PANE:-}" ] && tmux display-message -p -t "$TV_TMUX_TARGET_PANE" '#{pane_id}' >/dev/null 2>&1; then
+    printf '%s' "$TV_TMUX_TARGET_PANE"
+    return 0
+  fi
+
+  if [ -n "${TMUX:-}" ]; then
+    tmux display-message -p '#{pane_id}'
+    return 0
+  fi
+
+  client="$({ tmux list-clients -F '#{client_activity} #{client_name}' 2>/dev/null || true; } | sort -nr | sed -n '1{s/^[0-9]* //;p;}')"
+  [ -n "$client" ] || return 1
+  tmux display-message -p -t "$client" '#{pane_id}'
+}
+
+target="$(resolve_target_pane)" || exit 1
+selection="$(tv --config-file "$HOME/.config/television/config.toml" --cable-dir "$HOME/.config/television/cable" command-palette || true)"
+cmd="${selection##*|}"
+
+printf '%s selection=%q cmd=%q target=%q\n' "$(date -Is)" "$selection" "$cmd" "$target" >> "$log"
+
+case "$cmd" in
+  sesh-new-window)
+    TV_TMUX_TARGET_PANE="$target" "$HOME/.config/sesh/new-window" >> "$log" 2>&1
+    ;;
+  lazygit)
+    cwd="$(tmux display-message -p -t "$target" '#{pane_current_path}')"
+    tmux display-popup -E -w 90% -h 90% -d "$cwd" -T 'Lazygit' lazygit >> "$log" 2>&1
+    ;;
+  "")
+    ;;
+  *)
+    zsh -lc 'eval "$1"' zsh "$cmd" >> "$log" 2>&1
+    ;;
+esac

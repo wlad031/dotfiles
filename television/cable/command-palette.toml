@@ -1,0 +1,26 @@
+[metadata]
+name = "command-palette"
+description = "Pick a command to run from tmux"
+requirements = ["tmux"]
+
+[source]
+command = """
+cat <<'EOF'
+  New sesh window|sesh-new-window
+󰊢  Lazygit|lazygit
+EOF
+"""
+
+# Source entries are "Label|command".
+display = "{split:|:0}"
+output = "{split:|:1}"
+no_sort = true
+
+[ui]
+layout = "portrait"
+preview_panel = { hidden = true }
+status_bar = { hidden = true }
+help_panel = { hidden = true }
+input_bar = { prompt = "󰘳  ", border_type = "rounded" }
+results_panel = { border_type = "rounded" }
+

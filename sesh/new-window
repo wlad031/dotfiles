@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+"""Open a new tmux window using the current window's sesh description."""
+
+from __future__ import annotations
+
+import os
+import pathlib
+import shlex
+import subprocess
+import sys
+import tomllib
+from typing import Any
+
+
+def run(args: list[str], *, check: bool = True) -> str:
+    proc = subprocess.run(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if check and proc.returncode != 0:
+        raise RuntimeError(proc.stderr.strip() or f"command failed: {shlex.join(args)}")
+    return proc.stdout.strip()
+
+
+def tmux(args: list[str], *, check: bool = True) -> str:
+    return run(["tmux", *args], check=check)
+
+
+def expand_path(path: str | None) -> str | None:
+    if not path:
+        return None
+    return os.path.abspath(os.path.expandvars(os.path.expanduser(path)))
+
+
+def window_option(window_id: str, name: str) -> str | None:
+    value = tmux(["show-options", "-wqv", "-t", window_id, name], check=False)
+    return value or None
+
+
+def set_window_option(window_id: str, name: str, value: str | None) -> None:
+    if value:
+        tmux(["set-option", "-wq", "-t", window_id, name, value])
+
+
+def load_sesh_sessions() -> list[dict[str, Any]]:
+    config = pathlib.Path(os.path.expanduser("~/.config/sesh/sesh.toml"))
+    if not config.exists():
+        return []
+    with config.open("rb") as f:
+        data = tomllib.load(f)
+    return data.get("session", []) or []
+
+
+def find_sesh_entry(name: str) -> dict[str, Any] | None:
+    for session in load_sesh_sessions():
+        if session.get("name") == name:
+            return session
+    return None
+
+
+def sesh_root_fallback(cwd: str) -> str:
+    root = run(["sesh", "root"], check=False)
+    return expand_path(root) or cwd
+
+
+def capture_window(window_id: str, default_root: str) -> tuple[str, list[str], int]:
+    layout = tmux(["display-message", "-p", "-t", window_id, "#{window_layout}"])
+    raw_panes = tmux([
+        "list-panes",
+        "-t",
+        window_id,
+        "-F",
+        "#{pane_current_path}\t#{pane_active}",
+    ])
+
+    pane_paths: list[str] = []
+    active_index = 0
+    for index, line in enumerate(raw_panes.splitlines()):
+        path, _, active = line.partition("\t")
+        pane_paths.append(expand_path(path) or default_root)
+        if active == "1":
+            active_index = index
+
+    if not pane_paths:
+        pane_paths = [default_root]
+
+    return layout, pane_paths, active_index
+
+
+def create_window_copy(
+    *,
+    session_id: str,
+    source_window_id: str,
+    window_name: str,
+    root: str,
+) -> tuple[str, str, list[str]]:
+    layout, pane_paths, active_index = capture_window(source_window_id, root)
+
+    new_window = tmux([
+        "new-window",
+        "-d",
+        "-t",
+        f"{session_id}:",
+        "-c",
+        pane_paths[0],
+        "-n",
+        window_name,
+        "-P",
+        "-F",
+        "#{window_id}",
+    ])
+
+    for path in pane_paths[1:]:
+        tmux(["split-window", "-d", "-t", new_window, "-c", path])
+
+    if len(pane_paths) > 1:
+        tmux(["select-layout", "-t", new_window, layout], check=False)
+
+    new_panes = tmux(["list-panes", "-t", new_window, "-F", "#{pane_id}"]).splitlines()
+    if new_panes:
+        tmux(["select-pane", "-t", new_panes[min(active_index, len(new_panes) - 1)]])
+
+    return new_window, layout, pane_paths
+
+
+def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] in {"-h", "--help"}:
+        print("usage: sesh/new-window [tmux-pane-id]")
+        return 0
+
+    target = os.environ.get("TV_TMUX_TARGET_PANE") or (sys.argv[1] if len(sys.argv) > 1 else None)
+    if not target:
+        target = tmux(["display-message", "-p", "#{pane_id}"])
+
+    fields = tmux([
+        "display-message",
+        "-p",
+        "-t",
+        target,
+        "#{session_id}\t#{session_name}\t#{window_id}\t#{pane_current_path}",
+    ]).split("\t", 3)
+    if len(fields) != 4:
+        raise RuntimeError("Unable to resolve target tmux pane context")
+
+    session_id, session_name, window_id, pane_cwd = fields
+
+    remembered_entry = window_option(window_id, "@sesh_entry")
+    remembered_root = window_option(window_id, "@sesh_root")
+    remembered_startup = window_option(window_id, "@sesh_startup")
+
+    entry_name = remembered_entry or session_name
+    config_entry = find_sesh_entry(entry_name) or find_sesh_entry(session_name) or {}
+
+    root = expand_path(remembered_root or config_entry.get("path"))
+    if not root:
+        root = sesh_root_fallback(pane_cwd)
+
+    startup = remembered_startup
+    if startup is None:
+        startup = config_entry.get("startup_command") or ""
+
+    window_name = entry_name or pathlib.Path(root).name or "sesh"
+
+    new_window, layout, pane_paths = create_window_copy(
+        session_id=session_id,
+        source_window_id=window_id,
+        window_name=window_name,
+        root=root,
+    )
+
+    # Remember the sesh description and pane shape on both the source and child
+    # window. Future command-palette invocations keep using the original sesh
+    # even after cd, while the actual pane layout is copied from the current
+    # window each time.
+    panes_value = "\t".join(pane_paths)
+    for wid in (window_id, new_window):
+        set_window_option(wid, "@sesh_entry", entry_name)
+        set_window_option(wid, "@sesh_root", root)
+        set_window_option(wid, "@sesh_startup", startup)
+        set_window_option(wid, "@sesh_layout", layout)
+        set_window_option(wid, "@sesh_panes", panes_value)
+
+    tmux(["select-window", "-t", new_window])
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(f"sesh new-window: {exc}", file=sys.stderr)
+        raise SystemExit(1)
