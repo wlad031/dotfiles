@@ -1,5 +1,12 @@
 return {
   {
+    "wlad031/nvim-pi",
+    url = "git@gitea.local.vgerasimov.dev:wlad031/nvim-pi.git",
+    config = function()
+      require("nvim-pi").setup()
+    end,
+  },
+  {
     "supermaven-inc/supermaven-nvim",
     config = function()
       require("supermaven-nvim").setup({
