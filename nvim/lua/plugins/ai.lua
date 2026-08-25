@@ -21,7 +21,7 @@ return {
         provider = "openai_compatible",
         provider_options = {
           openai_compatible = {
-            model = "mistralai/devstral-small",
+            model = "mistralai/codestral-2508",
             stream = true,
             end_point = "https://openrouter.ai/api/v1/chat/completions",
             api_key = "NVIM_MINUET_OPENAI_API_KEY",
