@@ -8,6 +8,7 @@ command = """
 cat <<'EOF'
   New sesh window|sesh-new-window
 󰊢  Lazygit|lazygit
+󰡨  Lazydocker|lazydocker
 EOF
 """
 
