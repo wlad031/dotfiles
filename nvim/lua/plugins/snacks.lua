@@ -193,10 +193,10 @@ Pickers.commands = function()
   })
 end
 
-local LazyGit = {}
-LazyGit.open = function()
-  Snacks.lazygit.open()
-end
+-- local LazyGit = {}
+-- LazyGit.open = function()
+--   Snacks.lazygit.open()
+-- end
 
 local Explorer = {}
 Explorer.open = function()
@@ -243,7 +243,8 @@ return {
       replace_netrw = true,
     },
     lazygit = {
-      enabled = true,
+      -- enabled = true,
+      enabled = false,
     },
     scroll = {
       enabled = false,
@@ -302,11 +303,11 @@ return {
       desc = "Visual selection or word",
       mode = { "n", "x" },
     },
-    {
-      "<leader>gl",
-      LazyGit.open,
-      desc = "Lazygit: Open",
-    },
+    -- {
+    --   "<leader>gl",
+    --   LazyGit.open,
+    --   desc = "Lazygit: Open",
+    -- },
     -- { "<leader>nn",      Explorer.open,                 desc = "Files: Snacks Explorer" },
     {
       "<leader>ci",
