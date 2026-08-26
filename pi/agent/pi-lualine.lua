@@ -142,18 +142,6 @@ local function usage_progress(value_key)
   }
 end
 
-local function codex_reset(label_text, reset_time)
-  return table.concat({
-    label_text,
-    "↺",
-    fallback(reset_time),
-  }, " ")
-end
-
-local function codex_1w_reset(ctx)
-  return codex_reset("1w", ctx.codex_week_reset_time)
-end
-
 return {
   separator = SEP,
 
@@ -165,17 +153,13 @@ return {
       segments = {
         {
           kind = "git",
-          format = function(ctx)
-            return "󰜘 " .. fallback(ctx.value)
-          end,
+          pattern = "󰜘 {value}",
           color = "branch",
           maxWidth = 32,
         },
         {
           kind = "session_name",
-          format = function(ctx)
-            return "󰆼 " .. fallback(ctx.value)
-          end,
+          pattern = "󰆼 {value}",
           color = "session",
           maxWidth = 48,
         },
@@ -189,17 +173,13 @@ return {
       segments = {
         {
           kind = "cwd",
-          format = function(ctx)
-            return " " .. ctx.value
-          end,
+          pattern = " {value}",
           color = "cwd",
           maxWidth = 52,
         },
         {
           kind = "skill",
-          format = function(ctx)
-            return "󱜙 " .. fallback(ctx.value)
-          end,
+          pattern = "󱜙 {value}",
           color = "skill",
           maxWidth = 24,
         },
@@ -213,53 +193,52 @@ return {
       segments = {
         {
           kind = "model",
-          format = model,
+          pattern = "󰚩 {value} · {compact(model_context_window)}",
           minWidth = COL_MODEL + 1,
           maxWidth = COL_MODEL + 1,
         },
         {
           kind = "activity",
-          format = activity,
+          pattern = "● {value}",
           color = "activity",
           minWidth = COL_ACTIVITY,
           maxWidth = COL_ACTIVITY,
         },
         {
           kind = "session",
-          format = function(ctx)
-            return "󱎫 " .. format_seconds(ctx.session_seconds)
-          end,
+          pattern = "󱎫 {formatSeconds(session_seconds)}",
           color = "session",
           minWidth = COL_SESSION,
           maxWidth = COL_SESSION,
         },
         {
           kind = "context",
-          format = context_usage,
+          pattern = "󰾆 {toPercent(value)} {progress}",
+          progress = usage_progress("value"),
           color = "context",
           minWidth = COL_CONTEXT,
           maxWidth = COL_CONTEXT,
         },
         {
           kind = "context",
-          format = context_tokens,
+          pattern = "󰄨 ↑{compact(token_input)} ↓{compact(token_output)}",
           color = "context",
           minWidth = COL_TOKENS,
           maxWidth = COL_TOKENS,
         },
         {
           kind = "codex",
-          pattern = "1w {toPercent(codex_week_percent)} {progress}",
-          progress = usage_progress("codex_week_percent"),
-          minWidth = COL_HALF_MODEL,
-          maxWidth = COL_HALF_MODEL,
+          pattern = "5h {toPercent(codex_5h_percent)} {progress} ↺ {codex_5h_reset_time}",
+          progress = usage_progress("codex_5h_percent"),
+          minWidth = COL_MODEL,
+          maxWidth = COL_MODEL,
         },
         {
           kind = "codex",
-          format = codex_1w_reset,
-          color = "codex",
-          minWidth = COL_HALF_MODEL,
-          maxWidth = COL_HALF_MODEL,
+          pattern = "1w {toPercent(codex_week_percent)} {progress} ↺ {codex_week_reset_time}",
+          progress = usage_progress("codex_week_percent"),
+          minWidth = COL_MODEL,
+          maxWidth = COL_MODEL,
         },
       },
     },
