@@ -44,6 +44,15 @@ case "$cmd" in
     # immediately after this script exits and tmux closes the picker popup.
     tmux run-shell -b "sleep 0.05; tmux display-popup -E -w 90% -h 90% -d $(printf '%q' "$cwd") -T Lazygit lazygit" >> "$log" 2>&1
     ;;
+  chatgpt-usage*)
+    cwd="$(tmux display-message -p -t "$target" '#{pane_current_path}')"
+    printf '%s chatgpt-usage cwd=%q cmd=%q target=%q\n' "$(date -Is)" "$cwd" "$cmd" "$target" >> "$log"
+    # Reuse the picker popup instead of scheduling a second popup. That avoids
+    # both the black popup/log redirection and tmux leaving the deferred command
+    # text in the active pane.
+    cd "$cwd" 2>/dev/null || true
+    exec zsh -lc "exec $cmd"
+    ;;
   "")
     ;;
   *)
