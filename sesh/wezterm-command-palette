@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -u
+
+# WezTerm-friendly variant of ~/.config/sesh/command-palette.
+# It runs in its own WezTerm tab/pane rather than in a tmux popup, so commands
+# either exec into this terminal or fall back to tmux-only behavior when needed.
+
+selection="$(tv --config-file "$HOME/.config/television/config.toml" --cable-dir "$HOME/.config/television/cable" command-palette || true)"
+cmd="${selection##*|}"
+
+case "$cmd" in
+  "")
+    exit 0
+    ;;
+  sesh-new-window)
+    if [ -n "${TMUX:-}" ]; then
+      exec "$HOME/.config/sesh/new-window"
+    fi
+    printf 'New sesh window is tmux-specific. Use the sesh picker to attach a tmux session first.\n' >&2
+    printf 'Press Enter to close... ' >&2
+    read -r _
+    ;;
+  lazygit|lazydocker|chatgpt-usage*)
+    exec zsh -lc "exec $cmd"
+    ;;
+  *)
+    exec zsh -lc 'eval "$1"' zsh "$cmd"
+    ;;
+esac

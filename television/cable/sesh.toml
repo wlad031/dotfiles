@@ -67,7 +67,11 @@ if printf "%s" "$item" | grep -q "opencode"; then
     fi
   fi
 
-  tmux switch-client -t "$tmux_name"
+  if [ -n "${TMUX:-}" ]; then
+    tmux switch-client -t "$tmux_name"
+  else
+    exec tmux attach-session -t "$tmux_name"
+  fi
 
 else
   sesh connect "$(printf "%s" "$item" | sed 's/^[^ ]* //')"

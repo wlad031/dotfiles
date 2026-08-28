@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -u
+
+# Run the same Television sesh picker used by tmux, but from a WezTerm tab.
+# Keep the tab open on errors so failures are visible instead of flashing closed.
+
+selection="$(tv --config-file "$HOME/.config/television/config.toml" --cable-dir "$HOME/.config/television/cable" sesh-wezterm || true)"
+
+if [ -z "$selection" ]; then
+  exit 0
+fi
+
+exec "$HOME/.config/sesh/wezterm-sesh-connect" "$selection"

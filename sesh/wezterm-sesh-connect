@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+"""Open a sesh entry in the current WezTerm tab without attaching tmux.
+
+This is intentionally tmux-free: it reuses sesh's configured session names,
+paths and startup_command entries, then execs the equivalent shell command in
+this WezTerm tab.
+"""
+
+from __future__ import annotations
+
+import os
+import pathlib
+import re
+import shlex
+import sys
+import tomllib
+
+CONFIG = pathlib.Path(os.path.expanduser("~/.config/sesh/sesh.toml"))
+
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def clean_selection(value: str) -> str:
+    value = ANSI_RE.sub("", value).strip()
+    # sesh --icons output is "<icon> target". Drop the icon column.
+    parts = value.split(maxsplit=1)
+    if len(parts) == 2:
+        return parts[1].strip()
+    return value
+
+
+def expand_path(value: str | None) -> str | None:
+    if not value:
+        return None
+    return os.path.abspath(os.path.expandvars(os.path.expanduser(value)))
+
+
+def load_sessions() -> dict[str, dict[str, str]]:
+    if not CONFIG.exists():
+        return {}
+    with CONFIG.open("rb") as f:
+        data = tomllib.load(f)
+    sessions: dict[str, dict[str, str]] = {}
+    for item in data.get("session", []):
+        name = item.get("name")
+        if name:
+            sessions[name] = item
+    return sessions
+
+
+def shell_exec(cwd: str | None, command: str | None) -> None:
+    pieces: list[str] = []
+    if cwd:
+        pieces.append(f"cd {shlex.quote(cwd)}")
+    if command:
+        # In tmux/sesh, a configured session remains after a startup_command exits.
+        # Do the same in WezTerm: run the startup command, then leave an
+        # interactive shell in the session directory instead of closing the tab.
+        pieces.append(command)
+    pieces.append("exec zsh -l")
+
+    os.execvp("zsh", ["zsh", "-lc", " ; ".join(pieces)])
+
+
+def main() -> int:
+    if len(sys.argv) < 2 or not sys.argv[1].strip():
+        return 0
+
+    target = clean_selection(" ".join(sys.argv[1:]))
+    sessions = load_sessions()
+    entry = sessions.get(target, {})
+
+    cwd = expand_path(entry.get("path"))
+    command = entry.get("startup_command")
+
+    if not cwd and (target.startswith("~/") or target.startswith("/") or target.startswith(".")):
+        cwd = expand_path(target)
+
+    # Configured command-only sessions such as truenas0 should just exec their
+    # startup command. Named sessions without paths open at $HOME, matching the
+    # default interactive-shell behavior well enough for WezTerm.
+    if not cwd:
+        cwd = os.path.expanduser("~")
+
+    shell_exec(cwd, command)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

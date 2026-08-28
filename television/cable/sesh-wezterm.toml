@@ -1,0 +1,12 @@
+[metadata]
+name = "sesh-wezterm"
+description = "Sesh-style session picker for native WezTerm; opens paths/commands without tmux"
+requirements = ["sesh"]
+
+[source]
+command = "sesh list --icons"
+ansi = true
+output = "{strip_ansi|split: :1..|join: }"
+
+[preview]
+command = "sesh preview '{strip_ansi|split: :1..|join: }'"
