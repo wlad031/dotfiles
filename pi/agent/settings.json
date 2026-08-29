@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.3",
+  "lastChangelogVersion": "0.84.4",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
@@ -9,7 +9,6 @@
   "theme": "gruvbox-dark",
   "quietStartup": true,
   "extensions": [
-    "/home/geras/dotfiles/pi/agent/extensions/pi-lualine",
     "/home/geras/dotfiles/pi/agent/extensions/pi-pretty-tools"
   ],
   "pi-lualine": {

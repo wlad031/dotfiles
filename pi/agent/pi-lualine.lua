@@ -1,12 +1,13 @@
-local BAR_WIDTH = 8
-local SEP = "  │  "
+local BAR_WIDTH = 6
+local SEP = " │ "
 
-local COL_MODEL = 35
+local COL_MODEL = 28
 local COL_HALF_MODEL = (COL_MODEL + 1) / 2
-local COL_ACTIVITY = 24
-local COL_SESSION = 14
-local COL_CONTEXT = 20
-local COL_TOKENS = 18
+local COL_CODEX = 30
+local COL_ACTIVITY = 20
+local COL_SESSION = 11
+local COL_CONTEXT = 16
+local COL_TOKENS = 15
 
 local function fallback(value)
   return tostring(value or "n/a")
@@ -115,13 +116,13 @@ local function context_usage(ctx)
 end
 
 local function context_tokens(ctx)
-  return "󰄨 ↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output)
+  return "↑" .. compact_number(ctx.token_input) .. " ↓" .. compact_number(ctx.token_output)
 end
 
-local function usage_progress(value_key)
+local function usage_progress(value_key, width)
   return {
     value = value_key,
-    width = BAR_WIDTH,
+    width = width or BAR_WIDTH,
     fill = "█",
     empty = "░",
     open = "empty",
@@ -155,13 +156,13 @@ return {
           kind = "git",
           pattern = "󰜘 {value}",
           color = "branch",
-          maxWidth = 32,
+          maxWidth = 28,
         },
         {
           kind = "session_name",
           pattern = "󰆼 {value}",
           color = "session",
-          maxWidth = 48,
+          maxWidth = 40,
         },
       },
     },
@@ -175,13 +176,13 @@ return {
           kind = "cwd",
           pattern = " {value}",
           color = "cwd",
-          maxWidth = 52,
+          maxWidth = 44,
         },
         {
           kind = "skill",
           pattern = "󱜙 {value}",
           color = "skill",
-          maxWidth = 24,
+          maxWidth = 18,
         },
       },
     },
@@ -206,14 +207,14 @@ return {
         },
         {
           kind = "session",
-          pattern = "󱎫 {formatSeconds(session_seconds)}",
+          pattern = "{formatSeconds(session_seconds)}",
           color = "session",
           minWidth = COL_SESSION,
           maxWidth = COL_SESSION,
         },
         {
           kind = "context",
-          pattern = "󰾆 {toPercent(value)} {progress}",
+          pattern = "󰾆 {toPercent(value)}{progress}",
           progress = usage_progress("value"),
           color = "context",
           minWidth = COL_CONTEXT,
@@ -221,24 +222,24 @@ return {
         },
         {
           kind = "context",
-          pattern = "󰄨 ↑{compact(token_input)} ↓{compact(token_output)}",
+          pattern = "↑{compact(token_input)} ↓{compact(token_output)}",
           color = "context",
           minWidth = COL_TOKENS,
           maxWidth = COL_TOKENS,
         },
         {
           kind = "codex",
-          pattern = "5h {toPercent(codex_5h_percent)} {progress} ↺ {codex_5h_reset_time}",
-          progress = usage_progress("codex_5h_percent"),
-          minWidth = COL_MODEL,
-          maxWidth = COL_MODEL,
+          pattern = "5h {toPercent(codex_5h_percent)}{progress}↺{codex_5h_reset_time}",
+          progress = usage_progress("codex_5h_percent", 4),
+          minWidth = COL_CODEX,
+          maxWidth = COL_CODEX,
         },
         {
           kind = "codex",
-          pattern = "1w {toPercent(codex_week_percent)} {progress} ↺ {codex_week_reset_time}",
-          progress = usage_progress("codex_week_percent"),
-          minWidth = COL_MODEL,
-          maxWidth = COL_MODEL,
+          pattern = "1w {toPercent(codex_week_percent)}{progress}↺{codex_week_reset_time}",
+          progress = usage_progress("codex_week_percent", 4),
+          minWidth = COL_CODEX,
+          maxWidth = COL_CODEX,
         },
       },
     },
