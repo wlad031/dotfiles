@@ -1401,19 +1401,17 @@ chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true
 
 if __cmd_installed dredge; then
   function __dredge() {
+    if ! __cmd_installed dredge-tui; then
+      print -u2 "warning: dredge-tui is not installed; falling back to dredge"
+      command dredge "$@"
+      return
+    fi
+
     if [[ $# -eq 0 ]]; then
-      if __cmd_installed dredge-tui; then
-        dredge-tui
-      else
-        command dredge
-      fi
+      dredge-tui
     elif [[ "$1" == "ls" || "$1" == "list" ]]; then
-      if __cmd_installed dredge-tui; then
-        shift
-        dredge-tui ls "$@"
-      else
-        command dredge "$@"
-      fi
+      shift
+      dredge-tui ls "$@"
     else
       command dredge "$@"
     fi
