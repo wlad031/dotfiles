@@ -4,7 +4,6 @@ set -euo pipefail
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/opencode-tv"
 mkdir -p "$cache_dir"
 
-
 remote_url="${OPENCODE_REMOTE_URL:-https://opencode-ui.local.vgerasimov.dev}"
 
 emit() {
