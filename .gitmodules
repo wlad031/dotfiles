@@ -4,9 +4,6 @@
 [submodule "utils/whatis"]
 	path = utils/whatis
 	url = git@gitea.local.vgerasimov.dev:wlad031/whatis.git
-[submodule "utils/linkman"]
-	path = utils/linkman
-	url = git@gitea.local.vgerasimov.dev:wlad031/linkman.git
 [submodule "pi/agent/extensions/pi-lualine"]
 	path = pi/agent/extensions/pi-lualine
 	url = git@gitea.local.vgerasimov.dev:wlad031/pi-lualine.git
