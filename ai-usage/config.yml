@@ -1,0 +1,10 @@
+watch_interval: 1m
+
+providers:
+ - name: ChatGPT
+   type: chatgpt
+   auth_file: ~/.pi/agent/auth.json
+
+ - name: OpenRouter
+   type: openrouter
+   api_key_env: AI_USAGE_OPENROUTER_API_KEY
