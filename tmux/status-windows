@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+# Render a flat tmux status row with every window from every session.
+# The built-in #{W:...} formatter only sees the current session, so use
+# list-windows -a and tmux user ranges to keep entries clickable.
+
+current_window=${1-}
+
+escape_tmux_text() {
+  # Escape literal # so window/session names cannot be interpreted as tmux
+  # format strings when this script is expanded in status-format.
+  printf '%s' "$1" | sed 's/#/##/g'
+}
+
+tmux list-windows -a -F '#{session_created} #{window_index} #{window_id} #{session_name}:#{window_index} #{session_name}:#{window_index}:#{window_name}' 2>/dev/null |
+  sort -n -k1,1 -k2,2 |
+  while IFS= read -r window_line; do
+    [ -n "$window_line" ] || continue
+
+    rest=${window_line#* }
+    rest=${rest#* }
+    window_id=${rest%% *}
+    rest=${rest#* }
+    target=${rest%% *}
+    label=${rest#* }
+    label=$(escape_tmux_text "$label")
+
+    if [ "$window_id" = "$current_window" ]; then
+      printf '#[range=user|w%s]#[bg=#fabd2f]#[fg=#3c3836]#[bold] %s #[norange]' \
+        "$window_id" "$label"
+    else
+      printf '#[range=user|w%s]#[bg=#504945]#[fg=#ebdbb2] %s #[norange]' \
+        "$window_id" "$label"
+    fi
+  done
