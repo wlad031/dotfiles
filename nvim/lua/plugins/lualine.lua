@@ -43,11 +43,12 @@ return {
             sections = { "error", "warn", "info", "hint" },
 
             diagnostics_color = {
-              -- Same values as the general color option can be used here.
-              error = "DiagnosticError", -- Changes diagnostics' error color.
-              warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-              info = "DiagnosticInfo", -- Changes diagnostics' info color.
-              hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+              -- Keep severity colors, but force the same rectangular background
+              -- as the surrounding statusline section.
+              error = { fg = "#fb4934", bg = "#504945" },
+              warn = { fg = "#fabd2f", bg = "#504945" },
+              info = { fg = "#83a598", bg = "#504945" },
+              hint = { fg = "#b8bb26", bg = "#504945" },
             },
             symbols = { error = "E", warn = "W", info = "I", hint = "H" },
             colored = true, -- Displays diagnostics status in color if set to true.
@@ -133,6 +134,8 @@ return {
         options = {
           theme = "auto",
           icons_enabled = true,
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
         },
         extensions = extensions,
         sections = sections,
