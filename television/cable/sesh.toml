@@ -4,23 +4,14 @@ description = "Session manager integrating tmux sessions, zoxide directories, an
 requirements = ["sesh"]
 
 [source]
-command = [
-  "sesh list --icons",
-  "~/.config/television/scripts/oc-tv-source | sort -r -k3,4",
-]
+command = "sesh list --icons"
 ansi = true
 output = "{strip_ansi|split: :1..|join: }"
 
-[preview]
-command = '''
-item="{}"
-
-if printf "%s" "$item" | grep -q "opencode"; then
-  ~/.config/television/scripts/oc-tv-preview "$item"
-else
-  sesh preview '{strip_ansi|split: :1..|join: }'
-fi
-'''
+# Preview disabled for faster popup startup.
+# Re-enable with:
+# [preview]
+# command = "sesh preview '{strip_ansi|split: :1..|join: }'"
 
 [keybindings]
 enter = "actions:connect"

@@ -27,7 +27,7 @@ resolve_target_pane() {
 }
 
 target="$(resolve_target_pane)" || exit 1
-selection="$(tv --config-file "$HOME/.config/television/config.toml" --cable-dir "$HOME/.config/television/cable" command-palette || true)"
+selection="$(tv-fzf command-palette || true)"
 cmd="${selection##*|}"
 
 printf '%s selection=%q cmd=%q target=%q\n' "$(date -Is)" "$selection" "$cmd" "$target" >> "$log"
