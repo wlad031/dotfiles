@@ -1,10 +1,92 @@
-watch_interval: 1m
-
 providers:
- - name: ChatGPT
-   type: chatgpt
-   auth_file: ~/.pi/agent/auth.json
+  - name: ChatGPT
+    type: chatgpt
+    auth_file: ~/.pi/agent/auth.json
+    watch_interval: 1m
+    widgets:
+      - provider_meta
+    windows:
+      - scope: Default
+        window: 1
+        widgets:
+          - scope
+          - window
+          - usage
+          - reset
+          - pace_summary
+          - pace_usage
+          - pace_time
+          - status_badge
+          # - projected_empty
+          # - projected_reset
+          # - last_delta
+          # - delta_today
+          # - delta_24h
+          # - peak_burn
+          - history
+          # - samples
 
- - name: OpenRouter
-   type: openrouter
-   api_key_env: AI_USAGE_OPENROUTER_API_KEY
+      # - scope: GPT-5.3-Codex-Spark / codex_bengalfox
+      #   window: 1
+      #   widgets:
+      #     - scope
+      #     - window
+      #     - usage
+      #     - reset
+      #     - pace_summary
+      #     - pace_usage
+      #     - pace_time
+      #     - status_badge
+      #     - projected_empty
+      #     - projected_reset
+      #     - last_delta
+      #     - delta_today
+      #     - delta_24h
+      #     - peak_burn
+      #     - history
+      #     - samples
+      #
+      # - scope: GPT-5.3-Codex-Spark / codex_bengalfox
+      #   window: 2
+      #   widgets:
+      #     - scope
+      #     - window
+      #     - usage
+      #     - reset
+      #     - pace_summary
+      #     - pace_usage
+      #     - pace_time
+      #     - status_badge
+      #     - projected_empty
+      #     - projected_reset
+      #     - last_delta
+      #     - delta_today
+      #     - delta_24h
+      #     - peak_burn
+      #     - history
+      #     - samples
+
+  - name: OpenRouter
+    type: openrouter
+    api_key_env: AI_USAGE_OPENROUTER_API_KEY
+    watch_interval: 5min
+    widgets:
+      # - key_usage
+      # - key_limit
+      # - key_left
+      # - key_reset
+      # - key_last_delta
+      # - key_delta_today
+      # - key_delta_24h
+      # - key_peak_burn
+      # - key_history
+      # - key_samples
+      - credit_usage
+      - credit_limit
+      - credit_left
+      - credit_last_delta
+      - credit_delta_today
+      - credit_delta_24h
+      - credit_peak_burn
+      - credit_history
+      # - credit_samples
