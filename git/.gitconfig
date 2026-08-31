@@ -21,6 +21,7 @@
 	project-summary = !which onefetch && onefetch
 [delta]
 	side-by-side = true
+	tabs = 4
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
