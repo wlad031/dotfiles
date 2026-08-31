@@ -4,8 +4,13 @@
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
   "transport": "sse",
-  "httpIdleTimeoutMs": 120000,
+  "httpIdleTimeoutMs": 300000,
   "websocketConnectTimeoutMs": 15000,
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 32768,
+    "keepRecentTokens": 20000
+  },
   "theme": "gruvbox-dark",
   "quietStartup": true,
   "extensions": [
