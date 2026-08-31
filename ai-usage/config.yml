@@ -5,6 +5,7 @@ providers:
     watch_interval: 1m
     widgets:
       - provider_meta
+      - text: https://chatgpt.com/codex/cloud/settings/analytics
     windows:
       - scope: Default
         window: 1
