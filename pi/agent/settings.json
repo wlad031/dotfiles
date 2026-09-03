@@ -27,6 +27,13 @@
   ],
   "packages": [
     "npm:@tintinweb/pi-subagents",
+    {
+      "source": "npm:pi-web-access",
+      "extensions": [],
+      "skills": [],
+      "prompts": [],
+      "themes": []
+    },
     "npm:pi-ask-user",
     "npm:context-mode",
     "npm:pi-ticktick",

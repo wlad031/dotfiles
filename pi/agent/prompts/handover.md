@@ -11,6 +11,6 @@ Include:
 - Verification command(s) run with pass/fail
 - Blockers or follow-up risks
 
-If files were edited, include the exact expected behavior for tester/reviewer.
+If files were edited, include the exact expected behavior for reviewer.
 
 Additional context: $1
