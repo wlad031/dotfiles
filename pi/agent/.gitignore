@@ -13,6 +13,7 @@
 
 # Local/generated extensions and dependency/build caches
 /extensions/agentmemory/
+/disabled-extensions/agentmemory/
 /extensions/hledger-helper.ts
 /extensions/**/node_modules/
 /extensions/**/.cache/
