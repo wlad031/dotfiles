@@ -7,6 +7,3 @@
 [submodule "utils/pi-loop"]
 	path = utils/pi-loop
 	url = git@gitea.local.vgerasimov.dev:wlad031/pi-loop.git
-[submodule "pi/agent/extensions/pi-pretty-tools"]
-	path = pi/agent/extensions/pi-pretty-tools
-	url = git@gitea.local.vgerasimov.dev:wlad031/pi-pretty-tools.git

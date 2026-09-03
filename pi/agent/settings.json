@@ -22,7 +22,7 @@
   },
   "quietStartup": true,
   "extensions": [
-    "/home/geras/dotfiles/pi/agent/extensions/pi-pretty-tools"
+    "~/Projects/pi-pretty-tools"
   ],
   "packages": [
     "npm:@tintinweb/pi-subagents",
