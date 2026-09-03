@@ -4,33 +4,32 @@
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
   "transport": "sse",
-  "httpIdleTimeoutMs": 300000,
+  "httpIdleTimeoutMs": 600000,
   "websocketConnectTimeoutMs": 15000,
   "compaction": {
     "enabled": true,
-    "reserveTokens": 32768,
-    "keepRecentTokens": 20000
+    "reserveTokens": 65536,
+    "keepRecentTokens": 12000
   },
-  "theme": "gruvbox-dark",
+  "retry": {
+    "enabled": true,
+    "maxRetries": 5,
+    "baseDelayMs": 3000,
+    "provider": {
+      "maxRetries": 0,
+      "maxRetryDelayMs": 60000
+    }
+  },
   "quietStartup": true,
   "extensions": [
     "/home/geras/dotfiles/pi/agent/extensions/pi-pretty-tools"
   ],
-  "pi-lualine": {
-    "config": "$HOME/dotfiles/pi/agent/pi-lualine.lua"
-  },
   "packages": [
-    "npm:@victor-software-house/pi-curated-themes",
-    "npm:pi-web-access",
     "npm:@tintinweb/pi-subagents",
     "npm:pi-ask-user",
-    "npm:pi-btw",
     "npm:context-mode",
-    "npm:pi-chrome",
-    "npm:pi-paster",
     "npm:pi-ticktick",
-    "npm:@firstpick/pi-package-remote-webui",
-    "npm:@firstpick/pi-package-webui"
+    "npm:pi-websocket-auto-continue"
   ],
   "hideThinkingBlock": false
 }

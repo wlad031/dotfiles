@@ -1,0 +1,27 @@
+# Pi agent local/runtime state (kept available through ~/.pi/agent symlink)
+/auth.json
+/models-store.json
+/.pi-hermes-locks.sqlite*
+/pi-hermes-memory/
+/projects-memory/
+/sessions/
+/webui/
+/webui-rpc-supervisor/
+/ticktick/
+/git/
+/npm/
+
+# Local/generated extensions and dependency/build caches
+/extensions/agentmemory/
+/extensions/hledger-helper.ts
+/extensions/**/node_modules/
+/extensions/**/.cache/
+/extensions/**/dist/
+/extensions/**/build/
+/extensions/**/*.tsbuildinfo
+
+# Logs/backups/runtime caches
+*.log
+*.bak
+*.dotfiles-backup.*
+/pi-pretty-tools/bat-cache/

@@ -51,9 +51,7 @@ eza:
     dst: ~/.config/eza
 
 pi:
-  ~/dotfiles/pi/agent:
-    mode: folder
-    dst: ~/.pi/agent
+  ~/dotfiles/pi/agent: ~/.pi/agent
 
 luvus:
   ~/dotfiles/luvus/config.json: ~/.luvus/config.json
