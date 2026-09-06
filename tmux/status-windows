@@ -11,7 +11,7 @@ escape_tmux_text() {
   printf '%s' "$1" | sed 's/#/##/g'
 }
 
-tmux list-windows -a -F '#{session_created} #{window_index} #{window_id} #{session_name}:#{window_index} #{session_name}:#{window_index}:#{window_name}' 2>/dev/null |
+tmux list-windows -a -F '#{session_created} #{window_index} #{window_id} #{session_name}:#{window_index} #{session_name}:#{window_index}' 2>/dev/null |
   sort -n -k1,1 -k2,2 |
   while IFS= read -r window_line; do
     [ -n "$window_line" ] || continue
@@ -25,10 +25,10 @@ tmux list-windows -a -F '#{session_created} #{window_index} #{window_id} #{sessi
     label=$(escape_tmux_text "$label")
 
     if [ "$window_id" = "$current_window" ]; then
-      printf '#[range=user|w%s]#[bg=#fabd2f]#[fg=#3c3836]#[bold] %s #[norange]' \
+      printf '#[range=user|w%s]#[bg=#3c3836,fg=#fabd2f]▐#[bg=#fabd2f,fg=#3c3836,bold] %s #[bg=#3c3836,fg=#fabd2f,nobold]▌#[norange]' \
         "$window_id" "$label"
     else
-      printf '#[range=user|w%s]#[bg=#504945]#[fg=#ebdbb2] %s #[norange]' \
+      printf '#[range=user|w%s]#[bg=#3c3836,fg=#665c54]▐#[bg=#504945,fg=#ebdbb2] %s #[bg=#3c3836,fg=#665c54]▌#[norange]' \
         "$window_id" "$label"
     fi
   done
