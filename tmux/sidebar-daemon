@@ -24,12 +24,15 @@ sidebar_enabled() {
 sidebar_command_for_window() {
   # Separate tmux socket + no config prevents recursive sidebar creation.
   # Socket is shared so every sidebar attaches the same nested tmux session.
+  # zsh -lic loads normal zsh startup files/env before launching ai-usage.
   nested_socket='ai-usage-sidebar'
   nested_session='sidebar'
-  printf 'TMUX= exec sh -c %s sh %s %s' \
-    "$(quote_shell 'socket=$1; session=$2; tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null || tmux -f /dev/null -L "$socket" new-session -d -s "$session" "ai-usage sidebar --watch"; tmux -f /dev/null -L "$socket" set-option -g status off; exec tmux -f /dev/null -L "$socket" attach-session -t "$session"')" \
+  nested_command="exec zsh -lic $(quote_shell 'exec ai-usage sidebar --watch')"
+  printf 'TMUX= exec sh -c %s sh %s %s %s' \
+    "$(quote_shell 'socket=$1; session=$2; command=$3; tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null || tmux -f /dev/null -L "$socket" new-session -d -s "$session" "$command"; tmux -f /dev/null -L "$socket" set-option -g status off; exec tmux -f /dev/null -L "$socket" attach-session -t "$session"')" \
     "$(quote_shell "$nested_socket")" \
-    "$(quote_shell "$nested_session")"
+    "$(quote_shell "$nested_session")" \
+    "$(quote_shell "$nested_command")"
 }
 
 stop_daemons() {
@@ -55,12 +58,14 @@ kill_sidebars() {
   sockets=${TMPDIR:-/tmp}/tmux-left-sidebar-sockets-$$
 
   tmux list-panes -a -F '#{pane_id}	#{pane_title}	#{pane_start_command}' 2>/dev/null |
-    awk -F '\t' '$2 == "@left-sidebar" || $3 ~ /ai-usage-sidebar-/ { print $1 }' |
+    awk -F '\t' '$2 == "@left-sidebar" || $3 ~ /ai-usage-sidebar/ { print $1 }' |
     sort -u > "$tmp"
 
-  tmux list-panes -a -F '#{pane_start_command}' 2>/dev/null |
-    sed -n "s/.*ai-usage-sidebar-\([A-Za-z0-9_-][A-Za-z0-9_-]*\).*/ai-usage-sidebar-\1/p" |
-    sort -u > "$sockets"
+  {
+    echo ai-usage-sidebar
+    tmux list-panes -a -F '#{pane_start_command}' 2>/dev/null |
+      sed -n "s/.*\(ai-usage-sidebar[-A-Za-z0-9_]*\).*/\1/p"
+  } | sort -u > "$sockets"
 
   while IFS= read -r pane_id; do
     [ -n "$pane_id" ] && tmux kill-pane -t "$pane_id" 2>/dev/null || true
@@ -101,7 +106,7 @@ ensure_window_sidebar() {
 
   window_height=$(tmux display-message -p -t "$window_id" '#{window_height}' 2>/dev/null) || return 0
   panes=$(tmux list-panes -t "$window_id" -F '#{pane_id}	#{pane_title}	#{pane_current_command}	#{pane_start_command}	#{pane_top}	#{pane_height}' 2>/dev/null) || return 0
-  sidebar_ids=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 == title || $4 ~ /ai-usage-sidebar-/ { print $1 }')
+  sidebar_ids=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 == title || $4 ~ /ai-usage-sidebar/ { print $1 }')
   sidebar_id=$(printf '%s\n' "$sidebar_ids" | sed -n '1p')
 
   # Remove duplicate sidebars from earlier buggy runs.
@@ -124,7 +129,7 @@ ensure_window_sidebar() {
   fi
 
   if [ -z "$sidebar_id" ]; then
-    non_sidebar_count=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 != title && $4 !~ /ai-usage-sidebar-/ { count++ } END { print count + 0 }')
+    non_sidebar_count=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 != title && $4 !~ /ai-usage-sidebar/ { count++ } END { print count + 0 }')
     [ "$non_sidebar_count" -gt 0 ] || return 0
 
     active_pane=$(tmux display-message -p -t "$window_id" '#{pane_id}' 2>/dev/null) || active_pane=
