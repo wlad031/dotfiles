@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.85.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "medium",
@@ -37,7 +37,11 @@
     "npm:pi-ask-user",
     "npm:context-mode",
     "npm:pi-ticktick",
-    "npm:pi-websocket-auto-continue"
+    "npm:pi-websocket-auto-continue",
+    "npm:pi-caveman",
+    "npm:pi-condense",
+    "npm:pi-rtk-optimizer",
+    "npm:pi-cbm"
   ],
   "hideThinkingBlock": false
 }
