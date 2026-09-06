@@ -1,0 +1,178 @@
+#!/usr/bin/env sh
+# Keep one fixed-width, full-height left sidebar pane in every tmux window.
+
+command=${1:-daemon}
+interval=${TMUX_SIDEBAR_INTERVAL:-2}
+default_width=${TMUX_SIDEBAR_WIDTH:-64}
+sidebar_title='@left-sidebar'
+lock_dir="${TMPDIR:-/tmp}/tmux-left-sidebar-${UID:-$(id -u)}.lock"
+pid_file="$lock_dir/pid"
+
+quote_shell() {
+  printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"
+}
+
+tmux_has_server() {
+  tmux list-sessions >/dev/null 2>&1
+}
+
+sidebar_enabled() {
+  enabled=$(tmux show-option -gqv @left_sidebar_enabled 2>/dev/null)
+  [ "$enabled" != "off" ]
+}
+
+sidebar_command_for_window() {
+  # Separate tmux socket + no config prevents recursive sidebar creation.
+  # Socket is shared so every sidebar attaches the same nested tmux session.
+  nested_socket='ai-usage-sidebar'
+  nested_session='sidebar'
+  printf 'TMUX= exec sh -c %s sh %s %s' \
+    "$(quote_shell 'socket=$1; session=$2; tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null || tmux -f /dev/null -L "$socket" new-session -d -s "$session" "ai-usage sidebar --watch"; tmux -f /dev/null -L "$socket" set-option -g status off; exec tmux -f /dev/null -L "$socket" attach-session -t "$session"')" \
+    "$(quote_shell "$nested_socket")" \
+    "$(quote_shell "$nested_session")"
+}
+
+stop_daemons() {
+  old_pid=$(cat "$pid_file" 2>/dev/null || true)
+  if [ -n "$old_pid" ] && [ "$old_pid" != "$$" ] && ps -p "$old_pid" -o args= 2>/dev/null | grep -q '[s]idebar-daemon'; then
+    kill "$old_pid" 2>/dev/null || true
+  fi
+
+  ps -eo pid=,args= 2>/dev/null |
+    awk -v self="$$" '
+      $1 == self { next }
+      /^[[:space:]]*[0-9]+[[:space:]]+sh / && $0 ~ /(^|[ .\/])tmux\/sidebar-daemon([[:space:]]+daemon)?[[:space:]]*$/ { print $1 }
+    ' |
+    while IFS= read -r pid; do
+      [ -n "$pid" ] && kill "$pid" 2>/dev/null || true
+    done
+
+  rm -rf "$lock_dir"
+}
+
+kill_sidebars() {
+  tmp=${TMPDIR:-/tmp}/tmux-left-sidebar-panes-$$
+  sockets=${TMPDIR:-/tmp}/tmux-left-sidebar-sockets-$$
+
+  tmux list-panes -a -F '#{pane_id}	#{pane_title}	#{pane_start_command}' 2>/dev/null |
+    awk -F '\t' '$2 == "@left-sidebar" || $3 ~ /ai-usage-sidebar-/ { print $1 }' |
+    sort -u > "$tmp"
+
+  tmux list-panes -a -F '#{pane_start_command}' 2>/dev/null |
+    sed -n "s/.*ai-usage-sidebar-\([A-Za-z0-9_-][A-Za-z0-9_-]*\).*/ai-usage-sidebar-\1/p" |
+    sort -u > "$sockets"
+
+  while IFS= read -r pane_id; do
+    [ -n "$pane_id" ] && tmux kill-pane -t "$pane_id" 2>/dev/null || true
+  done < "$tmp"
+
+  while IFS= read -r socket; do
+    [ -n "$socket" ] && TMUX= tmux -L "$socket" kill-server 2>/dev/null || true
+  done < "$sockets"
+
+  count=$(wc -l < "$tmp" | tr -d ' ')
+  rm -f "$tmp" "$sockets"
+  printf '%s' "$count"
+}
+
+start_daemon() {
+  if ! sidebar_enabled; then
+    exit 0
+  fi
+
+  if ! mkdir "$lock_dir" 2>/dev/null; then
+    old_pid=$(cat "$pid_file" 2>/dev/null || true)
+    if [ -n "$old_pid" ] && ps -p "$old_pid" -o args= 2>/dev/null | grep -q '[s]idebar-daemon'; then
+      exit 0
+    fi
+    rm -rf "$lock_dir"
+    mkdir "$lock_dir" 2>/dev/null || exit 0
+  fi
+  printf '%s\n' "$$" > "$pid_file"
+  trap 'rm -rf "$lock_dir"' EXIT INT TERM
+}
+
+ensure_window_sidebar() {
+  window_id=$1
+  width=$(tmux show-option -gqv @left_sidebar_width 2>/dev/null)
+  case $width in
+    ''|*[!0-9]*) width=$default_width ;;
+  esac
+
+  window_height=$(tmux display-message -p -t "$window_id" '#{window_height}' 2>/dev/null) || return 0
+  panes=$(tmux list-panes -t "$window_id" -F '#{pane_id}	#{pane_title}	#{pane_current_command}	#{pane_start_command}	#{pane_top}	#{pane_height}' 2>/dev/null) || return 0
+  sidebar_ids=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 == title || $4 ~ /ai-usage-sidebar-/ { print $1 }')
+  sidebar_id=$(printf '%s\n' "$sidebar_ids" | sed -n '1p')
+
+  # Remove duplicate sidebars from earlier buggy runs.
+  printf '%s\n' "$sidebar_ids" | sed '1d' | while IFS= read -r duplicate_id; do
+    [ -n "$duplicate_id" ] && tmux kill-pane -t "$duplicate_id" 2>/dev/null || true
+  done
+
+  if [ -n "$sidebar_id" ]; then
+    sidebar_info=$(printf '%s\n' "$panes" | awk -F '\t' -v id="$sidebar_id" '$1 == id { print $3 "\t" $5 "\t" $6; exit }')
+    sidebar_command_name=$(printf '%s' "$sidebar_info" | awk -F '\t' '{ print $1 }')
+    sidebar_top=$(printf '%s' "$sidebar_info" | awk -F '\t' '{ print $2 }')
+    sidebar_height=$(printf '%s' "$sidebar_info" | awk -F '\t' '{ print $3 }')
+
+    # Sidebar must be nested tmux and span full window height; otherwise rebuild it.
+    # pane_top can be 1 with pane-border/status offsets, so height is the stable check.
+    if [ "$sidebar_command_name" != "tmux" ] || [ "${sidebar_height:-0}" -lt "$((window_height - 1))" ]; then
+      tmux kill-pane -t "$sidebar_id" 2>/dev/null || true
+      sidebar_id=
+    fi
+  fi
+
+  if [ -z "$sidebar_id" ]; then
+    non_sidebar_count=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 != title && $4 !~ /ai-usage-sidebar-/ { count++ } END { print count + 0 }')
+    [ "$non_sidebar_count" -gt 0 ] || return 0
+
+    active_pane=$(tmux display-message -p -t "$window_id" '#{pane_id}' 2>/dev/null) || active_pane=
+    sidebar_command=$(sidebar_command_for_window "$window_id")
+    # -f makes the split full-window: left sidebar + right workspace subtree.
+    sidebar_id=$(tmux split-window -h -b -f -d -l "$width" -t "$window_id" -P -F '#{pane_id}' "$sidebar_command" 2>/dev/null) || return 0
+    tmux select-pane -t "$sidebar_id" -T "$sidebar_title" 2>/dev/null || true
+    [ -n "$active_pane" ] && tmux select-pane -t "$active_pane" 2>/dev/null || true
+  fi
+
+  tmux resize-pane -t "$sidebar_id" -x "$width" 2>/dev/null || true
+}
+
+case "$command" in
+  on)
+    tmux set-option -gq @left_sidebar_enabled on
+    nohup "$0" daemon >/dev/null 2>&1 &
+    tmux display-message 'Left sidebar on' 2>/dev/null || true
+    ;;
+  off)
+    tmux set-option -gq @left_sidebar_enabled off
+    stop_daemons
+    killed=$(kill_sidebars)
+    sleep 1
+    killed_again=$(kill_sidebars)
+    total=$((killed + killed_again))
+    tmux display-message "Left sidebar off; killed $total panes" 2>/dev/null || true
+    ;;
+  toggle)
+    if sidebar_enabled; then
+      "$0" off
+    else
+      "$0" on
+    fi
+    ;;
+  daemon)
+    start_daemon
+    while tmux_has_server; do
+      sidebar_enabled || exit 0
+      tmux list-windows -a -F '#{window_id}' 2>/dev/null |
+        while IFS= read -r window_id; do
+          [ -n "$window_id" ] && ensure_window_sidebar "$window_id"
+        done
+      sleep "$interval"
+    done
+    ;;
+  *)
+    echo "usage: $0 [daemon|on|off|toggle]" >&2
+    exit 2
+    ;;
+esac
