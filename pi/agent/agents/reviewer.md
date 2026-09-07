@@ -5,6 +5,7 @@ name: reviewer
 description: "Independent reviewer for correctness, security, and maintainability."
 tools: read, grep, find, bash
 extensions: false
+model: openai-codex/gpt-5.6-sol
 thinking: high
 max_turns: 260
 ---

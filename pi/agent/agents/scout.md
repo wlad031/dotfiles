@@ -4,7 +4,8 @@ name: scout
 description: "Read-only exploration for large or unfamiliar repo areas before implementation."
 tools: read, grep, find, bash
 extensions: false
-thinking: medium
+model: openai-codex/gpt-5.6-luna
+thinking: low
 max_turns: 160
 ---
 

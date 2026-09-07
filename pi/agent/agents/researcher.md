@@ -4,6 +4,7 @@ name: researcher
 description: "External docs/web research when repo-local evidence is insufficient."
 tools: "read, grep, find, bash, ext:pi-web-access/web_search, ext:pi-web-access/fetch_content, ext:pi-web-access/get_search_content, ext:pi-web-access/source_check"
 extensions: ["~/.pi/agent/npm/node_modules/pi-web-access/index.ts"]
+model: openai-codex/gpt-5.6-terra
 thinking: medium
 max_turns: 160
 ---
