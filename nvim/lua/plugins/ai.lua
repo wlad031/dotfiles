@@ -41,6 +41,29 @@ return {
           },
         },
       })
+
+      -- OpenRouter may reject a revoked key on every automatic completion.
+      -- Show one actionable error, then stop automatic requests for this session.
+      local minuet = require("minuet")
+      local minuet_utils = require("minuet.utils")
+      local original_notify = minuet_utils.notify
+      local auto_completion_disabled = false
+
+      minuet_utils.notify = function(message, minuet_level, vim_level, opts)
+        if type(message) == "string" and message:find("Openrouter returns error on streaming:", 1, true) then
+          if not auto_completion_disabled then
+            auto_completion_disabled = true
+            minuet.config.cmp.enable_auto_complete = false
+            vim.notify(
+              "Minuet automatic completion disabled: OpenRouter request failed. Update NVIM_MINUET_OPENAI_API_KEY, then restart Neovim.",
+              vim.log.levels.ERROR
+            )
+          end
+          return
+        end
+
+        original_notify(message, minuet_level, vim_level, opts)
+      end
     end,
   },
   {
