@@ -2,24 +2,14 @@
 
 ## Checklist for initial setup
 - [ ] install `uv` for Python
-  ```bash
-    wget -q -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-uv.sh | bash
-  ```
+- [ ] install `fnv` for Node
 - [ ] install Ansible
-  ```bash
-    wget -q -O - https://raw.githubusercontent.com/wlad031/dotfiles/refs/heads/master/install-ansible.sh | bash
-  ```
-- [ ] install Bitwarden
-  - [ ] setup Bitwarden as SSH agent
 - [ ] install `rvm` for Ruby
 - [ ] install homebrew
 - [ ] install essential packages
 - [ ] install sdkman
 - [ ] install Go with `g`
 - [ ] install dotfiles
-  ```bash
-  bash install-dotfiles.sh --tags <comma-separated-tags>
-  ```
 - [ ] Gruvbox wallpapers
   ```bash
   mkdir -p ~/Pictures/wallpapers
