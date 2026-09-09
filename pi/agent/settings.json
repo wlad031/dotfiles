@@ -41,7 +41,9 @@
     "npm:pi-caveman",
     "npm:pi-condense",
     "npm:pi-rtk-optimizer",
-    "npm:pi-cbm"
+    "npm:pi-cbm",
+    "~/Projects/pi-cbm-md"
   ],
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "theme": "dark"
 }
