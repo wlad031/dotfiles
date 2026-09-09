@@ -1,0 +1,21 @@
+audioBell: false
+beepSound: $HOME/.config/ta/sounds/agent-complete-short.wav
+agentRows: 10
+recentLimit: 50
+recentInactiveMinutes: 3
+agentColumns:
+  - status
+  - session
+  - type
+  - state
+  - provider
+  - lastSeen
+  - location
+debug: false
+beepCommand: ''
+notifications: true
+notifyCommand: ''
+hooks: []
+stripLocationPrefixes:
+  - /home/geras/Projects
+  - /home/geras

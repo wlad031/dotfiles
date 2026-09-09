@@ -58,3 +58,5 @@ luvus:
 
 ai_usage:
   ~/dotfiles/ai-usage: ~/.config/ai-usage
+ta:
+  ~/dotfiles/ta: ~/.config/ta

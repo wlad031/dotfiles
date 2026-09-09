@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 # Keep one fixed-width, full-height left sidebar pane in every tmux window.
+# Each sidebar hosts nested tmux: command ta above ai-usage.
 
 command=${1:-daemon}
 interval=${TMUX_SIDEBAR_INTERVAL:-2}
@@ -23,16 +24,25 @@ sidebar_enabled() {
 
 sidebar_command_for_window() {
   # Separate tmux socket + no config prevents recursive sidebar creation.
-  # Socket is shared so every sidebar attaches the same nested tmux session.
-  # zsh -lic loads normal zsh startup files/env before launching ai-usage.
+  # Socket is shared so every sidebar attaches same nested dashboard session.
+  # zsh -lic loads normal zsh startup files/env before launching commands.
   nested_socket='ai-usage-sidebar'
   nested_session='sidebar'
-  nested_command="exec zsh -lic $(quote_shell 'exec ai-usage sidebar --watch')"
-  printf 'TMUX= exec sh -c %s sh %s %s %s' \
-    "$(quote_shell 'socket=$1; session=$2; command=$3; tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null || tmux -f /dev/null -L "$socket" new-session -d -s "$session" "$command"; tmux -f /dev/null -L "$socket" set-option -g status off; exec tmux -f /dev/null -L "$socket" attach-session -t "$session"')" \
+  ta_command="exec zsh -lic $(quote_shell 'exec ta')"
+  usage_command="exec zsh -lic $(quote_shell 'exec ai-usage sidebar --watch')"
+  printf 'TMUX= exec sh -c %s sh %s %s %s %s' \
+    "$(quote_shell 'socket=$1; session=$2; ta_command=$3; usage_command=$4; tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null && [ "$(tmux -f /dev/null -L "$socket" list-panes -t "$session" 2>/dev/null | wc -l | tr -d " ")" -eq 2 ] || tmux -f /dev/null -L "$socket" kill-session -t "$session" 2>/dev/null || true; if ! tmux -f /dev/null -L "$socket" has-session -t "$session" 2>/dev/null; then tmux -f /dev/null -L "$socket" new-session -d -s "$session" "$ta_command"; tmux -f /dev/null -L "$socket" split-window -v -d -l 12 -t "$session:0" "$usage_command"; tmux -f /dev/null -L "$socket" select-pane -t "$session:0.0" -T "command ta"; tmux -f /dev/null -L "$socket" select-pane -t "$session:0.1" -T "ai-usage"; fi; tmux -f /dev/null -L "$socket" set-option -g status off; tmux -f /dev/null -L "$socket" set-option -g pane-border-status top; tmux -f /dev/null -L "$socket" set-option -g pane-border-format " #{pane_title} "; tmux -f /dev/null -L "$socket" set-option -g pane-border-style "fg=#928374"; tmux -f /dev/null -L "$socket" set-option -g pane-active-border-style "fg=#d79921"; exec tmux -f /dev/null -L "$socket" attach-session -t "$session"')" \
     "$(quote_shell "$nested_socket")" \
     "$(quote_shell "$nested_session")" \
-    "$(quote_shell "$nested_command")"
+    "$(quote_shell "$ta_command")" \
+    "$(quote_shell "$usage_command")"
+}
+
+nested_sidebar_ready() {
+  nested_socket='ai-usage-sidebar'
+  nested_session='sidebar'
+  TMUX= tmux -f /dev/null -L "$nested_socket" has-session -t "$nested_session" 2>/dev/null || return 1
+  [ "$(TMUX= tmux -f /dev/null -L "$nested_socket" list-panes -t "$nested_session" 2>/dev/null | wc -l | tr -d ' ')" -eq 2 ]
 }
 
 stop_daemons() {
@@ -120,9 +130,9 @@ ensure_window_sidebar() {
     sidebar_top=$(printf '%s' "$sidebar_info" | awk -F '\t' '{ print $2 }')
     sidebar_height=$(printf '%s' "$sidebar_info" | awk -F '\t' '{ print $3 }')
 
-    # Sidebar must be nested tmux and span full window height; otherwise rebuild it.
-    # pane_top can be 1 with pane-border/status offsets, so height is the stable check.
-    if [ "$sidebar_command_name" != "tmux" ] || [ "${sidebar_height:-0}" -lt "$((window_height - 1))" ]; then
+    # Sidebar must be nested tmux, have both dashboard panes, and span full height.
+    # pane_top can be 1 with pane-border/status offsets, so height is stable check.
+    if [ "$sidebar_command_name" != "tmux" ] || [ "${sidebar_height:-0}" -lt "$((window_height - 1))" ] || ! nested_sidebar_ready; then
       tmux kill-pane -t "$sidebar_id" 2>/dev/null || true
       sidebar_id=
     fi
