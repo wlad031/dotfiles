@@ -2,6 +2,9 @@
 *.log
 */lazygit/state.yml
 
+# Pi session runtime files
+pi/agent/pi-sessions/
+
 # Babysitter (a5c) generated runtime files
 .a5c/
 .a5c/runs/
