@@ -42,7 +42,8 @@
     "npm:pi-condense",
     "npm:pi-rtk-optimizer",
     "npm:pi-cbm",
-    "~/Projects/pi-cbm-md"
+    "~/Projects/pi-cbm-md",
+    "npm:pi-sessions"
   ],
   "hideThinkingBlock": false,
   "theme": "dark"
