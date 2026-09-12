@@ -107,6 +107,33 @@ start_daemon() {
   trap 'rm -rf "$lock_dir"' EXIT INT TERM
 }
 
+# Reclaim sidebar width from panes at workspace's left edge. tmux normally
+# redistributes it across every horizontal sibling, moving existing dividers.
+# This preserves their screen columns where a pane can remain at least 1 wide.
+preserve_vertical_split_positions() {
+  window_id=$1
+  sidebar_id=$2
+  old_geometry=$3
+
+  sidebar_left=$(tmux display-message -p -t "$sidebar_id" '#{pane_left}' 2>/dev/null) || return 0
+  sidebar_width=$(tmux display-message -p -t "$sidebar_id" '#{pane_width}' 2>/dev/null) || return 0
+  workspace_left=$((sidebar_left + sidebar_width + 1))
+
+  # Resize left-to-right. Resizing each pane moves only its horizontal boundary;
+  # panes already wholly right of sidebar keep their previous width.
+  printf '%s\n' "$old_geometry" |
+    sort -k2,2n -k1,1n |
+    while IFS=' ' read -r pane_id old_left old_width; do
+      [ -n "$pane_id" ] && [ -n "$old_left" ] && [ -n "$old_width" ] || continue
+      old_right=$((old_left + old_width - 1))
+      desired_left=$old_left
+      [ "$desired_left" -lt "$workspace_left" ] && desired_left=$workspace_left
+      [ "$desired_left" -le "$old_right" ] || continue
+      desired_width=$((old_right - desired_left + 1))
+      tmux resize-pane -t "$pane_id" -x "$desired_width" 2>/dev/null || true
+    done
+}
+
 ensure_window_sidebar() {
   window_id=$1
   width=$(tmux show-option -gqv @left_sidebar_width 2>/dev/null)
@@ -115,7 +142,7 @@ ensure_window_sidebar() {
   esac
 
   window_height=$(tmux display-message -p -t "$window_id" '#{window_height}' 2>/dev/null) || return 0
-  panes=$(tmux list-panes -t "$window_id" -F '#{pane_id}	#{pane_title}	#{pane_current_command}	#{pane_start_command}	#{pane_top}	#{pane_height}' 2>/dev/null) || return 0
+  panes=$(tmux list-panes -t "$window_id" -F '#{pane_id}	#{pane_title}	#{pane_current_command}	#{pane_start_command}	#{pane_top}	#{pane_height}	#{pane_left}	#{pane_width}' 2>/dev/null) || return 0
   sidebar_ids=$(printf '%s\n' "$panes" | awk -F '\t' -v title="$sidebar_title" '$2 == title || $4 ~ /ai-usage-sidebar/ { print $1 }')
   sidebar_id=$(printf '%s\n' "$sidebar_ids" | sed -n '1p')
 
@@ -143,10 +170,15 @@ ensure_window_sidebar() {
     [ "$non_sidebar_count" -gt 0 ] || return 0
 
     active_pane=$(tmux display-message -p -t "$window_id" '#{pane_id}' 2>/dev/null) || active_pane=
+    # Capture positions before adding sidebar. `-f` preserves tree, but tmux
+    # otherwise rescales horizontal children and shifts their dividers right.
+    workspace_geometry=$(printf '%s\n' "$panes" |
+      awk -F '\t' -v title="$sidebar_title" '$2 != title && $4 !~ /ai-usage-sidebar/ { print $1 " " $7 " " $8 }')
     sidebar_command=$(sidebar_command_for_window "$window_id")
-    # -f makes the split full-window: left sidebar + right workspace subtree.
+    # -f makes split full-window: left sidebar + right workspace subtree.
     sidebar_id=$(tmux split-window -h -b -f -d -l "$width" -t "$window_id" -P -F '#{pane_id}' "$sidebar_command" 2>/dev/null) || return 0
     tmux select-pane -t "$sidebar_id" -T "$sidebar_title" 2>/dev/null || true
+    preserve_vertical_split_positions "$window_id" "$sidebar_id" "$workspace_geometry"
     [ -n "$active_pane" ] && tmux select-pane -t "$active_pane" 2>/dev/null || true
   fi
 
