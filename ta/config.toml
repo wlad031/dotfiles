@@ -1,0 +1,2 @@
+# Disable animated agent-title marquee.
+titleScrolling = false
