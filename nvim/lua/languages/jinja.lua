@@ -11,10 +11,10 @@ M.SetupLsp = function(capabilities)
     configs.jinja_lsp = {
       default_config = {
         name = "jinja-lsp",
-        cmd = { "/Users/vgerasimov/.cargo/bin/jinja-lsp" }, -- TODO: get rid of full path
+        cmd = { "jinja-lsp" },
         filetypes = { "jinja", "yaml" },
-        root_dir = function(fname)
-          return "."
+        root_dir = function()
+          return vim.uv.cwd()
           --return nvim_lsp.util.find_git_ancestor(fname)
         end,
       },

@@ -7,13 +7,21 @@ local jdtls = {
     config = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "java",
-        callback = function()
+        callback = function(args)
           local jdtls = require('jdtls')
 
           local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-          local workspace_dir = vim.env.HOME .. '/.jdtls/workspaces/' .. project_name
+          local workspace_dir = vim.fn.stdpath("data") .. "/jdtls/workspaces/" .. project_name
+          local jdtls_dir = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+          local launchers = vim.fn.glob(jdtls_dir .. "/plugins/org.eclipse.equinox.launcher_*.jar", true, true)
+          local platform = ({ Darwin = "mac", Windows_NT = "win" })[vim.uv.os_uname().sysname] or "linux"
+          local config_dir = jdtls_dir .. "/config_" .. platform
+          local lombok_path = jdtls_dir .. "/lombok.jar"
 
-          local lombok_path = vim.env.HOME .. '/.lib/lombok.jar'
+          if #launchers == 0 or vim.fn.isdirectory(config_dir) == 0 then
+            vim.notify("jdtls is not installed for " .. platform .. "; run :MasonInstall jdtls", vim.log.levels.WARN)
+            return
+          end
 
           local extendedClientCapabilities = jdtls.extendedClientCapabilities;
           extendedClientCapabilities.onCompletionItemSelectedCommand = "editor.action.triggerParameterHints"
@@ -47,14 +55,14 @@ local jdtls = {
 
               -- 💀
               '-jar',
-              '/Users/vgerasimov/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.800.v20240330-1250.jar',
+              launchers[1],
               -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
               -- Must point to the                                                     Change this to
               -- eclipse.jdt.ls installation                                           the actual version
 
 
               -- 💀
-              '-configuration', '/Users/vgerasimov/.local/share/nvim/mason/packages/jdtls/config_mac_arm',
+              '-configuration', config_dir,
               -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
               -- Must point to the                      Change to one of `linux`, `win` or `mac`
               -- eclipse.jdt.ls installation            Depending on your system.
@@ -99,7 +107,7 @@ local jdtls = {
           -- or attaches to an existing client & server depending on the `root_dir`.
           require('jdtls').start_or_attach(config)
 
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+          vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
         end
       })
     end
