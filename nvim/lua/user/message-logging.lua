@@ -1,13 +1,24 @@
--- Persist nvim messages + notifications to a log file
+-- Persist a bounded, private Neovim message log.
 
 local LOG_FILE = vim.fn.stdpath("state") .. "/nvim-messages.log"
+local MAX_LOG_BYTES = 1024 * 1024
+local LOG_MODE = 384 -- 0600
 
 local function append_log(lines)
   if type(lines) == "string" then
     lines = { lines }
   end
 
-  pcall(vim.fn.writefile, lines, LOG_FILE, "a")
+  local current_size = math.max(vim.fn.getfsize(LOG_FILE), 0)
+  local appended_size = #table.concat(lines, "\n") + 1
+  if current_size + appended_size > MAX_LOG_BYTES then
+    return
+  end
+
+  local ok = pcall(vim.fn.writefile, lines, LOG_FILE, "a")
+  if ok then
+    pcall(vim.uv.fs_chmod, LOG_FILE, LOG_MODE)
+  end
 end
 
 local wrapped_notify
