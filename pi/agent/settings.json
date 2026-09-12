@@ -23,7 +23,8 @@
   "quietStartup": true,
   "extensions": [
     "~/Projects/pi-pretty-tools",
-    "~/Projects/agentmemory"
+    "~/Projects/agentmemory",
+    "~/Projects/pi-steel/src/index.ts"
   ],
   "packages": [
     "npm:@tintinweb/pi-subagents",
