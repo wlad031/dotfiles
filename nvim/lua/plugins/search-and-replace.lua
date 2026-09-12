@@ -5,6 +5,12 @@ local rip_substitute = {
   cmd = "RipSubstitute",
   keys = {
     {
+      "<leader>fs",
+      function() require("rip-substitute").sub() end,
+      mode = { "n", "x" },
+      desc = "Replace: RipSubstitute",
+    },
+    {
       "<leader>rb",
       function() require("rip-substitute").sub() end,
       mode = { "n", "x" },
@@ -23,7 +29,7 @@ local grug_far = {
 }
 
 local plugins = {
-  -- rip_substitute,
+  rip_substitute,
   grug_far,
 }
 

@@ -55,13 +55,6 @@ local P = {
   end
 }
 
-local telescope_frecency = {
-  "nvim-telescope/telescope-frecency.nvim",
-  config = function()
-    require("telescope").load_extension "frecency"
-  end,
-}
-
 local smart_open = {
   "danielfalk/smart-open.nvim",
   branch = "0.2.x",

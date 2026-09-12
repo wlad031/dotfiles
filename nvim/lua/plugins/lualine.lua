@@ -123,7 +123,7 @@ return {
       if require("lazy.core.config").plugins["neo-tree.nvim"] then
         table.insert(extensions, "neo-tree")
       end
-      if require("lazy.core.config").plugins["troble.nvim"] then
+      if require("lazy.core.config").plugins["trouble.nvim"] then
         table.insert(extensions, "trouble")
       end
       if require("lazy.core.config").plugins["oil.nvim"] then

@@ -46,12 +46,6 @@ function M.setup()
   vim.keymap.set('n', 'gh', '<CMD>diffget //2<CR>', { noremap = true, silent = true, desc = "Git: Diffget left/local" })
   vim.keymap.set('n', 'gl', '<CMD>diffget //3<CR>', { noremap = true, silent = true, desc = "Git: Diffget right/remote" })
 
-  vim.keymap.set(
-    { "n", "x" },
-    "<leader>fs",
-    function() require("rip-substitute").sub() end,
-    { desc = " rip substitute" }
-  )
 end
 
 function GetOutlineKeys()
